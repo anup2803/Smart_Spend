@@ -1,0 +1,62 @@
+{%extends 'master.html' %}
+{% block title %}Transactions - Smart Spend{% endblock %}
+ {%block content%}
+
+
+    <div class="sidebar">
+        <h2>Samrt Spend</h2>
+
+
+    <!-- Add Transaction -->
+    <div >
+        <a href="{{ url_for('transaction_bp.add_transaction') }}">Add New Transaction</a><br> 
+    </div>
+
+
+
+
+
+
+<div>
+{% if recent_trans %}
+
+<h2>Recent Transactions</h2>
+
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Modify</th>
+    </tr>
+    
+    {% for t in recent_trans %}
+    <tr>S
+        <td>{{ t.date }}</td>
+        <td>{{ t.type }}</td>
+        <td>{{ t.category }}</td>
+        <td>{{ t.amount }}</td>
+        <td>
+            <form action="{{url_for('transaction_bp.edit_transaction', id=t.id)}}" method="post" style="display: inline;">
+            <button class="btn btn-danger" type="submit">Edit</button>
+            </form>
+            
+            <form action="{{url_for('transaction_bp.delete_transaction', id=t.id)}}" method="post" style="display: inline;">
+            <button class="btn btn-danger" type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+    {% else %}
+    <tr>
+        <td colspan="4">No recent transactions found</td>
+    </tr>
+</table>
+{% endif %}
+    </div>
+
+
+
+{% endblock %}

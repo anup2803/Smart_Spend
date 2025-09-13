@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Smart Spend</div>
+            <ul>
+                <li><a href="{{url_for('auth_bp.index')}}">Home</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="{{url_for('auth_bp.login')}}" class="btn">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <section class="hero">
+        <h1>Empower Your Savings Journey Today</h1>
+        <p>Take control of ypur finances and save samrter with smart spend</p>
+        <a href="{{ url_for('auth_bp.register') }}" class="btn">Get Started</a>
+
+
+    </section>
+
+    <section id="features" class="features" >
+        <h2>Features</h2>
+        <div class="feature-list">
+            <div class="feature-box">
+                <h3>Monthly Reports</h3>
+                <p>Automatically generate weekly or monthly reports with charts and summaries to monitor financial trends</p>
+            </div> 
+        </div>
+        <div class="feature-list">
+            <div class="feature-box">
+                <h3>Data Export</h3>
+                <p>Export your financial data as pdf or CSV. Share summaries or keep records of ypur financial activities securely</p>
+            </div>
+        </div>
+
+        </div>
+        <div class="feature-list">
+            <div class="feature-box">
+                <h3>Secure User Access</h3>
+                <p>Log In securely and manage your financial data privately. Your personal finance data is stored safely with encryption</p>
+            </div>
+        </div>
+    
+</body>
+</html>

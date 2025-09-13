@@ -1,0 +1,88 @@
+{%extends 'master.html' %}
+{% block title %}Reminders - Smart Spend{% endblock %}
+ {%block content%}
+
+    <div class="reminder-container">
+        <h2 class="title">Smart Remainders</h2>
+        <p class="subtitle"> Never miss a due bill, overspend, or forget your goal again. Set alerts that help keep your financial on track. </p>
+    </div>
+
+     <form method="POST" class="reminder-form">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.reminder_type.label(class="form-label") }}
+            {{ form.reminder_type(class="form-input") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.category.label(class="form-label") }}
+            {{ form.category(class="form-input") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.due_date.label(class="form-label") }}
+            {{ form.due_date(class="form-input") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.time.label(class="form-label") }}
+            {{ form.time(class="form-input") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.amount.label(class="form-label") }}
+            {{ form.amount(class="form-input") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.submit(class="btn-submit") }}
+        </div>
+    </form>
+
+    
+
+
+
+
+    {% if reminders %}
+
+    <h2>All Reminders</h2>
+<table border="1">
+    <tr>
+        <th>Reminder_type</th>
+        <th>Category</th>
+        <th>Due_date</th>
+        <th>Time</th>
+        <th>Amount</th>
+    </tr>
+    
+    {% for reminder in reminders %}
+    <tr>
+        <td>{{ reminder.reminder_type }}</td>
+        <td>{{ reminder.category }}</td>
+        <td>{{ reminder.due_date }}</td>
+        <td>{{ reminder.time }}</td>
+        <td>{{ reminder.amount}}</td>
+        <td>
+            <form action="{{url_for('reminders_bp.edit_reminder', id=reminder.id)}}" method="post" style="display: inline;">
+            <button class="btn btn-danger" type="submit">Edit</button>
+            </form>
+            
+            <form action="{{url_for('reminders_bp.delete_reminder', id=reminder.id)}}" method="post" style="display: inline;">
+            <button class="btn btn-danger" type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+    {% else %}
+    <tr>
+        <td colspan="4">No reminders yet.</td>
+    </tr>
+</table>
+{% endif %}
+
+
+
+{% endblock %}

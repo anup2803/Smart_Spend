@@ -1,0 +1,71 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField, DateField, RadioField,TimeField,SelectField,FloatField
+from wtforms.validators import DataRequired, Email, EqualTo, Length,NumberRange
+
+class Registerform(FlaskForm):
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
+
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
+
+
+class ResetRequestForm(FlaskForm):
+    email=StringField('Email',validators=[DataRequired(),Email()])
+    submit=SubmitField('Send Rest Link')
+
+
+class ResetPasswordForm(FlaskForm):
+    password=PasswordField('Password',validators=[DataRequired(),Length(min=8)])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit=SubmitField('Update password')
+
+class TransactionForm(FlaskForm):
+    amount = StringField('Amount', validators=[DataRequired()])
+    category = SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other')],validators=[DataRequired()])
+    date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    type = RadioField('Transaction Type',choices=[('expense', 'Expense'), ('income', 'Income')],default='expense',validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
+
+class BudgetForm(FlaskForm):
+    category = SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other')],validators=[DataRequired()])
+    amount = FloatField('Amount', validators=[DataRequired(), NumberRange(min=0)])
+    submit = SubmitField('Set Budget')
+
+
+
+
+
+class RemindersForm(FlaskForm):
+    reminder_type=SelectField('Reminder_type',choices=[('Payable','payable'),('Recivedable','recivedable')],validators=[DataRequired()])
+    category=SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other')],validators=[DataRequired()])
+    due_date=DateField('Due Date',format='%Y-%m-%d',validators=[DataRequired()])
+    time=TimeField('Time',format='%H:%M',validators=[DataRequired()])
+    amount = StringField('Amount', validators=[DataRequired()])
+    submit=SubmitField('Set Reminders')
+
+
+
+class UpdateprofileForm(FlaskForm):
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Update Profile')
+
+
+class ChangePasswordForm(FlaskForm):
+    old_password = PasswordField('Old Password', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired(), Length(min=8)])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo("new_password")])
+    submit = SubmitField("Change Password")

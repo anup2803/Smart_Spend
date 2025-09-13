@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>Welcome {{ user.first_name }},</p>
+    <p>Please verify your email by clicking the button below:</p>
+
+    <button>
+      <a href="{{ verify_url }}"
+         style="display:inline-block;
+                padding:10px 20px;
+                background-color:#28a745;
+                color:#ffffff;
+                text-decoration:none;
+                border-radius:5px;">
+        Verify My Account
+      </a>
+    </button>
+
+    <br>
+    <p>If you did not create this account, you can ignore this email.</p>
+  </body>
+</html>

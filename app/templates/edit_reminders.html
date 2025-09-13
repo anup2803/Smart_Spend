@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Transaction</title>
+</head>
+<body>
+        <h2>Edit Reminders </h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+      
+        <form method="POST">
+        {{ form.hidden_tag() }}
+
+         <label for="reminder_type">Type:</label><br>
+        {{ form.reminder_type() }}<br><br>
+
+        <label for="category">Category:</label><br>
+        {{ form.category(size=32) }}<br><br>
+
+        <label for="due_date">Due Date:</label><br>
+        {{ form.due_date() }}<br><br>
+
+        <label for="time">Time:</label><br>
+        {{ form.time() }}<br><br>
+
+        <label for="amount">Amount:</label><br>
+        {{ form.amount(size=32) }}<br><br>
+
+        <button type="submit">{{ form.submit.label.text }}</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('reminders_bp.reminders') }}">⬅ Back to Reminders</a>
+</body>
+</html>
+
+    
+</body>
+</html>

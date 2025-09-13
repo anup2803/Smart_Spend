@@ -1,0 +1,24 @@
+{%extends 'master.html' %}
+{% block title %}Settings - Smart Spend{% endblock %}
+ {%block content%}
+
+
+
+
+    <div class="container">
+        <h3>profile</h3>
+        <a href="{{ url_for('settings_bp.edit_informations') }}">Edit your account information</a>><br>
+
+
+        <h3>Perferences</h3>
+        <label>Light mode</label>
+
+
+        <h3>Security</h3>
+        <a href="{{ url_for('settings_bp.change_password') }}">Change Password</a>
+    </div>
+
+
+
+
+{%  endblock %}

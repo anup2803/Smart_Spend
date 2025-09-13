@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Transaction</title>
+</head>
+<body>
+        <h2>Edit transaction </h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+      
+        <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <label for="amount">Amount:</label><br>
+        {{ form.amount(size=32) }}<br><br>
+
+        <label for="category">Category:</label><br>
+        {{ form.category(size=32) }}<br><br>
+
+        <label for="type">Type:</label><br>
+        {{ form.type() }}<br><br>
+
+        <label for="date">Date:</label><br>
+        {{ form.date() }}<br><br>
+
+        <label for="description">Description:</label><br>
+        {{ form.description(size=64) }}<br><br>
+
+        <button type="submit">{{ form.submit.label.text }}</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('transaction_bp.transaction') }}">⬅ Back to Transactions</a>
+</body>
+</html>
+
+    
+</body>
+</html>

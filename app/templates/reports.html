@@ -1,0 +1,168 @@
+
+{%extends 'master.html' %}
+{% block title %}Report and Analytics - Smart Spend{% endblock %}
+ {%block content%}
+
+
+<style>
+  #expensePie {
+    width: 250px ;   
+    height: 250px ;  
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  #summaryBar{
+     width: 250px ;   
+    height: 250px ;  
+    max-width: 100%;
+    max-height: 100%;
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+<div class="reports-container">
+    <h2 class="title">Report and Analytics</h2>
+</div>
+
+
+
+
+<form action="{{url_for('report_bp.export_pdf')}}">
+    <button type="submit">Export PDF</button>
+</form>
+
+
+<form action="{{url_for('report_bp.download_csv')}}">
+    <button type="submit">Download CSV</button>
+</form>
+
+
+
+     <div class="cards">
+        <div class="card blue">Total Income :<p> Rs.{{ Total_Income if Total_Income is not none else 0 }}</p> </div>
+        <div class="card red">Total Expenses : <p>Rs.{{ Total_expense if Total_expense is not none else 0 }}</p></div>
+        <div class="card green">Net Saving :<p>Rs.{{ Net_income }}</p></div>
+    </div>
+
+
+
+
+
+{% if recent_trans %}
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Amount</th>
+    </tr>
+    
+    {% for t in recent_trans %}
+    <tr>
+        <td>{{ t.date }}</td>
+        <td>{{ t.category }}</td>
+        <td>{{ t.description }}</td>
+        <td>{{ t.type }}</td>
+        <td>{{ t.amount }}</td>
+    </tr>
+    {% endfor %}
+
+    {% else %}
+    <tr>
+        <td colspan="4">No recent transactions found</td>
+    </tr>
+</table>
+{% endif %}
+
+
+
+
+<div class="expense_charts">
+    <h2>Where Your money went</h2>
+    <canvas id="expensePie" ></canvas>
+    <script>
+        fetch('/expense_data')
+        .then(response =>response.json())
+        .then(data =>{
+            const ctx= document.getElementById('expensePie').getContext('2d')
+
+            new Chart(ctx,{
+                type: 'pie',
+                data:{
+                    labels:data.labels,
+                    datasets:[{
+                        data: data.values,
+                        backgroundColor: [
+                "#ff6384", "#36a2eb", "#ffce56",
+                "#4bc0c0", "#9966ff", "#ff9f40"
+              ]
+
+                    }]
+                },
+                options:{
+                    responsive: false,
+                    plugins: {
+                         legend: { position: "bottom" },
+                           title: { display: true, text: "Expenses by Category" }
+                    }
+                }
+
+            });
+        });
+    </script>
+
+
+
+
+
+
+<div class="bar_graph">
+<h2>Spending Trends Over Time</h2>
+<canvas id="summaryBar"></canvas>
+<script>
+fetch('/summary_data')
+.then(response => response.json())
+.then(data => {
+    const ctx = document.getElementById('summaryBar').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Amount (Rs)',
+                data: data.values,
+                backgroundColor: [
+                    'green', // Income
+                    'red',   // Expense
+                    'blue'   // Net Saving
+                ]
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Income vs Expense vs Net Saving' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true  // All bars start from 0
+                }
+            }
+        }
+    });
+})
+.catch(error => console.error('Error fetching summary data:', error));
+</script>
+
+
+</div>
+     
+
+
+
+</div>
+{% endblock %}

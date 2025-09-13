@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+     <div class="container">
+    <h2>Add transaction </h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+  <form action="{{url_for('transaction_bp.transaction')}}",method='POST'>
+    <button class="back-btn" type="submit" >back</button>
+</form>
+
+ 
+    <form method="POST" action="{{url_for('transaction_bp.add_transaction')}}">
+        {{form.hidden_tag()}}
+
+        <div class="form-group">
+            {{ form.amount.label }} <br>
+            {{ form.amount(class="form-control") }}
+        </div>
+        <br>
+
+          <div class="form-group">
+            {{ form.category.label }} <br>
+            {{ form.category(class="form-control") }}
+        </div>
+        <br>
+        
+
+        <div class="form-group">
+            {{ form.date.label }} <br>
+            {{ form.date(class="form-control") }}
+        </div>
+        <br>
+
+
+        <div class="form-group">
+            {{ form.description.label }} <br>
+            {{ form.description(class="form-control") }}
+        </div>
+        <br>
+
+
+
+        <label>Transaction Type</label>
+         <div class="radio-group">
+            {% for subfiled in form.type %}
+           <label> {{subfiled()}}{{subfiled.label.text}}</label>
+            {% endfor %}
+         </div>
+
+
+         {{form.submit(class='btn')}}
+        
+    </form>
+</div>
+</body>
+    </html>
+   
