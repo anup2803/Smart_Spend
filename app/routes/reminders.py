@@ -8,7 +8,7 @@ from app.models import User
 from apscheduler.jobstores.base import JobLookupError
 
 
-
+#blueprint for the reminders
 reminders_bp=Blueprint('reminders_bp',__name__)
 
 
@@ -17,12 +17,11 @@ reminders_bp=Blueprint('reminders_bp',__name__)
 #reminders routes
 @reminders_bp.route('/reminders',methods=['GET','POST'])
 def reminders():
+ #Only accessible if logged in.
  if 'user_id' not in session:
   flash('Please login first','danger')
   return redirect(url_for('auth_bp.login'))
  
-
-
 
  user_id=session.get('user_id')
  user = User.query.get(user_id)
@@ -34,6 +33,7 @@ def reminders():
  form = RemindersForm()
  if form.validate_on_submit():
     try:  
+      # Collect reminder form data
       reminder_type=form.reminder_type.data
       category=form.category.data
       due_date=form.due_date.data
@@ -52,7 +52,7 @@ def reminders():
         return redirect(url_for('reminders_bp.reminders'))
       
       
-      
+      # Create and save new reminder
       new_reminder=Reminder(reminder_type=reminder_type,category=category,due_date=due_date,time=time,user_id=user_id,amount=amount)
       
 
@@ -80,7 +80,7 @@ def reminders():
         args=[current_app._get_current_object(),new_reminder.id]
       )
       
-      flash(f"Reminder set successfully!✅ Email sent to {user.email} at {reminder_datetime}.", "success")
+      flash(f"Reminder set successfully! Email sent to {user.email} at {reminder_datetime}.", "success")
       return redirect(url_for('reminders_bp.reminders'))
     
 
@@ -101,6 +101,8 @@ def reminders():
 
 
 #functions email sender
+#Helper function (called by APScheduler) to send reminder emails.
+
 
 def send_reminder_email(app,reminder_id):
   with app.app_context():

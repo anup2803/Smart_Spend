@@ -13,6 +13,7 @@ monthly_bp=Blueprint('monthly_bp',__name__)
 #monthly route 
 @monthly_bp.route('/monthly', methods=['GET', 'POST'])
 def monthly():
+    # only login users can access
     if 'user_id' not in session:
         flash('Please login first','danger')
         return redirect(url_for('auth_bp.login'))
@@ -23,7 +24,8 @@ def monthly():
     if form.validate_on_submit():
         category = form.category.data
         amount = form.amount.data
-
+        
+        # Check if budget for this category already exists
         existing = Budget.query.filter_by(user_id=user_id, category=category).first()
         if existing:
             existing.amount = amount
@@ -53,6 +55,9 @@ def monthly():
             func.extract('year', Transaction.date) == datetime.now().year
          ).scalar() or 0
 
+
+
+        #append to the budget_data list and render to frontend 
          budget_data.append({
              "category": b.category,
             "budget": b.amount,

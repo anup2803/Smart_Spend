@@ -2,6 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateField, RadioField,TimeField,SelectField,FloatField
 from wtforms.validators import DataRequired, Email, EqualTo, Length,NumberRange
 
+
+#Form for new user registration
 class Registerform(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
@@ -11,23 +13,24 @@ class Registerform(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
-
+#Form for login
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
-
+#form for rest request password reset link (via email)
 class ResetRequestForm(FlaskForm):
     email=StringField('Email',validators=[DataRequired(),Email()])
     submit=SubmitField('Send Rest Link')
 
-
+#form for reset password after email verification
 class ResetPasswordForm(FlaskForm):
     password=PasswordField('Password',validators=[DataRequired(),Length(min=8)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit=SubmitField('Update password')
 
+#form for add/edit income and expenses
 class TransactionForm(FlaskForm):
     amount = StringField('Amount', validators=[DataRequired()])
     category = SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other')],validators=[DataRequired()])
@@ -37,7 +40,7 @@ class TransactionForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-
+#form for set monthly budget for each category
 class BudgetForm(FlaskForm):
     category = SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other')],validators=[DataRequired()])
     amount = FloatField('Amount', validators=[DataRequired(), NumberRange(min=0)])
@@ -46,7 +49,7 @@ class BudgetForm(FlaskForm):
 
 
 
-
+#form for set payable/receivable reminders
 class RemindersForm(FlaskForm):
     reminder_type=SelectField('Reminder_type',choices=[('Payable','payable'),('Recivedable','recivedable')],validators=[DataRequired()])
     category=SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other')],validators=[DataRequired()])
@@ -56,14 +59,14 @@ class RemindersForm(FlaskForm):
     submit=SubmitField('Set Reminders')
 
 
-
+#form for update profile info
 class UpdateprofileForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Update Profile')
 
-
+#form for change account password
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('Old Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired(), Length(min=8)])

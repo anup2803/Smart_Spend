@@ -9,7 +9,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 
 
-
+#blueprint for the reports
 report_bp=Blueprint('report_bp',__name__)
 
 
@@ -62,6 +62,7 @@ def report_analysis():
 #export pdf of transactions
 @report_bp.route('/export_pdf')
 def export_pdf():
+    #only login user can access and export all user transactions as pdf file .
     if 'user_id' not in session:
         flash("Please login first","danger")
         return  redirect(url_for('auth_bp.login'))
@@ -95,7 +96,7 @@ def export_pdf():
                 t.date.strftime('%Y-%m-%d')
 
             ])
-
+         # Table style
         table=Table(data)
         table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), colors.grey),
@@ -109,17 +110,12 @@ def export_pdf():
 
         doc.build([table])
 
-
+        # Send as response
         pdf=buffer.getvalue()
         buffer.close()
-
-
-
         response= make_response(pdf)
         response.headers['Content-Type'] = 'application/pdf'
         response.headers['Content-Disposition'] = 'attachment; filename=transactions.pdf'
-
-
         return response
     
 
@@ -132,6 +128,7 @@ def export_pdf():
 #download csv 
 @report_bp.route('/download_csv')
 def download_csv():
+    #Export all user transactions as CSV file.
     if 'user_id' not in session:
         flash("Please login first","danger")
         return redirect(url_for('auth_bp.login'))
@@ -171,8 +168,6 @@ def download_csv():
      response=make_response(output.getvalue())
      response.headers['Content-Disposition'] = 'attachment; filename=transactions.csv'
      response.headers['Content-Type'] = 'text/csv'
-
-
      return response
 
 
@@ -190,10 +185,8 @@ def expense_data():
         return jsonify({'error','Pleases Login First'}),403
         
     user_id=session.get('user_id')
-
     results=db.session.query(Transaction.category,func.sum(Transaction.amount)).filter_by(user_id=user_id,type='expense').group_by(Transaction.category).all()
-
-
+    
     #convert json format to chart.js
     data={
         "labels":[r[0] for r in results],

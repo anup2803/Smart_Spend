@@ -12,7 +12,7 @@ auth_bp = Blueprint('auth_bp', __name__)
 
 
 
-
+#Index route
 @auth_bp.route('/')
 def index():
     #Redirect logged-in users to the dashboard 
@@ -26,12 +26,16 @@ def index():
 
 #email verifications helper
 def generate_email_token(user_data, expires_sec=3600):
+    #generate a secure token for email verification
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return s.dumps(user_data)
 
 
 
 def verify_email_token(token, max_age=3600):
+    
+    #verify the email verification token.
+    #  returns user data if valid  or returns None if token is invalid/expired
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     try:
         user_data = s.loads(token, max_age=max_age)
@@ -84,7 +88,7 @@ def register():
 
 
             #generating email verification token
-            token=generate_reset_token(user_data)
+            token=generate_email_token(user_data)
             verify_url=url_for('auth_bp.verify_email', token=token,_external=True)
 
 
@@ -183,11 +187,13 @@ def login():
 
 #password reset helper
 def generate_reset_token(user_id,expires_sec=3600):
+    #generate a token for password reset.
     s=URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return s.dumps(user_id)
 
 
 def verify_reset_token(token,max_age=3600):
+    #verify a password reset token and return user_id if valid.
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     try:
         user_id=s.loads(token,max_age=max_age)

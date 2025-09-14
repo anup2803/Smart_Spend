@@ -5,21 +5,25 @@ from app import db
 from app.forms import TransactionForm
 from datetime import datetime
 
+# Blueprint for all transaction routes
 transaction_bp=Blueprint('transaction_bp',__name__)
 
 #transcations route
 @transaction_bp.route('/Transaction')
 def transaction():
+    # Only logged-in users can access
     if 'user_id' not in session:
         flash('Please Login first','danger')
         return redirect(url_for('auth_bp.login'))
     
 
     user_id=session['user_id']
+
+    # Fetch all user transactions
     transaction=Transaction.query.filter_by(user_id=user_id).all()
 
 
-    #recent transaction
+    #recent transaction of recent transactioons 
     recent_trans = Transaction.query.filter_by(user_id=user_id).order_by(desc(Transaction.date)).limit(5).all()
 
     return render_template('transaction.html',transaction=transaction,recent_trans=recent_trans)
@@ -48,11 +52,11 @@ def add_transaction():
             date=form.date.data
             T_type=form.type.data
 
-            # Check budget only for expenses
+            # check budget only for expenses
             if T_type=='expense':
                 budget=Budget.query.filter_by(user_id=user_id,category=category).first()
                 if budget:
-                    # Sum all expenses for this month and category
+                    # calculate total spent in this category for the same month
                     total_used=db.session.query(func.sum(Transaction.amount)).filter(
                         Transaction.user_id==user_id,
                         Transaction.category==category,
@@ -60,11 +64,14 @@ def add_transaction():
                         func.MONTH(Transaction.date) == date.month,
                         func.YEAR(Transaction.date) == date.year
                     ).scalar() or 0
-
+                     
+                    # if expense exceeds budget → prevent saving
                     if total_used +amount >budget.amount:
                         flash(f"⚠️ Cannot add expense! It exceeds your monthly budget of {budget.amount} for {category}.", 'danger')
                         return redirect(url_for('transaction_bp.add_transaction'))  
+            
 
+            #save new transactions
             new_transaction=Transaction(user_id=user_id,amount=amount,category=category,description=description,date=date,type=T_type)
             db.session.add(new_transaction)
             db.session.commit()
@@ -89,7 +96,7 @@ def edit_transaction(id):
         flash('Please login first', 'danger')
         return redirect(url_for('auth_bp.login'))
 
-    # Get transaction regardless of type
+    # fetch transactions by ID
     transaction = Transaction.query.filter_by(id=id, user_id=session['user_id']).first()
     if not transaction:
         flash('Transaction not found', 'danger')
@@ -100,6 +107,7 @@ def edit_transaction(id):
 
     if form.validate_on_submit():
         try:
+            # Update transaction fields
             transaction.amount = float(form.amount.data)
             transaction.category = form.category.data
             transaction.date = form.date.data
@@ -134,11 +142,13 @@ def delete_transaction(id):
         return redirect(url_for('auth_bp.login'))
 
     try:
+        # fetch transactions by ID
         transaction = Transaction.query.filter_by(id=id, user_id=session['user_id']).first()
         if not transaction:
             flash('Transaction not found', 'danger')
             return redirect(url_for('transaction_bp.transaction'))
-
+        
+        # delete transaction
         db.session.delete(transaction)
         db.session.commit()
         flash(f'{transaction.type.capitalize()} deleted successfully!', 'success')

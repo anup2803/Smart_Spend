@@ -10,7 +10,7 @@ class User(db.Model):
     email = db.Column(db.String(200), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
     is_verified=db.Column(db.Boolean, default=False)  #use to verify the user confirm their email ?
-    created_at=db.Column(db.DateTime,default=db.func.now())
+    created_at=db.Column(db.DateTime,default=db.func.now()) # Auto timestamp    
 
 
 class Transaction(db.Model):
@@ -28,8 +28,8 @@ class Budget(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('register.id'), nullable=False)
     category = db.Column(db.String(100), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    amount = db.Column(db.Float, nullable=False) # Maximum allowed per month
+    created_at = db.Column(db.DateTime, default=datetime.utcnow) # When the budget was set
 
 
 
@@ -37,11 +37,11 @@ class Budget(db.Model):
 
 class Reminder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    reminder_type = db.Column(db.String(50), nullable=False)
+    reminder_type = db.Column(db.String(50), nullable=False)  # Payable or Receivable
     category = db.Column(db.String(50), nullable=False)
     due_date = db.Column(db.Date, nullable=False)
     time = db.Column(db.Time, nullable=False)
     amount=db.Column(db.Integer,nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('register.id'), nullable=False)
-    notified = db.Column(db.Boolean, default=False)
+    notified = db.Column(db.Boolean, default=False)    # Email notification sent status
 
