@@ -17,7 +17,7 @@
     <h2 class="register-title">Sign up</h2>
     <p class="subtitle">Create a new account with Smart Spent</p>
 
-    <form method="post" class="register-form">
+    <form method="post" action="{{ url_for('auth_bp.register') }}" class="register-form">
       <div class="flash-message">
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}

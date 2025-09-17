@@ -19,7 +19,7 @@
         <h1 class="login-title">Welcome Back</h1>
         <p class="subtitle">Sign in to your Smart Spent account</p>
 
-        <form method="POST" class="login-form">
+        <form method="POST" action="{{ url_for('auth_bp.login') }}" class="login-form">
             <div class="flash-message">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                   {% if messages %}
