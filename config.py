@@ -28,5 +28,5 @@ class Config:
    
     # Flask app URL settings
 
-    # SERVER_NAME = 'smart-spend-1.onrender.com'
-    # PREFERRED_URL_SCHEME = 'https'
+    SERVER_NAME = 'smart-spend-1.onrender.com'
+    PREFERRED_URL_SCHEME = 'https'
