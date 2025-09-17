@@ -1,0 +1,62 @@
+/* Flash Messages */
+.flash-message {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.flash {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 500;
+  animation: fadein 0.5s, fadeout 0.5s 4s;
+}
+
+.flash-success { background-color: #4CAF50; }
+.flash-danger  { background-color: #f44336; }
+.flash-warning { background-color: #ff9800; }
+.flash-info    { background-color: #2196F3; }
+
+@keyframes fadein { from {opacity: 0;} to {opacity: 1;} }
+@keyframes fadeout { from {opacity: 1;} to {opacity: 0;} }
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.error-list {
+  margin-top: 5px;
+  color: #f44336;
+  font-size: 13px;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 10px;
+  background: #2196F3;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+  background: #1976D2;
+}

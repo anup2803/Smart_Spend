@@ -1,8 +1,9 @@
 from flask import Flask,redirect,url_for,session,flash,render_template,jsonify,Blueprint
-from app.models import Transaction
+from app.models import Transaction,Budget,User
 from sqlalchemy import func,desc,extract
 from app import db
 from datetime import datetime
+
 
 # blueprint for dashboard routes
 dashboard_bp = Blueprint('dashboard_bp', __name__)
@@ -18,6 +19,11 @@ def dashboard():
 
     try:
      user_id=session['user_id']
+     summary_data=[]
+     
+     budget=Budget.query.filter_by(user_id=user_id).all()
+     user = User.query.filter_by(id=user_id).first()
+
 
     #total income 
      Total_Income = db.session.query(func.sum(Transaction.amount)).filter_by(user_id=user_id, type='income').scalar()
@@ -25,10 +31,6 @@ def dashboard():
    #total expense
      Total_expense=db.session.query(func.sum(Transaction.amount)).filter_by(user_id=user_id,type='expense').scalar()
     
-  #remaing balance never neagtive
-     reamaing_balance=0
-     if Total_Income is not None:
-      reamaing_balance=max(Total_Income-(Total_expense or 0), 0)
 
 
 
@@ -36,8 +38,49 @@ def dashboard():
      recent_trans = Transaction.query.filter_by(user_id=user_id).order_by(desc(Transaction.date)).limit(5).all()
 
 
+
+
+     for b in budget:
+        category=b.category
+        total_budget=b.amount
+        
+
+        # Expenses for this specific category
+        total_expense=db.session.query(func.sum(Transaction.amount)).filter_by(user_id=user_id,type='expense',category=category).scalar() or 0
+        
+
+        # Remaining balance and percentage
+        remaining_balance = total_budget - total_expense
+
+        # Percentage calculation (avoid division by zero)
+        percentage = round((total_expense / total_budget) * 100, 2) if total_budget else 0
+        
+
+        if percentage < 50:
+            color_class = "progress-green"
+        elif percentage < 80:
+            color_class = "progress-orange"
+        else:
+            color_class = "progress-red"
+
+
+            
+
+        
+        summary_data.append({
+           "category": category,
+            "total_budget": total_budget,
+            "total_expense": total_expense,
+            "remaining": remaining_balance,
+            "percentage": percentage,
+            "color_class": color_class
+             })
+        
+
+        summary_data = summary_data[:2]
+     
    
-     return render_template('dashboard.html',Total_Income=Total_Income,Total_expense=Total_expense,reamaing_balance=reamaing_balance,recent_trans=recent_trans)
+     return render_template('dashboard.html',user=user,Total_Income=Total_Income,Total_expense=Total_expense,recent_trans=recent_trans,summaries=summary_data)
 
     except Exception as e:
         flash(f'Error Occur{e}','danger')
@@ -84,4 +127,6 @@ def data():
                      'income': income_data})
     except Exception as e:
         return jsonify({'error':str(e)}),500
+
+
 

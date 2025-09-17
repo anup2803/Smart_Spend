@@ -1,62 +1,68 @@
-{%extends 'master.html' %}
+{% extends 'master.html' %}
 {% block title %}Transactions - Smart Spend{% endblock %}
- {%block content%}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/transaction.css') }}">
+{% endblock %}
+
+{% block content %}
+
+  <div class="topbar">
+    <div class="left">
+        <span class="menu-icon">☰</span>
+        <h3>Transactions</h3>
+    </div>
+     <div class="profile">
+     <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
+       <div class="dropdown" id="profileDropdown">
+        <p><strong>Username:{{user.username}}</strong></p>
+        <p><strong>{{user.email}}</strong></p>
+        <a href="{{url_for('settings_bp.settings')}}">Settings</a>
+        <a href="{{url_for('auth_bp.logout')}}">Logout</a>
+       </div>
+     </div>
+  </div>
 
 
-    <div class="sidebar">
-        <h2>Samrt Spend</h2>
-
-
+<div class="transaction-container">
     <!-- Add Transaction -->
-    <div >
+    <div class="add_transaction">
         <a href="{{ url_for('transaction_bp.add_transaction') }}">Add New Transaction</a><br> 
     </div>
 
-
-
-
-
-
-<div>
-{% if recent_trans %}
-
-<h2>Recent Transactions</h2>
-
-<table border="1">
-    <tr>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Category</th>
-        <th>Amount</th>
-        <th>Modify</th>
-    </tr>
-    
-    {% for t in recent_trans %}
-    <tr>S
-        <td>{{ t.date }}</td>
-        <td>{{ t.type }}</td>
-        <td>{{ t.category }}</td>
-        <td>{{ t.amount }}</td>
-        <td>
-            <form action="{{url_for('transaction_bp.edit_transaction', id=t.id)}}" method="post" style="display: inline;">
-            <button class="btn btn-danger" type="submit">Edit</button>
-            </form>
-            
-            <form action="{{url_for('transaction_bp.delete_transaction', id=t.id)}}" method="post" style="display: inline;">
-            <button class="btn btn-danger" type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
-
-    {% else %}
-    <tr>
-        <td colspan="4">No recent transactions found</td>
-    </tr>
-</table>
-{% endif %}
+    <!-- Table -->
+    <div class="table">
+        {% if recent_trans %}
+            <h2>Recent Transactions</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Modify</th>
+                </tr>
+                {% for t in recent_trans %}
+                <tr>
+                    <td>{{ t.date }}</td>
+                    <td>{{ t.type }}</td>
+                    <td>{{ t.category }}</td>
+                    <td>{{ t.amount }}</td>
+                    <td>
+                        <form action="{{ url_for('transaction_bp.edit_transaction', id=t.id) }}" method="post" style="display: inline;">
+                            <button class="btn btn-danger" type="submit">Edit</button>
+                        </form>
+                        <form action="{{ url_for('transaction_bp.delete_transaction', id=t.id) }}" method="post" style="display: inline;">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        {% else %}
+            <p>No recent transactions found</p>
+        {% endif %}
+            </table>
     </div>
-
-
-
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}

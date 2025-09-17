@@ -21,6 +21,25 @@ def index():
     #if not then return to index
     return render_template('index.html')
 
+#terms
+@auth_bp.route("/terms")
+def terms():
+    return render_template("terms.html")
+
+#privacy
+@auth_bp.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+#compliance
+@auth_bp.route("/compliance")
+def compliance():
+    return render_template("compliance.html")
+
+#read_more
+@auth_bp.route("/read_more")
+def read_more():
+    return render_template('readmore.html')
 
 
 

@@ -1,5 +1,5 @@
 from flask import Blueprint,flash,render_template,url_for,redirect,session
-from app.models import Transaction,Budget
+from app.models import Transaction,Budget,User
 from sqlalchemy import desc,func
 from app import db
 from app.forms import TransactionForm
@@ -21,12 +21,13 @@ def transaction():
 
     # Fetch all user transactions
     transaction=Transaction.query.filter_by(user_id=user_id).all()
+    user = User.query.filter_by(id=user_id).first()
 
 
     #recent transaction of recent transactioons 
     recent_trans = Transaction.query.filter_by(user_id=user_id).order_by(desc(Transaction.date)).limit(5).all()
 
-    return render_template('transaction.html',transaction=transaction,recent_trans=recent_trans)
+    return render_template('transaction.html',transaction=transaction,recent_trans=recent_trans,user=user)
 
 
 

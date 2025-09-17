@@ -4,52 +4,322 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">Smart Spend</div>
-            <ul>
-                <li><a href="{{url_for('auth_bp.index')}}">Home</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="{{url_for('auth_bp.login')}}" class="btn">Login</a></li>
-            </ul>
-        </nav>
-    </header>
+
+<header>
+  <nav>
+    <div class="logo">
+      <a href="{{ url_for('auth_bp.index') }}" class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Smart Spend Logo">
+        <strong>Smart Spend</strong>
+      </a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="{{url_for('auth_bp.index')}}">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-btn">
+      <a href="{{url_for('auth_bp.register')}}" class="btn">Get Started</a>
+    </div>
+  </nav>
+</header>
+
 
 
     <section class="hero">
-        <h1>Empower Your Savings Journey Today</h1>
-        <p>Take control of ypur finances and save samrter with smart spend</p>
-        <a href="{{ url_for('auth_bp.register') }}" class="btn">Get Started</a>
-
-
+    <div class="container">
+     <h1>Empower Your Savings Journey Today</h1>
+     <p>Collaborating technology and services to transform spend management.</p>
+     <a href="{{ url_for('auth_bp.register') }}" class="btn">Get Started →</a>
+     </div>
     </section>
 
-    <section id="features" class="features" >
-        <h2>Features</h2>
-        <div class="feature-list">
-            <div class="feature-box">
-                <h3>Monthly Reports</h3>
-                <p>Automatically generate weekly or monthly reports with charts and summaries to monitor financial trends</p>
-            </div> 
+
+
+    <section id="features-list">
+    <div class="features-grid">
+    <div class="feature-card pink">
+      <div class="icon">📊</div>
+      <h3>Spending Analysis</h3>
+      <p>Gain insight into where your money goes. <br>
+        Smart Spend breaks down your expenses by category to reveal spending habits.</p>
+    </div>
+
+    <div class="feature-card green">
+      <div class="icon">🎯</div>
+      <h3>Savings Goals</h3>
+      <p>Set personal savings goals and track progress visually. <br>
+        Stay motivated as you watch your savings grow over time.</p>
+    </div>
+
+    <div class="feature-card yellow">
+      <div class="icon">💵</div>
+      <h3>Expense Logging</h3>
+      <p>Quickly add, edit, or delete daily expenses. <br>
+        Categorize your entries to organize your finances effectively.</p>
+    </div>
+
+    <div class="feature-card blue">
+      <div class="icon">🗓️</div>
+      <h3>Monthly Reports</h3>
+      <p>Automatically generate weekly or monthly reports with charts and summaries to monitor financial trends.</p>
+    </div>
+
+    <div class="feature-card purple">
+      <div class="icon">💽</div>
+      <h3>Data Export</h3>
+      <p>Export your data to PDF or CSV. <br>
+        Share summaries or keep records of your financial activity safely.</p>
+    </div>
+
+    <div class="feature-card orange">
+      <div class="icon">🔐</div>
+      <h3>Secure User Access</h3>
+      <p>Log in securely and manage your financial data privately. <br>
+        Your personal finance data is stored safely with encryption.</p>
+    </div>
+  </div>
+    </section>
+
+
+    <section class="how_it_works">
+     <h1>How it Works</h1>
+     <div class="how_it_work_list">
+        <img src="{{ url_for('static', filename='images/sing up boy.png') }}" alt="sing up boy" width="200">
+        <p>Sign up and 
+            create account</p>
+     </div>
+          <div class="how_it_work_list">
+        <img src="{{ url_for('static', filename='images/income and expenses.png') }}" alt="income and expenses" width="200">
+            <p>Add your income
+              and expenses</p>
+     </div>
+          <div class="how_it_work_list">
+        <img src="{{ url_for('static', filename='images/finacial_reports.png') }}" alt="finacial_reports" width="200">
+        <p>View your financial
+            reports and insights</p>
+     </div>
+     <div class="dashboard_image">
+        <img src="{{ url_for('static', filename='images/dashboard_image.png') }}" alt="dashboard_image" width="200">
+     </div>
+    </section>
+
+
+
+<section id="features">
+    <h2>Features Built to Make You Smarter With Money</h2>
+    <p>From daily tracking to insightful analytics, Smart Spend offers the tools you need to manage your money with confidence</p>
+    
+    <div class="feature-grid">
+        <div class="feature-box">
+            <img src="{{ url_for('static', filename='images/Track Daily Expenses.png') }}" alt="Track Daily Expenses">
+            <h3>Track Daily Expenses</h3>
+            <p>Log your spending in seconds, anytime, anywhere.</p>
         </div>
-        <div class="feature-list">
-            <div class="feature-box">
-                <h3>Data Export</h3>
-                <p>Export your financial data as pdf or CSV. Share summaries or keep records of ypur financial activities securely</p>
+
+        <div class="feature-box">
+            <img src="{{ url_for('static', filename='images/Visualize Spending Pattern.png') }}" alt="Visualize Spending Pattern">
+            <h3>Visualize Spending Pattern</h3>
+            <p>Use interactive pie charts and graphs to see where your money goes.</p>
+        </div>
+
+        <div class="feature-box">
+            <img src="{{ url_for('static', filename='images/Set Monthly Budgets.png') }}" alt="Set Monthly Budgets">
+            <h3>Set Monthly Budgets</h3>
+            <p>Control your spending by assigning budget limits to each category.</p>
+        </div>
+
+        <div class="feature-box">
+            <img src="{{ url_for('static', filename='images/Monitor Saving Goals.png') }}" alt="Monitor Saving Goals">
+            <h3>Monitor Saving Goals</h3>
+            <p>Create saving goals and track your progress over time with visuals.</p>
+        </div>
+
+        <div class="feature-box">
+            <img src="{{ url_for('static', filename='images/Export Reports (PDF).png') }}" alt="Export Reports">
+            <h3>Export Reports (PDF)</h3>
+            <p>Download your financial reports and transaction history for personal records or taxes.</p>
+        </div>
+
+        <div class="feature-box">
+            <img src="{{ url_for('static', filename='images/Smart Reminders.png') }}" alt="Smart Reminders">
+            <h3>Smart Reminders</h3>
+            <p>Get notified before you exceed your budget or miss a due bill.</p>
+        </div>
+
+        <div class="feature-box">
+            <img src="{{ url_for('static', filename='images/Secure Login.png') }}" alt="Secure Login">
+            <h3>Secure Login</h3>
+            <p>Secure login with email verification.</p>
+        </div>
+
+        <div class="feature-box">
+            <img src="{{ url_for('static', filename='images/Mobile Friendly UI.png') }}" alt="Mobile Friendly UI">
+            <h3>Mobile Friendly UI</h3>
+            <p>Enjoy a smooth and responsive design on any device.</p>
+        </div>
+    </div>
+</section>
+
+
+<section id="about">
+  <div class="container">
+
+    <!-- Title -->
+    <div class="about">
+      <img src="{{ url_for('static', filename='images/about.png') }}" alt="About Smart Spend logo">
+      <h2>About Smart Spend</h2>
+    </div>
+
+    <!-- Description -->
+    <div class="about_desc">
+      <p>
+        At Smart Spend, we’re on a mission to make personal finance approachable and stress-free. 
+        Founded in 2025 by a team of finance enthusiasts and tech experts, our app helps you gain 
+        control over your finances with ease and efficiency.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="about_list">
+
+      <!-- Row 1 -->
+      <div class="about_row">
+        <div class="about_box">
+          <img src="{{ url_for('static', filename='images/Our_Mission.png') }}" alt="Illustration representing our mission">
+          <h3>Our Mission</h3>
+          <p>Empower you to lead a financially healthier life</p>
+        </div>
+
+        <div class="about_box">
+          <img src="{{ url_for('static', filename='images/Our_vision.png') }}" alt="Illustration representing our vision">
+          <h3>Our Vision</h3>
+          <p>Redefine personal money management for the digital age</p>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="about_row">
+        <div class="about_box">
+          <img src="{{ url_for('static', filename='images/Our_Philosophy.png') }}" alt="Illustration representing our philosophy">
+          <h3>Our Philosophy</h3>
+          <p>Simplicity, transparency, and user-focused design</p>
+        </div>
+
+        <div class="about_box">
+          <img src="{{ url_for('static', filename='images/Core_Values.png') }}" alt="Illustration representing our core values">
+          <h3>Core Values</h3>
+          <p>Trust, security, and continuous improvement</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section id="contact">
+    <div class="contact-container">
+    <div class="contact">
+        <img src="{{ url_for('static', filename='images/Contact_Us.png') }}" alt="Contact" width="150">
+        <h2>Contact Us</h2>
+        <p>Have questions or need assistance? Get in touch with us.</p>
+    </div>
+
+    <div class="contact_container">
+
+        <!-- Contact Info -->
+        <div class="contact_info">
+            <div class="info_item">
+                <img src="{{ url_for('static', filename='images/mail.png') }}" alt="Contact_mail">
+                <h3>info@smartspend.com</h3>
+            </div>
+            <div class="info_item">
+                <img src="{{ url_for('static', filename='images/phone.png') }}" alt="Contact_phone">
+                <h3>+977 9845021942</h3>
+            </div>
+            <div class="info_item">
+                <img src="{{ url_for('static', filename='images/location.png') }}" alt="Contact_location">
+                <h3>Chitwan, Bharatpur-4</h3>
             </div>
         </div>
 
+        <!-- Contact Form -->
+        <div class="contact_form">
+            <form>
+                <h3>Get in Touch</h3>
+                <label>Name</label>
+                <input type="text" placeholder="Name" name="contact_name">
+                <label>Email</label>
+                <input type="email" placeholder="Email" name="contact_email">
+                <label>Subject</label>
+                <input type="text" placeholder="Subject" name="contact_subject">
+                <label>Message</label>
+                <textarea placeholder="Your message..." name="contact_message"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
         </div>
-        <div class="feature-list">
-            <div class="feature-box">
-                <h3>Secure User Access</h3>
-                <p>Log In securely and manage your financial data privately. Your personal finance data is stored safely with encryption</p>
-            </div>
-        </div>
+    </div>
+    </div>
+</section>
+
+
+<footer>
+  <div class="footer-container">
     
+    <div class="footer-section about">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Smart Spend Logo" class="logo">
+      <span class="brand">Smart Spend</span>
+      <p>Personal Finance<br>Application For<br>Smart Choices</p>
+      <a href="{{url_for('auth_bp.read_more')}}" class="read-more">Read More ➜</a>
+    </div>
+
+    <div class="footer-section links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="{{url_for('auth_bp.index')}}">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="{{url_for('auth_bp.login')}}">Sign In</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section contact">
+      <h3>Contact Us:</h3>
+      <p>Email: smartspend@gmail.com</p>
+      <p>Phone Number: +977 9845021942</p>
+    </div>
+
+    <div class="footer-section social">
+      <h3>Social Media:</h3>
+      <div class="social-icons">
+        <a href="#"><img src="{{ url_for('static', filename='images/Facebook_icon.png') }}" alt="Facebook" class="social-icon"></a>
+        <a href="#"><img src="{{ url_for('static', filename='images/instagram_icon.png') }}" alt="Instagram" class="social-icon"></a>
+        <a href="#"><img src="{{ url_for('static', filename='images/X_logo.png') }}" alt="X" class="social-icon"></a>
+        <a href="#"><img src="{{ url_for('static', filename='images/youtube_icon.png') }}" alt="YouTube" class="social-icon"></a>
+      </div>
+
+      <div class="footer-bottom-links">
+       <a href="{{ url_for('auth_bp.terms') }}">Terms</a>
+       <a href="{{ url_for('auth_bp.privacy') }}">Privacy</a>
+       <a href="{{ url_for('auth_bp.compliance') }}">Compliances</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-copy">
+    &copy;2025 Smart Spend. All rights reserved
+  </div>
+</footer>
+
+
+
 </body>
 </html>

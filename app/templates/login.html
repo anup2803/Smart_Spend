@@ -1,52 +1,73 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 
-
-
-<h1 class="login-title">Login</h1>
-<form method="POST" class="login-form">
-    <div class="flash-message">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="flash flash-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    </div>
-    {{ form.hidden_tag() }}
-    
-    <div class="form-group">
-        {{ form.username.label(class="form-label") }}
-        {{ form.username(class="form-input") }}
-        {% if form.username.errors %}
-            <ul class="error-list">
-                {% for error in form.username.errors %}
-                    <li class="error">{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+<div class="login-container">
+    <!-- Left Info Section -->
+    <div class="login-left">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Smart Spent Logo">
+            <h2>SMART SPENT</h2>
+        </div>
+        <h1>Welcome to Smart Spent</h1>
+        <p>where smart choices lead to real savings.</p>
+        <p>
+            Sign in to take control of your money with easy tools that help you save more every day.
+        </p>
     </div>
 
-    <div class="form-group">
-        {{ form.password.label(class="form-label") }}
-        {{ form.password(class="form-input") }}
-        {% if form.password.errors %}
-            <ul class="error-list">
-                {% for error in form.password.errors %}
-                    <li class="error">{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </div>
+    <!-- Right Form Section -->
+    <div class="login-right">
+        <h1 class="login-title">Welcome Back</h1>
+        <p class="subtitle">Sign in to your Smart Spent account</p>
 
-    <div class="form-group">
-        {{ form.submit(class="btn-submit") }}
-    </div>
-    <div>
-        <a href="{{ url_for('auth_bp.reset_password_request') }}">Forgot password?</a>
-    </div>
-</form>
+        <form method="POST" class="login-form">
+            <div class="flash-message">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+            </div>
 
-<div class="links">
-    <a href="{{ url_for('auth_bp.register') }}">Don't have an account? Register here</a><br>
-    <a href="{{url_for('auth_bp.index')}}">Back</a>
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-input") }}
+                {% if form.username.errors %}
+                    <ul class="error-list">
+                        {% for error in form.username.errors %}
+                            <li class="error">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-input") }}
+                {% if form.password.errors %}
+                    <ul class="error-list">
+                        {% for error in form.password.errors %}
+                            <li class="error">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.submit(class="btn-submit") }}
+            </div>
+
+            <div class="links">
+                <a href="{{ url_for('auth_bp.reset_password_request') }}">Forgot password?</a>
+            </div>
+        </form>
+
+        <div class="links">
+            <a href="{{ url_for('auth_bp.register') }}">Don't have an account? Register here</a><br>
+            <a href="{{ url_for('auth_bp.index') }}">Back</a>
+        </div>
+    </div>
 </div>

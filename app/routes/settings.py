@@ -14,7 +14,13 @@ def settings():
     if 'user_id' not in session:
         flash(f'Please Login first','danger')
         return redirect(url_for('auth_bp.login'))
-    return render_template('setting.html')
+    
+
+    user_id=session.get('user_id')
+
+    user = User.query.filter_by(id=user_id).first()
+    
+    return render_template('setting.html',user=user)
 
 
 

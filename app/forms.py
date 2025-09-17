@@ -33,7 +33,7 @@ class ResetPasswordForm(FlaskForm):
 #form for add/edit income and expenses
 class TransactionForm(FlaskForm):
     amount = StringField('Amount', validators=[DataRequired()])
-    category = SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other')],validators=[DataRequired()])
+    category = SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other'),('salary','Salary')],validators=[DataRequired()])
     date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
     type = RadioField('Transaction Type',choices=[('expense', 'Expense'), ('income', 'Income')],default='expense',validators=[DataRequired()])
@@ -51,8 +51,8 @@ class BudgetForm(FlaskForm):
 
 #form for set payable/receivable reminders
 class RemindersForm(FlaskForm):
-    reminder_type=SelectField('Reminder_type',choices=[('Payable','payable'),('Recivedable','recivedable')],validators=[DataRequired()])
-    category=SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other')],validators=[DataRequired()])
+    reminder_type=SelectField('Reminder_type',choices=[('payable','Payable'),('recivedable','Recivedable')],validators=[DataRequired()])
+    category=SelectField('Category', choices=[('food', 'Food'),('internet', 'Internet'),('shopping', 'Shopping'),('rent', 'Rent'),('electricity','Electricity'),('salary','Salary'),('other', 'Other')],validators=[DataRequired()])
     due_date=DateField('Due Date',format='%Y-%m-%d',validators=[DataRequired()])
     time=TimeField('Time',format='%H:%M',validators=[DataRequired()])
     amount = StringField('Amount', validators=[DataRequired()])

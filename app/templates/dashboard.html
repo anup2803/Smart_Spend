@@ -1,150 +1,114 @@
-{%extends 'master.html' %}
+{% extends 'master.html' %}
+
 {% block title %}Dashboard - Smart Spend{% endblock %}
- {%block content%}
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-     <style>
-    #myChart {
-        max-width: 300px;   /* Shrinks width */
-        max-height: 300px;  /* Shrinks height */
-    }
-</style>
-   
 
-
-   
-        <h2>Samrt Spend</h2>
-        
-
-
-
-    <!-- <div class="flash-message">
-         {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="flash flash-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %} -->
-  
-
-
-
-    <!-- </div>
-        <ul>
-            <li><a href="{{url_for('dashboard_bp.dashboard')}}">Dashboard</a></li>
-            <li><a href="{{url_for('transaction_bp.transaction')}}">Transactions</a></li>
-            <li><a href="{{url_for('monthly_bp.monthly')}}">Monthly Budget</a></li>
-            <li><a href="{{url_for('report_bp.report_analysis')}}">Reports and Analytics</a></li>
-            <li><a href="{{ url_for('reminders_bp.reminders') }}">Reminder</a></li>
-            <li><a href="{{url_for('settings_bp.settings')}}">Settings</a></li>
-            <li><a href="{{url_for('auth_bp.logout')}}">Logout</a></li>
-        </ul>
-    </div> -->
-
-    <div class="main-content">
-
-    </div>
-
-    <div class="cards">
-        <div class="card green">Total Income :<p> Rs.{{ Total_Income if Total_Income is not none else 0 }}</p> </div>
-        <div class="card red">Total Expenses : <p>Rs.{{ Total_expense if Total_expense is not none else 0 }}</p></div>
-        <div class="card blue">Remaining Balance : <p>Rs.{{ reamaing_balance }}</p>   
-    </div>
-
-
-
-
-
-
-
-
- <h2>Expenses by Category</h2>
-    <canvas id="myChart" width="300" height="300"></canvas>
-
-
-<canvas id="myChart" height="150"></canvas>
-
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
 
 
+<div class="dashboard-container">
+    <div class="topbar">
+    <div class="left">
+        <span class="menu-icon">☰</span>
+        <h3>Dashboard</h3>
+    </div>
 
 
-<script>
-fetch('/data')
-.then(res => res.json())
-.then(data => {
-    const ctx = document.getElementById('myChart').getContext('2d');
+     <div class="profile">
+     <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
+      <div class="dropdown" id="profileDropdown">
+        <p><strong>{{user.username}}</strong></p>
+        <p><strong>{{user.email}}</strong></p>
+        <a href="{{url_for('settings_bp.settings')}}">Settings</a>
+        <a href="{{url_for('auth_bp.logout')}}">Logout</a>
+       </div>
+      </div>
 
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: data.months,
-            datasets: [
-                {
-                    label: 'Expenses',
-                    data: data.expenses,
-                    borderColor: 'rgba(255, 0, 0, 0.8)',
-                    backgroundColor: 'rgba(255, 0, 0, 0.3)',
-                    fill: true,
-                    tension: 0.4  // smooth curve
-                },
-                {
-                    label: 'Income',
-                    data: data.income,
-                    borderColor: 'rgba(0, 200, 0, 0.8)',
-                    backgroundColor: 'rgba(0, 200, 0, 0.3)',
-                    fill: true,
-                    tension: 0.4
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'bottom' }
-            },
-            scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    });
-});
-</script>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="cards">
+        <div class="card green">
+            Total Income:
+            <p>Rs. {{ Total_Income if Total_Income is not none else 0 }}</p>
+        </div>
+        <div class="card red">
+            Total Expenses:
+            <p>Rs. {{ Total_expense if Total_expense is not none else 0 }}</p>
+        </div>
+        <div class="card orange">
+            Total Budgets:
+            <p>Rs. {{ summaries | sum(attribute='total_budget') }}</p>
+        </div>
+        <div class="card blue">
+            Remaining Balance:
+            <p>Rs. {{ summaries | sum(attribute='remaining') }}</p>
+        </div>
+    </div>
+
+<div class="dashboard-overview">
+
+    <!-- Chart -->
+    <div class="Expenses_Overview">
+        <h2>Expenses Overview</h2>
+        <canvas id="myChart"></canvas>
+    </div>
 
 
-
-
-
+    <!-- Category Summary Cards -->
+    <div class="budget-summary">
+        <h2>Budget Summary</h2>
+        {% for s in summaries %}
+        <div class="summary-card">
+            <h3>{{ s.category }}</h3>
+            <div class="progress-container">
+                 <div class="progress-bar {{ s.color_class }}"style="width: {{ s.percentage }}%;" >
+                    {{ s.percentage }}%
+                </div>
+            </div>
+            <div class="summary-info">
+                <p><strong>Budget:</strong> {{ s.total_budget }}</p>
+                <p><strong>Spent:</strong> {{ s.total_expense }}</p>
+                <p><strong>Remaining:</strong> {{ s.remaining }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+    
 
 {% if recent_trans %}
-<h2>Recent Transactions</h2>
-<table border="1">
-    <tr>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Category</th>
-        <th>Amount</th>
-    </tr>
-    
-    {% for t in recent_trans %}
-    <tr>
-        <td>{{ t.date }}</td>
-        <td>{{ t.type }}</td>
-        <td>{{ t.category }}</td>
-        <td>{{ t.amount }}</td>
-    </tr>
-    {% endfor %}
-
-    {% else %}
-    <tr>
-        <td colspan="4">No recent transactions found</td>
-    </tr>
-</table>
+<div class="recent-transactions">
+    <h2>Recent Transactions</h2>
+    <table class="transactions-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in recent_trans %}
+            <tr>
+                <td>{{ t.date }}</td>
+                <td>{{ t.type }}</td>
+                <td>{{ t.category }}</td>
+                <td>{{ t.amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p>No recent transactions found</p>
 {% endif %}
+</div>
 
-
-{% endblock  %}
-
-    
-</body>
-</html>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}

@@ -1,24 +1,38 @@
-{%extends 'master.html' %}
+{% extends 'master.html' %}
 {% block title %}Settings - Smart Spend{% endblock %}
- {%block content%}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/setting.css') }}">
+{% endblock %}
 
-
-
-    <div class="container">
-        <h3>profile</h3>
-        <a href="{{ url_for('settings_bp.edit_informations') }}">Edit your account information</a>><br>
-
-
-        <h3>Perferences</h3>
-        <label>Light mode</label>
-
-
-        <h3>Security</h3>
-        <a href="{{ url_for('settings_bp.change_password') }}">Change Password</a>
+{% block content %}
+  <div class="topbar">
+    <div class="left">
+        <span class="menu-icon">☰</span>
+        <h3>Settings</h3>
     </div>
+     <div class="profile">
+     <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
+       <div class="dropdown" id="profileDropdown">
+        <p><strong>{{user.username}}</strong></p>
+        <p><strong>{{user.email}}</strong></p>
+        <a href="{{url_for('settings_bp.settings')}}">Settings</a>
+        <a href="{{url_for('auth_bp.logout')}}">Logout</a>
+       </div>
+     </div>
+  </div>
 
+<main class="settings-container">
+  <section class="settings-section">
+    <h3>Profile</h3>
+    <a href="{{ url_for('settings_bp.edit_informations') }}">Edit your account information</a>
+  </section>
 
+  <section class="settings-section">
+    <h3>Security</h3>
+    <a href="{{ url_for('settings_bp.change_password') }}">Change Password</a>
+  </section>
+</main>
 
-
-{%  endblock %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}

@@ -3,44 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Transaction</title>
+    <title>Edit Reminder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_reminders.css') }}">
 </head>
 <body>
-        <h2>Edit Reminders </h2>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="flash flash-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-      
-        <form method="POST">
+
+<div class="form-container">
+    <h2>Edit Reminder</h2>
+
+    <!-- Flash Messages -->
+    <div class="flash-message">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Edit Form -->
+    <form method="POST">
         {{ form.hidden_tag() }}
 
-         <label for="reminder_type">Type:</label><br>
-        {{ form.reminder_type() }}<br><br>
+        <div class="form-group">
+            {{ form.reminder_type.label(class="form-label") }}
+            {{ form.reminder_type(class="form-input") }}
+        </div>
 
-        <label for="category">Category:</label><br>
-        {{ form.category(size=32) }}<br><br>
+        <div class="form-group">
+            {{ form.category.label(class="form-label") }}
+            {{ form.category(class="form-input") }}
+        </div>
 
-        <label for="due_date">Due Date:</label><br>
-        {{ form.due_date() }}<br><br>
+        <div class="form-group">
+            {{ form.due_date.label(class="form-label") }}
+            {{ form.due_date(class="form-input") }}
+        </div>
 
-        <label for="time">Time:</label><br>
-        {{ form.time() }}<br><br>
+        <div class="form-group">
+            {{ form.time.label(class="form-label") }}
+            {{ form.time(class="form-input") }}
+        </div>
 
-        <label for="amount">Amount:</label><br>
-        {{ form.amount(size=32) }}<br><br>
+        <div class="form-group">
+            {{ form.amount.label(class="form-label") }}
+            {{ form.amount(class="form-input") }}
+        </div>
 
-        <button type="submit">{{ form.submit.label.text }}</button>
+        <div class="form-group">
+            {{ form.submit(class="btn-submit") }}
+        </div>
     </form>
 
-    <br>
-    <a href="{{ url_for('reminders_bp.reminders') }}">⬅ Back to Reminders</a>
-</body>
-</html>
+    <!-- Back Link -->
+    <a href="{{ url_for('reminders_bp.reminders') }}" class="back-link">⬅ Back to Reminders</a>
+</div>
 
-    
 </body>
 </html>

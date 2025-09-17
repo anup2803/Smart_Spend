@@ -1,0 +1,141 @@
+/* Layout */
+.register-container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%); /* same as index hero */
+  font-family: Arial, sans-serif;
+}
+
+/* Left Side Info */
+.register-left {
+  flex: 1;
+  background: url("../images/money-bg.jpg") no-repeat center center/cover;
+  color: #1f2a37;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.register-left h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.register-left p {
+  font-size: 1.1rem;
+  margin: 8px 0;
+  color: #374151;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Right Side Form */
+.register-right {
+  flex: 1;
+  background: #ffffff;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid rgba(0,0,0,0.1);
+  box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+  border-radius: 15px 0 0 15px;
+}
+
+/* Form Styling */
+.register-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1f2a37;
+}
+
+.subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #059669;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(5,150,105,0.2);
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* Button */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: #059669;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+  background: #047857;
+}
+
+/* Links */
+.login-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-link a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .register-container {
+    flex-direction: column;
+  }
+  .register-left, .register-right {
+    flex: none;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+  }
+}
+
+

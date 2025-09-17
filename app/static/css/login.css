@@ -1,0 +1,203 @@
+/* Layout */
+.login-container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
+  font-family: Arial, sans-serif;
+}
+
+/* Left Side Info */
+.login-left {
+  flex: 1;
+  background: url("../images/money-bg.jpg") no-repeat center center/cover;
+  color: #1f2a37;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-left h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.login-left p {
+  font-size: 1.1rem;
+  margin: 8px 0;
+  color: #374151;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Right Side Form */
+.login-right {
+  flex: 1;
+  background: #ffffff;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid rgba(0,0,0,0.1);
+  box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+  border-radius: 15px 0 0 15px;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1f2a37;
+}
+
+.subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #059669;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(5,150,105,0.2);
+}
+
+.error-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 5px;
+}
+
+.error {
+  font-size: 0.85rem;
+  color: red;
+}
+
+/* Flash Messages */
+.flash-message {
+  margin-bottom: 15px;
+}
+
+.flash {
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.flash-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.flash-error {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Button */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: #059669;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+  background: #047857;
+}
+
+/* Links */
+.links {
+  text-align: center;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.links a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.links a:hover {
+  text-decoration: underline;
+  color: #0d47a1;
+}
+
+/* Special styling for Forgot password & Register */
+.links a:first-child {
+  color: #000000;
+}
+
+.links a:nth-child(2) {
+  background-color: #059669;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 25px;
+  display: inline-block;
+}
+
+.links a:nth-child(2):hover {
+  background-color: #047857;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .login-left, .login-right {
+    flex: none;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .login-right {
+    border-left: none;
+  }
+}

@@ -1,13 +1,37 @@
-{%extends 'master.html' %}
+{% extends 'master.html' %}
 {% block title %}Reminders - Smart Spend{% endblock %}
- {%block content%}
 
-    <div class="reminder-container">
-        <h2 class="title">Smart Remainders</h2>
-        <p class="subtitle"> Never miss a due bill, overspend, or forget your goal again. Set alerts that help keep your financial on track. </p>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reminders.css') }}">
+{% endblock %}
+
+{% block content %}
+
+  <div class="topbar">
+    <div class="left">
+        <span class="menu-icon">☰</span>
+        <h3>Reminders</h3>
     </div>
+     <div class="profile">
+     <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
+       <div class="dropdown" id="profileDropdown">
+        <p><strong>{{user.username}}</strong></p>
+        <p><strong>{{user.email}}</strong></p>
+        <a href="{{url_for('settings_bp.settings')}}">Settings</a>
+        <a href="{{url_for('auth_bp.logout')}}">Logout</a>
+       </div>
+     </div>
+  </div>
 
-     <form method="POST" class="reminder-form">
+<div class="reminder-container">
+    <h2 class="title">Smart Reminders</h2>
+    <p class="subtitle">
+        Never miss a due bill, overspend, or forget your goal again.
+        Set alerts that help keep your finances on track.
+    </p>
+
+    <!-- Reminder Form -->
+    <form method="POST" class="reminder-form vertical-form">
         {{ form.hidden_tag() }}
 
         <div class="form-group">
@@ -35,54 +59,67 @@
             {{ form.amount(class="form-input") }}
         </div>
 
-        <div class="form-group">
+        <div class="form-group submit-group">
             {{ form.submit(class="btn-submit") }}
         </div>
     </form>
 
-    
+    <hr class="divider">
 
+    <!-- Active Reminders Header -->
+    <div class="active-reminders-header">
+        <h3>Active Reminders</h3>
+        <div class="header-actions">
+            <!-- Export Reminders -->
+            <a href="{{ url_for('reminders_bp.export_pdf') }}" class="btn-secondary">
+                Export Reminders
+            </a>
 
+            <!-- Clear All Reminders -->
+            <form action="{{ url_for('reminders_bp.clear_all') }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn-danger" onclick="return confirm('Are you sure you want to clear all reminders?');">
+                    Clear All Reminders
+                </button>
+            </form>
+        </div>
+    </div>
 
-
+    <!-- Reminders Table -->
     {% if reminders %}
-
-    <h2>All Reminders</h2>
-<table border="1">
-    <tr>
-        <th>Reminder_type</th>
-        <th>Category</th>
-        <th>Due_date</th>
-        <th>Time</th>
-        <th>Amount</th>
-    </tr>
-    
-    {% for reminder in reminders %}
-    <tr>
-        <td>{{ reminder.reminder_type }}</td>
-        <td>{{ reminder.category }}</td>
-        <td>{{ reminder.due_date }}</td>
-        <td>{{ reminder.time }}</td>
-        <td>{{ reminder.amount}}</td>
-        <td>
-            <form action="{{url_for('reminders_bp.edit_reminder', id=reminder.id)}}" method="post" style="display: inline;">
-            <button class="btn btn-danger" type="submit">Edit</button>
-            </form>
-            
-            <form action="{{url_for('reminders_bp.delete_reminder', id=reminder.id)}}" method="post" style="display: inline;">
-            <button class="btn btn-danger" type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
-
+    <table class="reminders-table">
+        <thead>
+            <tr>
+                <th>Reminder Type</th>
+                <th>Category</th>
+                <th>Due Date</th>
+                <th>Time</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reminder in reminders %}
+            <tr>
+                <td>{{ reminder.reminder_type }}</td>
+                <td>{{ reminder.category }}</td>
+                <td>{{ reminder.due_date }}</td>
+                <td>{{ reminder.time }}</td>
+                <td>{{ reminder.amount }}</td>
+                <td>
+                    <form action="{{ url_for('reminders_bp.edit_reminder', id=reminder.id) }}" method="post" style="display:inline;">
+                        <button class="btn-edit" type="submit">Edit</button>
+                    </form>
+                    <form action="{{ url_for('reminders_bp.delete_reminder', id=reminder.id) }}" method="post" style="display:inline;">
+                        <button class="btn-danger small-btn" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     {% else %}
-    <tr>
-        <td colspan="4">No reminders yet.</td>
-    </tr>
-</table>
-{% endif %}
-
-
-
+    <p>No reminders yet.</p>
+    {% endif %}
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}

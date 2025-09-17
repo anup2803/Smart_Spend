@@ -5,6 +5,11 @@ class Config:
 
 
 
+    # # Flask app domain settings
+    # SERVER_NAME = '6f21-102-45-89-34.ngrok.io'   # or 'yourdomain.com' in production
+    # PREFERRED_URL_SCHEME = 'https'
+
+
     # Flask-Mail settings
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587

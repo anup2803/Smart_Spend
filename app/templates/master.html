@@ -1,43 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Smart Spend{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Smart Spend{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/master.css') }}">
+  {% block head %}{% endblock %}
 </head>
 <body>
 
-    <!-- Flash message -->
-    <div class="flash-message">
-         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash flash-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-         {% endwith %}
-    </div>
+  <!-- Sidebar (Fixed for all pages) -->
+  <div class="sidebar">
+  <div class="logo">
+  <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Smart Spend Logo">
+  <strong>Smart Spend</strong>
+  </div>
+<ul>
+  <li><a href="{{ url_for('dashboard_bp.dashboard') }}">Dashboard</a></li>
+  <li><a href="{{ url_for('transaction_bp.transaction') }}">Transactions</a></li>
+  <li><a href="{{ url_for('monthly_bp.monthly') }}">Monthly Budget</a></li>
+  <li><a href="{{ url_for('report_bp.report_analysis') }}">Reports & Analytics</a></li>
+  <li><a href="{{ url_for('reminders_bp.reminders') }}">Reminders</a></li>
+  <li><a href="{{ url_for('settings_bp.settings') }}">Settings</a></li>
+</ul>
+</div>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        {% block nav %}
-        <h2>Smart Spend</h2>
-        <ul>
-            <li><a href="{{url_for('dashboard_bp.dashboard')}}">Dashboard</a></li>
-            <li><a href="{{url_for('transaction_bp.transaction')}}">Transactions</a></li>
-            <li><a href="{{url_for('monthly_bp.monthly')}}">Monthly Budget</a></li>
-            <li><a href="{{url_for('report_bp.report_analysis')}}">Reports & Analytics</a></li>
-            <li><a href="{{ url_for('reminders_bp.reminders') }}">Reminders</a></li>
-            <li><a href="{{url_for('settings_bp.settings')}}">Settings</a></li>
-            <li><a href="{{url_for('auth_bp.logout')}}">Logout</a></li>
-        </ul>
-        {% endblock %}
-    </div>
 
-    <!-- Main content -->
-    <div class="main-content">
-        {% block content %}{% endblock %}
-    </div>
-    
+  <!-- Main Content -->
+  <div class="main-content">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- Flash Messages -->
+  <div class="flash-message">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
 </body>
 </html>

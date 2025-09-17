@@ -1,168 +1,135 @@
+    {% extends 'master.html' %}
+    {% block title %}Report and Analytics - Smart Spend{% endblock %}
 
-{%extends 'master.html' %}
-{% block title %}Report and Analytics - Smart Spend{% endblock %}
- {%block content%}
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reports.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% endblock %}
 
+    {% block content %}
 
-<style>
-  #expensePie {
-    width: 250px ;   
-    height: 250px ;  
-    max-width: 100%;
-    max-height: 100%;
-  }
-
-  #summaryBar{
-     width: 250px ;   
-    height: 250px ;  
-    max-width: 100%;
-    max-height: 100%;
-  }
-</style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-<div class="reports-container">
-    <h2 class="title">Report and Analytics</h2>
-</div>
-
-
-
-
-<form action="{{url_for('report_bp.export_pdf')}}">
-    <button type="submit">Export PDF</button>
-</form>
-
-
-<form action="{{url_for('report_bp.download_csv')}}">
-    <button type="submit">Download CSV</button>
-</form>
-
-
-
-     <div class="cards">
-        <div class="card blue">Total Income :<p> Rs.{{ Total_Income if Total_Income is not none else 0 }}</p> </div>
-        <div class="card red">Total Expenses : <p>Rs.{{ Total_expense if Total_expense is not none else 0 }}</p></div>
-        <div class="card green">Net Saving :<p>Rs.{{ Net_income }}</p></div>
+    <div class="topbar">
+        <div class="left">
+            <span class="menu-icon">☰</span>
+            <h3>Reports</h3>
+        </div>
+        <div class="profile">
+        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
+        <div class="dropdown" id="profileDropdown">
+            <p><strong>{{user.username}}</strong></p>
+            <p><strong>{{user.email}}</strong></p>
+            <a href="{{url_for('settings_bp.settings')}}">Settings</a>
+            <a href="{{url_for('auth_bp.logout')}}">Logout</a>
+        </div>
+        </div>
     </div>
 
+    <div class="report-container">
 
 
 
+        <div class="cards">
+            <div class="card blue">Total Income: <p>Rs.{{ Total_Income if Total_Income is not none else 0 }}</p></div>
+            <div class="card red">Total Expenses: <p>Rs.{{ Total_expense if Total_expense is not none else 0 }}</p></div>
+            <div class="card green">Net Saving: <p>Rs.{{ Net_income }}</p></div>
+        </div>
 
-{% if recent_trans %}
-<table border="1">
-    <tr>
-        <th>Date</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Type</th>
-        <th>Amount</th>
-    </tr>
+
+        <div class="charts">
+            <div class="expense_charts">
+                <h2>Where Your Money Went</h2>
+                <canvas id="expensePie"></canvas>
+            </div>
+
+            <div class="bar_graph">
+                <h2>Spending Trends Over Time</h2>
+                <canvas id="summaryBar"></canvas>
+            </div>
+        </div>
+    </div>
     
-    {% for t in recent_trans %}
-    <tr>
-        <td>{{ t.date }}</td>
-        <td>{{ t.category }}</td>
-        <td>{{ t.description }}</td>
-        <td>{{ t.type }}</td>
-        <td>{{ t.amount }}</td>
-    </tr>
-    {% endfor %}
 
-    {% else %}
-    <tr>
-        <td colspan="4">No recent transactions found</td>
-    </tr>
-</table>
+
+        <div class="export-buttons">
+            <form action="{{ url_for('report_bp.export_pdf') }}">
+                <button type="submit" class="btn">Export PDF</button>
+            </form>
+            <form action="{{ url_for('report_bp.download_csv') }}">
+                <button type="submit" class="btn">Download CSV</button>
+            </form>
+        </div>
+
+
+       {% if recent_trans %}
+<div class="table-container">
+    <h3>Recent Transactions</h3>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in recent_trans %}
+            <tr>
+                <td>{{ t.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ t.category }}</td>
+                <td>{{ t.description }}</td>
+                <td>{{ t.type }}</td>
+                <td>{{ t.amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p>No recent transactions found</p>
+{% endif %}
+
+<div class="export-buttons">
+    <form action="{{ url_for('report_bp.past_monthly_budgets') }}">
+        <button type="submit" class="btn">Export PDF</button>
+    </form>
+    <form action="{{ url_for('report_bp.monthly_budgets_csv') }}">
+        <button type="submit" class="btn">Download CSV</button>
+    </form>
+</div>
+
+{% if past_budget %}
+<div class="table-container">
+    <h3>Past Monthly Budget</h3>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Budget</th>
+                <th>Spent</th>
+                <th>Remaining</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in past_budget %}
+            <tr>
+                <td>{{ t.month }} / {{ t.year }}</td>
+                <td>{{ t.category }}</td>
+                <td>{{ t.budget }}</td>
+                <td>{{ t.spent }}</td>
+                <td>{{ t.remaining }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p>No budget set for previous month.</p>
 {% endif %}
 
 
 
-
-<div class="expense_charts">
-    <h2>Where Your money went</h2>
-    <canvas id="expensePie" ></canvas>
-    <script>
-        fetch('/expense_data')
-        .then(response =>response.json())
-        .then(data =>{
-            const ctx= document.getElementById('expensePie').getContext('2d')
-
-            new Chart(ctx,{
-                type: 'pie',
-                data:{
-                    labels:data.labels,
-                    datasets:[{
-                        data: data.values,
-                        backgroundColor: [
-                "#ff6384", "#36a2eb", "#ffce56",
-                "#4bc0c0", "#9966ff", "#ff9f40"
-              ]
-
-                    }]
-                },
-                options:{
-                    responsive: false,
-                    plugins: {
-                         legend: { position: "bottom" },
-                           title: { display: true, text: "Expenses by Category" }
-                    }
-                }
-
-            });
-        });
-    </script>
-
-
-
-
-
-
-<div class="bar_graph">
-<h2>Spending Trends Over Time</h2>
-<canvas id="summaryBar"></canvas>
-<script>
-fetch('/summary_data')
-.then(response => response.json())
-.then(data => {
-    const ctx = document.getElementById('summaryBar').getContext('2d');
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: 'Amount (Rs)',
-                data: data.values,
-                backgroundColor: [
-                    'green', // Income
-                    'red',   // Expense
-                    'blue'   // Net Saving
-                ]
-            }]
-        },
-        options: {
-            responsive: false,
-            plugins: {
-                legend: { display: false },
-                title: { display: true, text: 'Income vs Expense vs Net Saving' }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true  // All bars start from 0
-                }
-            }
-        }
-    });
-})
-.catch(error => console.error('Error fetching summary data:', error));
-</script>
-
-
-</div>
-     
-
-
-
-</div>
-{% endblock %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% endblock %}

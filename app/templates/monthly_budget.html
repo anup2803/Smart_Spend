@@ -1,49 +1,99 @@
-{%extends 'master.html' %}
+{% extends 'master.html' %}
 {% block title %}Monthly Budgets - Smart Spend{% endblock %}
- {%block content%}
 
-
-<div class="monthly_budget">
-    <h2 class="title">Set your monthly Budget</h2>
-<h2>Set Budget</h2>
-
-<form method="POST">
-  {{ form.hidden_tag() }}
-
-          <div class="form-group">
-            {{ form.category.label }} <br>
-            {{ form.category(class="form-control") }}
-        </div>
-        <br>
-        
-
-       <div class="form-group">
-            {{ form.amount.label }} <br>
-            {{ form.amount(class="form-control") }}
-        </div>
-        <br>
-  <button type="submit">{{ form.submit.label.text }}</button>
-</form>
-</div>
-
-
-
-
-
-
-
-<div class="show-budget">
-<h3>Your Budgets</h3>
-<ul>
-  {% for b in budget_data %}
-  <h4>{{ b.category }}</h4>
-  <p><strong>Budget:</strong> Rs {{ b.budget }}</p>
-  <p><strong>Spent:</strong> Rs {{ b.spent }}</p>
-  <p><strong>Remaining:</strong> Rs {{ b.remaining }}</p>
-    </li>
-  {% endfor %}
-</ul>
-</div>
-
-
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/monthly_budget.css') }}">
 {% endblock %}
+
+{% block content %}
+
+
+<div class="monthly-budget">
+
+
+  <div class="topbar">
+    <div class="left">
+        <span class="menu-icon">☰</span>
+        <h3>Monthly Budgets</h3>
+    </div>
+     <div class="profile">
+     <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
+       <div class="dropdown" id="profileDropdown">
+        <p><strong>{{user.username}}</strong></p>
+        <p><strong>{{user.email}}</strong></p>
+        <a href="{{url_for('settings_bp.settings')}}">Settings</a>
+        <a href="{{url_for('auth_bp.logout')}}">Logout</a>
+       </div>
+     </div>
+  </div>
+
+
+
+
+    <!-- Budget Form -->
+    <div class="budget-form">
+        <h2>Set Your Monthly Budget</h2>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.category.label }}
+                {{ form.category(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.amount.label }}
+                {{ form.amount(class="form-control") }}
+            </div>
+            {{ form.submit(class="btn") }}
+        </form>
+    </div>
+
+
+
+
+    <!-- Show Budgets -->
+<div class="show-budget">
+    <div class="export-buttons">
+        <form action="{{ url_for('monthly_bp.current_monthly_budgets') }}">
+            <button type="submit" class="btn">Export PDF</button>
+        </form>
+    </div>
+
+    <h3>Current Monthly Budgets</h3>
+
+    {% if budget_data %}
+        <div class="budget-grid">
+            {% for b in budget_data %}
+            <div class="budget-item">
+                <p><strong>Date:</strong> {{ b.month }} / {{ b.year }}</p>
+                <p><strong>Category:</strong> {{ b.category }}</p>
+                <p><strong>Budget:</strong> Rs {{ b.budget }}</p>
+                <p><strong>Spent:</strong> Rs {{ b.spent }}</p>
+                <p><strong>Remaining:</strong> Rs {{ b.remaining }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            {% if budgets.has_prev %}
+                <a href="{{ url_for('monthly_bp.monthly', page=budgets.prev_num) }}">&laquo; Prev</a>
+            {% endif %}
+
+            <span>Page {{ budgets.page }} of {{ budgets.pages }}</span>
+
+            {% if budgets.has_next %}
+                <a href="{{ url_for('monthly_bp.monthly', page=budgets.next_num) }}">Next &raquo;</a>
+            {% endif %}
+        </div>
+
+    {% else %}
+        <p>No budgets set yet.</p>
+    {% endif %}
+</div>
+
+
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}
+
+

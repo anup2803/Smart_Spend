@@ -25,11 +25,14 @@ class Transaction(db.Model):
 
 
 class Budget(db.Model):
+    __tablename__='budget'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('register.id'), nullable=False)
-    category = db.Column(db.String(100), nullable=False)
-    amount = db.Column(db.Float, nullable=False) # Maximum allowed per month
-    created_at = db.Column(db.DateTime, default=datetime.utcnow) # When the budget was set
+    user_id = db.Column(db.Integer, db.ForeignKey('register.id'))
+    category = db.Column(db.String(50))
+    amount = db.Column(db.Float)
+    month = db.Column(db.Integer)   
+    year = db.Column(db.Integer)
+
 
 
 

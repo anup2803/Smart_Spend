@@ -1,67 +1,61 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Transaction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_transaction.css') }}">
 </head>
 <body>
-     <div class="container">
-    <h2>Add transaction </h2>
+<div class="container">
+    <h2>Add Transaction</h2>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div class="alert alert-{{ category }}">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
 
-  <form action="{{url_for('transaction_bp.transaction')}}",method='POST'>
-    <button class="back-btn" type="submit" >back</button>
-</form>
+    <!-- Back Button -->
+      <a href="{{ url_for('transaction_bp.transaction') }}" class="back-btn">Back</a>
 
- 
-    <form method="POST" action="{{url_for('transaction_bp.add_transaction')}}">
-        {{form.hidden_tag()}}
+
+    <!-- Add Transaction Form -->
+    <form method="POST" action="{{ url_for('transaction_bp.add_transaction') }}">
+        {{ form.hidden_tag() }}
 
         <div class="form-group">
-            {{ form.amount.label }} <br>
+            {{ form.amount.label }}
             {{ form.amount(class="form-control") }}
         </div>
-        <br>
 
-          <div class="form-group">
-            {{ form.category.label }} <br>
+        <div class="form-group">
+            {{ form.category.label }}
             {{ form.category(class="form-control") }}
         </div>
-        <br>
-        
 
         <div class="form-group">
-            {{ form.date.label }} <br>
+            {{ form.date.label }}
             {{ form.date(class="form-control") }}
         </div>
-        <br>
-
 
         <div class="form-group">
-            {{ form.description.label }} <br>
+            {{ form.description.label }}
             {{ form.description(class="form-control") }}
         </div>
-        <br>
-
-
 
         <label>Transaction Type</label>
-         <div class="radio-group">
-            {% for subfiled in form.type %}
-           <label> {{subfiled()}}{{subfiled.label.text}}</label>
+        <div class="radio-group">
+            {% for subfield in form.type %}
+                <label>{{ subfield() }} {{ subfield.label.text }}</label>
             {% endfor %}
-         </div>
+        </div>
 
-
-         {{form.submit(class='btn')}}
-        
+        {{ form.submit(class='btn') }}
     </form>
 </div>
 </body>
-    </html>
-   
+</html>

@@ -3,52 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>edit information</title>
+    <title>Edit Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_information.css') }}">
 </head>
 <body>
 
+<h1>Profile</h1>
 
-    <h1>Profile</h1>
-    <form action="{{url_for('settings_bp.settings')}}",method='POST'>
-        <button class="back-btn" type="submit" >back</button>
-    </form>
+<!-- Back Button -->
+<form action="{{ url_for('settings_bp.settings') }}" method="POST" style="margin-bottom: 20px;">
+    <button class="back-btn" type="submit">Back</button>
+</form>
 
-
-
-
-    <div class="flash-message">
-         {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="flash flash-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
+<!-- Flash Messages -->
+<div class="flash-message">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
     {% endwith %}
-    </div>
+</div>
 
-
+<!-- Form -->
 <div class="form-container">
     <h2>Account Settings</h2>
     <form method="POST">
         {{ form.hidden_tag() }}
 
         <div class="form-group">
-            {{ form.first_name.label }} <br>
-            {{ form.first_name(class="form-control") }}
+            {{ form.first_name.label(class="form-label") }}
+            {{ form.first_name(class="form-input") }}
         </div>
 
         <div class="form-group">
-            {{ form.last_name.label }} <br>
-            {{ form.last_name(class="form-control") }}
+            {{ form.last_name.label(class="form-label") }}
+            {{ form.last_name(class="form-input") }}
         </div>
 
         <div class="form-group">
-            {{ form.email.label }} <br>
-            {{ form.email(class="form-control") }}
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-input") }}
         </div>
 
-        {{ form.submit(class="btn btn-primary") }}
+        <div class="form-group">
+            {{ form.submit(class="btn-submit") }}
+        </div>
     </form>
 </div>
+
 </body>
 </html>
