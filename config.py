@@ -13,7 +13,8 @@ class Config:
     
     # Security
    
-    SECRET_KEY = 'super_secret_key123'  # change this for production
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'super_secret_key123')
+
 
     
     # Flask-Mail configuration
@@ -21,12 +22,12 @@ class Config:
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'smartspend94@gmail.com'
-    MAIL_PASSWORD = 'jgpt pkuf xrxb ykpt'  # replace with your actual app password
-    MAIL_DEFAULT_SENDER = 'SmartSpend <smartspend94@gmail.com>'  # must be a string
-
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME', 'smartspend94@gmail.com')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD', 'jgpt pkuf xrxb ykpt')  # App password
+    MAIL_DEFAULT_SENDER = ('SmartSpend', 'smartspend94@gmail.com')
    
     # Flask app URL settings
-
-    SERVER_NAME = 'smart-spend-1.onrender.com'
-    PREFERRED_URL_SCHEME = 'https'
+ # ⚠️ Only use SERVER_NAME in production, not during local development
+    if os.environ.get("FLASK_ENV") == "production":
+        SERVER_NAME = 'smart-spend-1.onrender.com'
+        PREFERRED_URL_SCHEME = 'https'
