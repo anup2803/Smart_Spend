@@ -1,21 +1,32 @@
 import os
 
 class Config:
-    # Fallback to local dev if DATABASE_URL not set
+   
+    # Database configuration
+    # Use DATABASE_URL from environment (Render/production) or fallback to local MySQL
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL",
         "mysql+pymysql://root:@localhost/smart_spend"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = 'super_secret_key123'
 
-    # Mail settings
+    
+    # Security
+   
+    SECRET_KEY = 'super_secret_key123'  # change this for production
+
+    
+    # Flask-Mail configuration
+    
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = 'kumalanup555@gmail.com'
-    MAIL_PASSWORD = 'your_app_password'
-    MAIL_DEFAULT_SENDER = 'kumalanup555@gmail.com'
+    MAIL_PASSWORD = 'lbhh uuad rkek ovnc'  # replace with your actual app password
+    MAIL_DEFAULT_SENDER = 'SmartSpend <kumalanup555@gmail.com>'  # must be a string
 
+   
+    # Flask app URL settings
+    
     SERVER_NAME = 'smart-spend-1.onrender.com'
     PREFERRED_URL_SCHEME = 'https'

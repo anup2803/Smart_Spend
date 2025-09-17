@@ -8,7 +8,7 @@
             <h2>SMART SPENT</h2>
         </div>
         <h1>Welcome to Smart Spent</h1>
-        <p>where smart choices lead to real savings.</p>
+        <p>Where smart choices lead to real savings.</p>
         <p>
             Sign in to take control of your money with easy tools that help you save more every day.
         </p>
@@ -20,18 +20,19 @@
         <p class="subtitle">Sign in to your Smart Spent account</p>
 
         <form method="POST" action="{{ url_for('auth_bp.login') }}" class="login-form">
-            <div class="flash-message">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                  {% if messages %}
-                    {% for category, message in messages %}
-                      <div class="flash flash-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                  {% endif %}
-                {% endwith %}
-            </div>
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
 
+            <!-- CSRF Token -->
             {{ form.hidden_tag() }}
 
+            <!-- Username Field -->
             <div class="form-group">
                 {{ form.username.label(class="form-label") }}
                 {{ form.username(class="form-input") }}
@@ -44,6 +45,7 @@
                 {% endif %}
             </div>
 
+            <!-- Password Field -->
             <div class="form-group">
                 {{ form.password.label(class="form-label") }}
                 {{ form.password(class="form-input") }}
@@ -56,10 +58,12 @@
                 {% endif %}
             </div>
 
+            <!-- Submit Button -->
             <div class="form-group">
                 {{ form.submit(class="btn-submit") }}
             </div>
 
+            <!-- Additional Links -->
             <div class="links">
                 <a href="{{ url_for('auth_bp.reset_password_request') }}">Forgot password?</a>
             </div>
