@@ -129,4 +129,3 @@ def data():
         return jsonify({'error':str(e)}),500
 
 
-

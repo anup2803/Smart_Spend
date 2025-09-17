@@ -1,3 +1,43 @@
+
+
+
+
+
+
+// for the master side bar menu
+document.addEventListener('DOMContentLoaded', function () {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuIcon = document.querySelector('.menu-icon');
+  const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+  // Toggle sidebar on ☰ click
+  menuIcon.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+  });
+
+  // Close sidebar when clicking overlay
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+  });
+
+  // Close sidebar after clicking a link (mobile)
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+  });
+});
+
+
+
+
+
+
+
 // fetch the data and show in the graph
 fetch('/data')
 .then(res => res.json())

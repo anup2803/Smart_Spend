@@ -125,17 +125,105 @@
   text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+/* Responsive for tablets and smaller screens */
+@media (max-width: 764px) {
   .register-container {
     flex-direction: column;
-  }
-  .register-left, .register-right {
-    flex: none;
     width: 100%;
-    padding: 30px;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .register-left,
+  .register-right {
+    flex: none;
+    width: 90%;
+    max-width: 90%;
+    padding: 20px;
     text-align: center;
+    border-radius: 10px;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .register-left {
+    background-size: cover;
+    background-position: center top;
+    padding-bottom: 30px;
+  }
+
+  .register-left h1 {
+    font-size: 1.6rem;
+  }
+
+  .register-left p {
+    font-size: 0.95rem;
+  }
+
+  .logo {
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .logo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .register-right {
+    padding: 25px;
+  }
+
+  .register-title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .form-input {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .btn-submit {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .login-link {
+    margin-top: 12px;
   }
 }
 
-
+/* Extra small screens < 576px */
+@media (max-width: 576px) {
+  .register-left h1 {
+    font-size: 1.5rem;
+  }
+  .register-left p {
+    font-size: 0.85rem;
+  }
+  .register-title {
+    font-size: 1.3rem;
+  }
+  .subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+  }
+  .form-input {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+  .btn-submit {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}

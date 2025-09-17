@@ -29,40 +29,39 @@
     <div class="add_transaction">
         <a href="{{ url_for('transaction_bp.add_transaction') }}">Add New Transaction</a><br> 
     </div>
-
-    <!-- Table -->
-    <div class="table">
-        {% if recent_trans %}
-            <h2>Recent Transactions</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Category</th>
-                    <th>Amount</th>
-                    <th>Modify</th>
-                </tr>
-                {% for t in recent_trans %}
-                <tr>
-                    <td>{{ t.date }}</td>
-                    <td>{{ t.type }}</td>
-                    <td>{{ t.category }}</td>
-                    <td>{{ t.amount }}</td>
-                    <td>
-                        <form action="{{ url_for('transaction_bp.edit_transaction', id=t.id) }}" method="post" style="display: inline;">
-                            <button class="btn btn-danger" type="submit">Edit</button>
-                        </form>
-                        <form action="{{ url_for('transaction_bp.delete_transaction', id=t.id) }}" method="post" style="display: inline;">
-                            <button class="btn btn-danger" type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-        {% else %}
-            <p>No recent transactions found</p>
-        {% endif %}
-            </table>
-    </div>
+<!-- Table -->
+<div class="table-wrapper">
+    {% if recent_trans %}
+        <h2>Recent Transactions</h2>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Modify</th>
+            </tr>
+            {% for t in recent_trans %}
+            <tr>
+                <td>{{ t.date }}</td>
+                <td>{{ t.type }}</td>
+                <td>{{ t.category }}</td>
+                <td>{{ t.amount }}</td>
+                <td>
+                    <form action="{{ url_for('transaction_bp.edit_transaction', id=t.id) }}" method="post" style="display: inline;">
+                        <button class="edit-btn" type="submit">Edit</button>
+                    </form>
+                    <form action="{{ url_for('transaction_bp.delete_transaction', id=t.id) }}" method="post" style="display: inline;">
+                        <button class="delete-btn" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No recent transactions found</p>
+    {% endif %}
+</div>
 </div>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}

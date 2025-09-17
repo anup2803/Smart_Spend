@@ -21,12 +21,12 @@ class Config:
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'kumalanup555@gmail.com'
-    MAIL_PASSWORD = 'lbhh uuad rkek ovnc'  # replace with your actual app password
-    MAIL_DEFAULT_SENDER = 'SmartSpend <kumalanup555@gmail.com>'  # must be a string
+    MAIL_USERNAME = 'smartspend94@gmail.com'
+    MAIL_PASSWORD = 'jgpt pkuf xrxb ykpt'  # replace with your actual app password
+    MAIL_DEFAULT_SENDER = 'SmartSpend <smartspend94@gmail.com>'  # must be a string
 
    
     # Flask app URL settings
-    
-    SERVER_NAME = 'smart-spend-1.onrender.com'
-    PREFERRED_URL_SCHEME = 'https'
+
+    # SERVER_NAME = 'smart-spend-1.onrender.com'
+    # PREFERRED_URL_SCHEME = 'https'

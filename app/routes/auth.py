@@ -79,7 +79,7 @@ def register():
         # Send verification email
         msg = Message(
             subject="Verify Your Account",
-            sender="SmartSpend <Kumalanup555@gmail.com>",
+            sender="SmartSpend <smartspend94@gmail.com>",
             recipients=[email]
         )
         msg.body = f"Welcome {first_name}, please verify your account: {verify_url}"
@@ -174,7 +174,7 @@ def reset_password_request():
 
             msg = Message(
                 subject="Password Reset Request",
-                sender="SmartSpend <Kumalanup555@gmail.com>",
+                sender="SmartSpend <smartspend94@gmail.com>",
                 recipients=[user.email]
             )
             msg.body = f"Click here to reset your password: {reset_url}"

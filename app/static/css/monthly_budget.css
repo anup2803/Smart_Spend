@@ -1,15 +1,13 @@
+/* ===== Global Styles ===== */
 body {
-  display: flex;
-  justify-content: center; /* Horizontal center */
-  align-items: center;     /* Vertical center */
-  min-height: 100vh;       /* Full viewport height */
   margin: 0;
-  background: #f5f7fa;
   font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  min-height: 100vh;
 }
 
-
-/* Topbar */
+/* ===== Topbar ===== */
 .topbar {
   position: fixed;
   top: 0;
@@ -22,19 +20,17 @@ body {
   align-items: center;
   padding: 0 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  z-index: 1000;
   border-radius: 10px;
-  margin-bottom: 20px;
+  z-index: 1000;
 }
 
-/* Topbar Left & Right */
 .topbar .left {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-
+/* ===== Header / Navigation ===== */
 header {
   display: flex;
   justify-content: space-between;
@@ -42,7 +38,6 @@ header {
   padding: 10px 30px;
   background-color: #2c3e50;
   color: white;
-  position: relative;
 }
 
 .logo {
@@ -79,7 +74,7 @@ header {
   position: absolute;
   right: 0;
   top: 50px;
-  background-color: #ffffff;
+  background-color: #fff;
   color: #2c3e50;
   width: 220px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2);
@@ -88,15 +83,14 @@ header {
   z-index: 100;
 }
 
-.dropdown p {
+.dropdown p,
+.dropdown a {
   padding: 10px 15px;
-  border-bottom: 1px solid #ddd;
   margin: 0;
 }
 
 .dropdown a {
   display: block;
-  padding: 10px 15px;
   text-decoration: none;
   color: #2c3e50;
   font-weight: 500;
@@ -108,10 +102,9 @@ header {
   color: #1a1a1a;
 }
 
-
-/* Main Monthly Budget Container */
+/* ===== Monthly Budget Container ===== */
 .monthly-budget {
-  margin: 100px auto 40px auto; /* Push down below topbar */
+  margin: 100px auto 40px auto;
   width: 95%;
   max-width: 1200px;
   background: #fff;
@@ -119,36 +112,27 @@ header {
   border-radius: 16px;
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Form and Budget side by side */
+  grid-template-columns: 1fr 1fr;
   gap: 40px;
 }
 
-/* Make it responsive for smaller screens */
-@media (max-width: 900px) {
-  .monthly-budget {
-    grid-template-columns: 1fr; /* Stack vertically */
-    padding: 20px;
-  }
-}
-
-/* Budget Form Section */
+/* ===== Budget Form ===== */
 .budget-form {
   background: #f9fafc;
   padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .budget-form h2 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 1.5rem;
-  color: #333;
+  font-weight: 500;
 }
 
 .form-group {
   margin-bottom: 15px;
-  text-align: left;
 }
 
 .form-control {
@@ -160,10 +144,10 @@ header {
   background: #fff;
 }
 
-/* Submit Button */
+/* ===== Buttons ===== */
 .btn {
   background: linear-gradient(135deg, #4CAF50, #3e8e41);
-  color: white;
+  color: #fff;
   border: none;
   padding: 12px 20px;
   border-radius: 8px;
@@ -179,39 +163,20 @@ header {
   transform: translateY(-2px);
 }
 
-/* Budget List Section */
-.show-budget {
-  background: #f9fafc;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  margin: 5px;
-}
-
-.show-budget h3 {
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.show-budget ul {
-  list-style: none;
-  padding: 0;
-}
-
+/* Export Button */
 .export-buttons {
   background: linear-gradient(135deg, #4CAF50, #3e8e41);
   color: white;
   border: none;
-  padding: 2px;
+  padding: 6px 12px; /* increased padding for better click area */
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 12px;     /* smaller font size */
+  font-size: 14px; /* default font size */
+  min-width: 80px; /* ensures minimum size */
   transition: transform 0.2s ease, background 0.3s ease;
-  float: right;        /* push to right */
-  margin-left: auto;   /* ensures alignment in flex containers */
+  float: right;
+  margin-left: auto;
 }
 
 .export-buttons:hover {
@@ -219,45 +184,40 @@ header {
   transform: translateY(-1px);
 }
 
+
+/* ===== Budget List / Items ===== */
+.show-budget {
+  background: #f9fafc;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.show-budget h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
 .budget-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
-
-.pagination {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.pagination a {
-    margin: 0 5px;
-    padding: 6px 12px;
-    background: #4CAF50;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-.pagination a:hover {
-    background: #2e7d32;
-}
-
-/* Budget Item Card */
 .budget-item {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 15px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.05);
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .budget-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
 .budget-item h4 {
@@ -269,4 +229,111 @@ header {
   margin: 5px 0;
   color: #666;
   font-size: 14px;
+}
+
+/* ===== Pagination ===== */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination a {
+  margin: 0 5px;
+  padding: 6px 12px;
+  background: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.pagination a:hover {
+  background: #2e7d32;
+}
+
+/* ===== Responsive ===== */
+
+/* Tablets */
+@media (max-width: 900px) {
+  .monthly-budget {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .budget-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+/* Small Phones */
+@media (max-width: 600px) {
+  .topbar {
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    padding: 0 10px;
+  }
+
+  .monthly-budget {
+    margin: 80px 10px 20px 10px;
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .budget-form h2, .show-budget h3 {
+    font-size: 1.25rem;
+  }
+
+  .form-control {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .btn, .export-buttons {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .budget-item {
+    padding: 15px;
+  }
+
+  .budget-item h4 {
+    font-size: 1rem;
+  }
+
+  .budget-item p {
+    font-size: 13px;
+  }
+    .export-buttons {
+    font-size: 14px; /* keep readable */
+    padding: 8px 14px; /* comfortable tap area */
+    min-width: 90px;   /* slightly wider */
+  }
+}
+
+
+/* Extra Small Phones */
+@media (max-width: 400px) {
+  .budget-form h2, .show-budget h3 {
+    font-size: 1.1rem;
+  }
+
+  .btn, .export-buttons {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .budget-item h4 {
+    font-size: 0.95rem;
+  }
+
+  .budget-item p {
+    font-size: 12px;
+  }
+    .export-buttons {
+    font-size: 13px;
+    padding: 6px 12px;
+    min-width: 80px;
+  }
 }

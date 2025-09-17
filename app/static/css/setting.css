@@ -1,6 +1,9 @@
-/* Topbar container */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: #f5f7fa;
+}
 
-/* Topbar */
 .topbar {
   position: fixed;
   top: 0;
@@ -15,15 +18,14 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   z-index: 1000;
   border-radius: 10px;
-  margin-bottom: 20px;
 }
 
-/* Topbar Left & Right */
 .topbar .left {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 header {
   display: flex;
   justify-content: space-between;
@@ -97,8 +99,6 @@ header {
   color: #1a1a1a;
 }
 
-
-
 .settings-container {
   margin-top: 80px;
   padding: 20px;
@@ -112,7 +112,7 @@ header {
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
 .settings-section h3 {
@@ -134,4 +134,64 @@ header {
 .settings-section label {
   font-weight: 500;
   margin-right: 10px;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 1024px) {
+  .topbar {
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    padding: 0 15px;
+  }
+
+  .settings-container {
+    padding: 15px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 15px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .profile-pic {
+    width: 35px;
+    height: 35px;
+  }
+
+  .dropdown {
+    width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 20px;
+  }
+
+  .settings-section {
+    padding: 15px;
+  }
+
+  .settings-section h3 {
+    font-size: 16px;
+  }
+
+  .settings-section a {
+    font-size: 14px;
+  }
+
+  .settings-section label {
+    font-size: 14px;
+  }
 }

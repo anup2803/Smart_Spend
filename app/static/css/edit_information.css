@@ -26,17 +26,20 @@ h2 {
 
 /* Back Button */
 .back-btn {
-  background: #2c2b2b;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
+  display: inline-block;
+  background: #000000;
+  color: white;
+  padding: 10px 20px;
   border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  margin-bottom: 15px;
 }
+
 .back-btn:hover {
   background: #000000;
 }
+
 
 /* Flash Messages */
 .flash-message {

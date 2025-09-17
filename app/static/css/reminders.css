@@ -1,3 +1,10 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
 
 /* Topbar */
 .topbar {
@@ -6,7 +13,7 @@
   left: 230px;
   right: 0;
   height: 60px;
-  background: #fff;
+  background: #fff;    
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,14 +24,13 @@
   margin-bottom: 20px;
 }
 
-/* Topbar Left & Right */
 .topbar .left {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -78,15 +84,17 @@ header {
   z-index: 100;
 }
 
-.dropdown p {
+.dropdown p, .dropdown a {
   padding: 10px 15px;
-  border-bottom: 1px solid #ddd;
   margin: 0;
+}
+
+.dropdown p {
+  border-bottom: 1px solid #ddd;
 }
 
 .dropdown a {
   display: block;
-  padding: 10px 15px;
   text-decoration: none;
   color: #2c3e50;
   font-weight: 500;
@@ -98,11 +106,9 @@ header {
   color: #1a1a1a;
 }
 
-
-
-
+/* Reminder Container */
 .reminder-container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 80px auto 30px auto;
   background: #fff;
   padding: 20px;
@@ -110,30 +116,52 @@ header {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
 }
 
-/* Titles */
+/* Page Header */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.back-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.back-btn:hover {
+  background: #333;
+}
+
+/* Titles & Subtitles */
 .title {
   font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 8px;
+  font-weight: bold;
+  margin-bottom: 10px;
   text-align: center;
-  color: #222;
 }
 
 .subtitle {
-  font-size: 14px;
-  text-align: center;
-  color: #666;
   margin-bottom: 20px;
+  color: #555;
 }
 
-/* ==============================
-   FORM (VERTICAL)
-============================== */
-.reminder-form {
+/* Form */
+.vertical-form {
   display: flex;
-  flex-direction: column; /* 🔥 Vertical layout */
+  flex-direction: column;
   gap: 15px;
-  margin-bottom: 20px;
 }
 
 .form-group {
@@ -141,54 +169,44 @@ header {
   flex-direction: column;
 }
 
-.form-group label {
-  font-size: 13px;
-  font-weight: 600;
+.form-label {
+  font-weight: bold;
   margin-bottom: 5px;
-  color: #444;
 }
 
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 8px 10px;
+.form-input {
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 13px;
-  transition: border 0.2s ease;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-  border-color: #2196F3;
-  outline: none;
+.form-input:focus {
+  border-color: #2980b9;
 }
 
 .btn-submit {
-  padding: 10px 14px;
-  border: none;
-  border-radius: 8px;
   background: #4CAF50;
   color: #fff;
-  font-weight: 600;
-  font-size: 14px;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  font-weight: bold;
 }
 
 .btn-submit:hover {
-  background: #45a049;
+  background: #2e7d32;
 }
 
 .divider {
-  margin: 20px 0;
-  border: none;
-  border-top: 1px solid #eee;
+  margin: 25px 0;
+  border: 0;
+  border-top: 1px solid #ddd;
 }
 
-/* ==============================
-   ACTIVE REMINDERS HEADER
-============================== */
+/* Active Reminders Header */
 .active-reminders-header {
   display: flex;
   justify-content: space-between;
@@ -196,135 +214,122 @@ header {
   margin-bottom: 15px;
 }
 
-.active-reminders-header h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #222;
-}
-
-.header-actions button,
-.header-actions a {
-  padding: 6px 12px;
-  margin-left: 6px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  transition: background 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
+.header-actions {
+  display: flex;
+  gap: 10px;
 }
 
 .btn-secondary {
-  background: #4CAF50; 
+  background: #4CAF50;
   color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
 }
+
 .btn-secondary:hover {
   background: #2e7d32;
 }
 
 .btn-danger {
-  background: #F44336;
-  color: #fff;
-}
-.btn-danger:hover {
-  background: #D32F2F;
-}
-
-/* ==============================
-   TABLE
-============================== */
-.reminders-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.reminders-table th,
-.reminders-table td {
-  padding: 10px 8px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
-
-.reminders-table th {
-  background: #f5f5f5;
-  font-weight: 700;
-  color: #222;
-}
-
-.reminders-table tbody tr:nth-child(even) {
-  background: #fafafa;
-}
-
-.reminders-table tbody tr:hover {
-  background: #f9f9f9;
-}
-
-/* ==============================
-   STATUS BADGES
-============================== */
-.status {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: bold;
-  color: #fff;
-}
-
-.status.upcoming { background: #2196F3; }
-.status.active { background: #4CAF50; }
-.status.alert { background: #F44336; }
-
-/* ==============================
-   EDIT BUTTON
-============================== */
-.btn-edit {
-  padding: 5px 12px;
-  background: #9C27B0;
+  background: #e74c3c;
   color: #fff;
   border: none;
+  padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 12px;
-  font-weight: 600;
-  transition: background 0.3s ease;
+}
+
+.btn-danger:hover {
+  background: #c0392b;
+}
+
+.btn-edit {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .btn-edit:hover {
-  background: #7B1FA2;
+  background: #1e8449;
 }
 
-/* ==============================
-   RESPONSIVE
-============================== */
+.small-btn {
+  padding: 6px 10px;
+}
+
+/* Table */
+.reminders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.reminders-table th, .reminders-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.reminders-table th {
+  background: #4CAF50;
+  color: #fff;
+}
+
+.reminders-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.reminders-table tr:hover {
+  background: #f1f1f1;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .active-reminders-header {
+  .topbar {
+    left: 0;
+    padding: 0 10px;
+  }
+
+  .header, .page-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
   }
 
-  .reminders-table thead {
-    display: none;
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .reminders-table tr {
-    display: block;
-    margin-bottom: 10px;
+  .reminder-container {
+    margin: 100px 10px 30px 10px;
+    padding: 15px;
   }
 
-  .reminders-table td {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
-    border: none;
-    border-bottom: 1px solid #eee;
+  .reminders-table th, .reminders-table td {
+    padding: 6px;
+    font-size: 12px;
   }
 
-  .reminders-table td::before {
-    content: attr(data-label);
-    font-weight: bold;
+  .title {
+    font-size: 18px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .btn-submit, .btn-secondary, .btn-danger, .btn-edit {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .back-btn {
+    padding: 6px 12px;
+    font-size: 12px;
   }
 }

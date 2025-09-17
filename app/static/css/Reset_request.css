@@ -37,6 +37,7 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 1rem;
 }
 
 .error-list {
@@ -59,4 +60,44 @@
 
 .btn-submit:hover {
   background: #1976D2;
+}
+
+/* Responsive for tablets */
+@media (max-width: 900px) {
+  .flash {
+    font-size: 0.95rem;
+    padding: 8px 12px;
+  }
+
+  .form-input {
+    padding: 9px;
+    font-size: 0.95rem;
+  }
+
+  .btn-submit {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Responsive for mobile */
+@media (max-width: 576px) {
+  .flash {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+
+  .form-input {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .btn-submit {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .error-list {
+    font-size: 12px;
+  }
 }

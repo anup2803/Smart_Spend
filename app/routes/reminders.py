@@ -123,7 +123,7 @@ def send_reminder_email(app,reminder_id):
 
    msg = Message(
         subject=f"Reminder: {reminder.reminder_type}",
-        sender=("SmartSpend", "Kumalanup555@gmail.com"),
+        sender="SmartSpend <smartspend94@gmail.com>",
         recipients=[user.email],
         body=f"""
         Hi {user.first_name},

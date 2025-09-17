@@ -27,6 +27,12 @@
     <div class="nav-btn">
       <a href="{{url_for('auth_bp.register')}}" class="btn">Get Started</a>
     </div>
+
+    <div class="hamburger">
+        ☰
+    </div>
+
+
   </nav>
 </header>
 
@@ -228,7 +234,7 @@
 <section id="contact">
     <div class="contact-container">
     <div class="contact">
-        <img src="{{ url_for('static', filename='images/Contact_Us.png') }}" alt="Contact" width="150">
+        <img src="{{ url_for('static', filename='images/Contact_Us.png') }}" alt="Contact" width="90px">
         <h2>Contact Us</h2>
         <p>Have questions or need assistance? Get in touch with us.</p>
     </div>
@@ -255,13 +261,13 @@
         <div class="contact_form">
             <form>
                 <h3>Get in Touch</h3>
-                <label>Name</label>
+            
                 <input type="text" placeholder="Name" name="contact_name">
-                <label>Email</label>
+                
                 <input type="email" placeholder="Email" name="contact_email">
-                <label>Subject</label>
+                
                 <input type="text" placeholder="Subject" name="contact_subject">
-                <label>Message</label>
+                
                 <textarea placeholder="Your message..." name="contact_message"></textarea>
                 <button type="submit">Send Message</button>
             </form>
@@ -320,6 +326,6 @@
 </footer>
 
 
-
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
 </body>
 </html>

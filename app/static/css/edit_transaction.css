@@ -1,12 +1,14 @@
 /* Container */
 .container {
   max-width: 500px;
+  width: 90%;
   margin: 80px auto;
   background: #fff;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', Tahoma, sans-serif;
+  box-sizing: border-box;
 }
 
 /* Heading */
@@ -14,6 +16,7 @@
   margin-bottom: 20px;
   text-align: center;
   color: #333;
+  font-size: 1.8rem;
 }
 
 /* Alerts */
@@ -21,6 +24,7 @@
   padding: 10px 15px;
   border-radius: 5px;
   margin-bottom: 15px;
+  word-wrap: break-word;
 }
 
 .alert-success {
@@ -40,6 +44,8 @@
 
 .form-group label {
   font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .form-control {
@@ -54,6 +60,7 @@
 /* Radio Group */
 .radio-group label {
   margin-right: 10px;
+  display: inline-block;
 }
 
 /* Buttons */
@@ -68,6 +75,12 @@
   cursor: pointer;
   transition: background 0.3s ease;
   margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn:hover {
+  background: #45a049;
 }
 
 .back-btn {
@@ -79,17 +92,52 @@
   text-decoration: none;
   transition: background 0.3s ease;
   margin-bottom: 15px;
-}
-
-.back-btn:hover {
-  background: #000000;
-}
-
-
-.btn:hover {
-  background: #45a049;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .back-btn:hover {
   background: #555;
+}
+
+/* ================= Responsive ================= */
+
+/* Tablets */
+@media (max-width: 900px) {
+  .container {
+    padding: 25px;
+    margin: 60px auto;
+  }
+
+  .container h2 {
+    font-size: 1.6rem;
+  }
+
+  .form-control, .btn, .back-btn {
+    font-size: 13px;
+    padding: 9px 15px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .container {
+    padding: 20px;
+    margin: 40px auto;
+  }
+
+  .container h2 {
+    font-size: 1.4rem;
+  }
+
+  .form-control, .btn, .back-btn {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .radio-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
 }

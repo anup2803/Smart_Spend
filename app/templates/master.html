@@ -11,10 +11,10 @@
 
   <!-- Sidebar (Fixed for all pages) -->
   <div class="sidebar">
-  <div class="logo">
-  <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Smart Spend Logo">
-  <strong>Smart Spend</strong>
-  </div>
+    <div class="logo">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Smart Spend Logo">
+      <strong>Smart Spend</strong>
+</div>
 <ul>
   <li><a href="{{ url_for('dashboard_bp.dashboard') }}">Dashboard</a></li>
   <li><a href="{{ url_for('transaction_bp.transaction') }}">Transactions</a></li>
@@ -22,6 +22,7 @@
   <li><a href="{{ url_for('report_bp.report_analysis') }}">Reports & Analytics</a></li>
   <li><a href="{{ url_for('reminders_bp.reminders') }}">Reminders</a></li>
   <li><a href="{{ url_for('settings_bp.settings') }}">Settings</a></li>
+
 </ul>
 </div>
 
@@ -42,5 +43,11 @@
     {% endwith %}
   </div>
 
+
+
+  <!-- Overlay for mobile -->
+<div id="overlay"></div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

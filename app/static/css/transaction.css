@@ -1,6 +1,3 @@
-/* Topbar container */
-
-/* Topbar */
 .topbar {
   position: fixed;
   top: 0;
@@ -15,10 +12,8 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   z-index: 1000;
   border-radius: 10px;
-  margin-bottom: 20px;
 }
 
-/* Topbar Left & Right */
 .topbar .left {
   display: flex;
   align-items: center;
@@ -78,15 +73,17 @@ header {
   z-index: 100;
 }
 
-.dropdown p {
+.dropdown p, .dropdown a {
   padding: 10px 15px;
-  border-bottom: 1px solid #ddd;
   margin: 0;
+}
+
+.dropdown p {
+  border-bottom: 1px solid #ddd;
 }
 
 .dropdown a {
   display: block;
-  padding: 10px 15px;
   text-decoration: none;
   color: #2c3e50;
   font-weight: 500;
@@ -98,18 +95,18 @@ header {
   color: #1a1a1a;
 }
 
-
 .transaction-container {
-  margin-top: 80px; /* Push down below fixed topbar */
+  margin-top: 80px;
   padding: 20px;
   width: 100%;
+  box-sizing: border-box;
 }
 
-/* ===========================
-   Add Transaction Button
-=========================== */
 .add_transaction {
   margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 .add_transaction a {
@@ -127,9 +124,6 @@ header {
   background: #45a049;
 }
 
-/* ===========================
-   Table Container
-=========================== */
 .table {
   width: 100%;
   overflow-x: auto;
@@ -139,11 +133,8 @@ header {
   padding: 15px;
 }
 
-/* ===========================
-   Table Styling
-=========================== */
 table {
-  width: 100%; 
+  width: 100%;
   border-collapse: collapse;
   background: #fff;
   border-radius: 8px;
@@ -171,10 +162,23 @@ table tr:hover {
   background-color: #f1f1f1;
 }
 
-/* ===========================
-   Buttons
-=========================== */
-button {
+button.edit-btn {
+  background: #0275d8;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background 0.3s ease;
+  margin-right: 5px;
+}
+
+button.edit-btn:hover {
+  background: #025aa5;
+}
+
+button.delete-btn {
   background: #f44336;
   color: white;
   border: none;
@@ -185,27 +189,174 @@ button {
   transition: background 0.3s ease;
 }
 
-button:hover {
+button.delete-btn:hover {
   background: #d32f2f;
 }
 
-.btn-danger {
-  background: #f44336;
+.table-actions {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
 }
 
-/* ===========================
-   Responsive
-=========================== */
-@media (max-width: 768px) {
+/* ===== Tablet (1024px) ===== */
+@media (max-width: 1024px) {
+  .topbar {
+    left: 200px;
+  }
+
   .transaction-container {
+    padding: 15px;
+  }
+}
+
+/* ===== Mobile View (<=768px) ===== */
+@media (max-width: 768px) {
+  /* Topbar */
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0; /* full width on mobile */
+    right: 0;
+    height: 60px;
+    padding: 0 15px;
+    border-radius: 0;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+
+  .menu-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+  }
+
+  .transaction-container {
+    margin-top: 70px; /* below topbar */
     padding: 10px;
+    width: 90%;
+  }
+
+  /* Add Transaction button */
+  .add_transaction {
+    display: flex;
+    justify-content: flex-end; /* align right */
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    margin-left: 250px;
+    gap: 10px;
+  }
+
+  .add_transaction a {
+    background: #4CAF50;
+    color: white;
+    padding: 8px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    text-align: center;
+    display: inline-block;
+    min-width: 120px;
+  }
+
+  .add_transaction a:hover {
+    background: #45a049;
+  }
+
+
+
+  table {
+    
+    min-width: 450px; /* allows horizontal scroll if needed */
+    border-collapse: collapse;
+    font-size: 13px;
   }
 
   table th, table td {
-    font-size: 13px;
-    padding: 8px;
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  table th {
+    background-color: #4CAF50;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  table tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Table action buttons */
+  .table-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  button.edit-btn, button.delete-btn {
+    width: auto;
+    font-size: 12px;
+    padding: 5px 10px;
   }
 }
 
+/* ===== Extra Small Phones (<=480px) ===== */
+@media (max-width: 480px) {
+  .transaction-container {
+    margin-top: 70px; /* below topbar */
+    padding: 5px 10px;
+    width: 100%;
+  }
 
+  .add_transaction {
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
 
+  .add_transaction a {
+    width: 100%;
+    min-width: unset;
+    padding: 8px 0;
+    font-size: 13px;
+  }
+
+  .table {
+    width: 100%;
+    overflow-x: auto; /* horizontal scroll only if needed */
+    padding: 5px;
+  }
+
+  table {
+    width: 100%;
+    min-width: unset; /* remove forced min-width */
+    font-size: 12px;
+  }
+
+  table th, table td {
+    padding: 6px 5px;
+  }
+
+  .table-actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  button.edit-btn, button.delete-btn {
+    width: 100%;
+    font-size: 12px;
+    padding: 5px 0;
+  }
+}
