@@ -5,9 +5,9 @@ class Config:
 
 
 
-    # # Flask app domain settings
-    # SERVER_NAME = '6f21-102-45-89-34.ngrok.io'   # or 'yourdomain.com' in production
-    # PREFERRED_URL_SCHEME = 'https'
+    # Flask app domain settings
+    SERVER_NAME = 'smart-spend-1.onrender.com'   # or 'yourdomain.com' in production
+    PREFERRED_URL_SCHEME = 'https'
 
 
     # Flask-Mail settings
@@ -17,3 +17,5 @@ class Config:
     MAIL_USERNAME = 'kumalanup555@gmail.com'
     MAIL_PASSWORD = 'lbhh uuad rkek ovnc' 
     MAIL_DEFAULT_SENDER = 'kumalanup555@gmail.com'
+
+
