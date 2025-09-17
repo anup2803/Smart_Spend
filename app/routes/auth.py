@@ -1,8 +1,6 @@
-# Corrected auth_bp routes
-
 from flask import Blueprint, render_template, redirect, url_for, flash, session, current_app
 from app.models import User
-from app.forms import Registerform, LoginForm, ResetPasswordForm, ResetRequestForm
+from app.forms import RegisterForm, LoginForm, ResetPasswordForm, ResetRequestForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, mail
 from flask_mail import Message
@@ -17,7 +15,8 @@ def index():
         return redirect(url_for('dashboard_bp.dashboard'))
     return render_template('index.html')
 
-# --- Terms, Privacy, Compliance, Read More ---
+
+# --- Static pages ---
 @auth_bp.route("/terms")
 def terms(): return render_template("terms.html")
 
@@ -32,17 +31,16 @@ def read_more(): return render_template('readmore.html')
 
 
 # --- Email token helpers ---
-def generate_email_token(user_data, expires_sec=3600):
+def generate_email_token(user_data):
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return s.dumps(user_data)
 
 def verify_email_token(token, max_age=3600):
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     try:
-        user_data = s.loads(token, max_age=max_age)
+        return s.loads(token, max_age=max_age)
     except (BadSignature, SignatureExpired):
         return None
-    return user_data
 
 
 # --- Register route ---
@@ -51,49 +49,45 @@ def register():
     if 'user_id' in session:
         return redirect(url_for('dashboard_bp.dashboard'))
 
-    form = Registerform()
+    form = RegisterForm()
     if form.validate_on_submit():
-        try:
-            first_name = form.first_name.data
-            last_name = form.last_name.data
-            username = form.username.data
-            email = form.email.data
-            password = generate_password_hash(form.password.data)
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+        username = form.username.data
+        email = form.email.data
+        password = generate_password_hash(form.password.data)
 
-            if User.query.filter_by(username=username).first():
-                flash('Username already exists', 'danger')
-                return redirect(url_for('auth_bp.register'))
-            if User.query.filter_by(email=email).first():
-                flash('Email already exists', 'danger')
-                return redirect(url_for('auth_bp.register'))
+        # Check if user exists
+        if User.query.filter_by(username=username).first():
+            flash('Username already exists', 'danger')
+            return redirect(url_for('auth_bp.register'))
+        if User.query.filter_by(email=email).first():
+            flash('Email already exists', 'danger')
+            return redirect(url_for('auth_bp.register'))
 
-            user_data = {
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "password": password
-            }
+        user_data = {
+            "first_name": first_name,
+            "last_name": last_name,
+            "username": username,
+            "email": email,
+            "password": password
+        }
 
-            token = generate_email_token(user_data)
-            verify_url = url_for('auth_bp.verify_email', token=token, _external=True)
+        token = generate_email_token(user_data)
+        verify_url = url_for('auth_bp.verify_email', token=token, _external=True)
 
-            
-            msg = Message(
-                subject="Verify Your Account",
-                sender="SmartSpend <Kumalanup555@gmail.com>",  # Corrected
-                recipients=[email]
-            )
-            msg.body = f"Welcome {first_name}, Please verify your account {verify_url}"
-            msg.html = render_template('verify_email.html', user=user_data, verify_url=verify_url)
-            mail.send(msg)
+        # Send verification email
+        msg = Message(
+            subject="Verify Your Account",
+            sender="SmartSpend <Kumalanup555@gmail.com>",
+            recipients=[email]
+        )
+        msg.body = f"Welcome {first_name}, please verify your account: {verify_url}"
+        msg.html = render_template('verify_email.html', user=user_data, verify_url=verify_url)
+        mail.send(msg)
 
-            flash('Registration successful! Check your email to verify your account.', 'success')
-            return redirect(url_for('auth_bp.login'))
-
-        except Exception as e:
-            db.session.rollback()
-            flash(f'Error: {e}', 'danger')
+        flash('Registration successful! Check your email to verify your account.', 'success')
+        return redirect(url_for('auth_bp.login'))
 
     return render_template('register.html', form=form)
 
@@ -106,12 +100,12 @@ def verify_email(token):
         flash('Verification link is invalid or expired.', 'danger')
         return redirect(url_for('auth_bp.login'))
 
-    # Check if already verified
-    if User.query.filter_by(email=user_data['email']).first():
+    existing_user = User.query.filter_by(email=user_data['email']).first()
+    if existing_user:
         flash('Your account is already verified. Please log in.', 'info')
         return redirect(url_for('auth_bp.login'))
 
-    # Create new user
+    # Create new verified user
     new_user = User(
         first_name=user_data['first_name'],
         last_name=user_data['last_name'],
@@ -132,42 +126,39 @@ def verify_email(token):
 def login():
     if 'user_id' in session:
         return redirect(url_for('dashboard_bp.dashboard'))
+
     form = LoginForm()
     if form.validate_on_submit():
-        try:
-            username = form.username.data
-            password = form.password.data
+        username = form.username.data
+        password = form.password.data
 
-            user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username).first()
+        if user and check_password_hash(user.password, password):
+            if not user.is_verified:
+                flash('Please verify your email before logging in.', 'danger')
+                return redirect(url_for('auth_bp.login'))
 
-            if user and check_password_hash(user.password, password):
-                if not user.is_verified:
-                    flash('Please verify your email before logging in.', 'danger')
-                    return redirect(url_for('auth_bp.login'))
+            session['user_id'] = user.id
+            session['username'] = user.username
+            flash(f"Welcome back, {user.first_name}!", 'success')
+            return redirect(url_for('dashboard_bp.dashboard'))
+        else:
+            flash('Invalid username or password', 'danger')
 
-                session['user_id'] = user.id
-                session['username'] = user.username
-                flash(f"Welcome back, {user.first_name}!", 'success')
-                return redirect(url_for('dashboard_bp.dashboard'))
-            else:
-                flash('Invalid username or password', 'danger')
-        except Exception as e:
-            flash(f'Login error: {str(e)}', 'danger')
     return render_template('login.html', form=form)
 
 
 # --- Password reset helpers ---
-def generate_reset_token(user_id, expires_sec=3600):
+def generate_reset_token(user_id):
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return s.dumps(user_id)
 
 def verify_reset_token(token, max_age=3600):
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     try:
-        user_id = s.loads(token, max_age=max_age)
+        return s.loads(token, max_age=max_age)
     except (BadSignature, SignatureExpired):
         return None
-    return user_id
 
 
 # --- Reset password request ---
@@ -181,10 +172,9 @@ def reset_password_request():
             token = generate_reset_token(user.id)
             reset_url = url_for('auth_bp.reset_password', token=token, _external=True)
 
-            
             msg = Message(
                 subject="Password Reset Request",
-                sender="SmartSpend <Kumalanup555@gmail.com>", 
+                sender="SmartSpend <Kumalanup555@gmail.com>",
                 recipients=[user.email]
             )
             msg.body = f"Click here to reset your password: {reset_url}"
@@ -194,10 +184,11 @@ def reset_password_request():
             return redirect(url_for('auth_bp.login'))
         else:
             flash('Email not found!', 'danger')
-    return render_template('Reset_request.html', form=form)
+
+    return render_template('reset_request.html', form=form)
 
 
-# --- Reset password route ---
+# --- Reset password ---
 @auth_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     user_id = verify_reset_token(token)
@@ -216,7 +207,7 @@ def reset_password(token):
     return render_template('reset_password.html', form=form)
 
 
-# --- Logout route ---
+# --- Logout ---
 @auth_bp.route('/logout')
 def logout():
     session.clear()
