@@ -1,6 +1,6 @@
 import os
 class Config:
-    # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost/smart_spend'  its used for development 
+    # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@@aws.connect.psdb.cloud/smart_spend'  its used for development 
 
     #but for production Database connection (Render will pull from environment variable)
     SQLALCHEMY_DATABASE_URI =os.environ.get("DATABASE_URL")
