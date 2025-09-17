@@ -64,40 +64,34 @@ def verify_email_token(token, max_age=3600):
 
 
 
-
 #register route
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
-    #checking the user are in session or not if yes then redirect to the dashboard
+    # Redirect logged-in users to the dashboard
     if 'user_id' in session:
         return redirect(url_for('dashboard_bp.dashboard'))
+
     form = Registerform()
     if form.validate_on_submit():
         try:
-            #user detailes for registations
-        
+            # User details for registration
             first_name = form.first_name.data
             last_name = form.last_name.data
             username = form.username.data
             email = form.email.data
-            #generated hashed password
+            # Generated hashed password
             password = generate_password_hash(form.password.data)
-            
-            
-            
 
-
-            #checking the user email and username are already register or not 
+            # Checking if the username or email is already registered
             if User.query.filter_by(username=username).first():
                 flash('Username already exists', 'danger')
                 return redirect(url_for('auth_bp.register'))
             if User.query.filter_by(email=email).first():
                 flash('Email already exists', 'danger')
                 return redirect(url_for('auth_bp.register'))
-             
 
             # Prepare data for token
-            user_data={
+            user_data = {
                 "first_name": first_name,
                 "last_name": last_name,
                 "username": username,
@@ -105,33 +99,33 @@ def register():
                 "password": password
             }
 
+            # Generating email verification token
+            token = generate_email_token(user_data)
+            verify_url = url_for('auth_bp.verify_email', token=token, _external=True)
 
-            #generating email verification token
-            token=generate_email_token(user_data)
-            verify_url=url_for('auth_bp.verify_email', token=token,_external=True)
-
-
-
-            #send verification email
-            msg= Message(subject=f"'Verify Your Account",
-                         sender=["SmartSpend", "Kumalanup555@gmail.com"],
-                           recipients=[email])
-            msg.body= f"Welcome {first_name}, Please verify your account {verify_url}" 
-            msg.html=render_template('verify_email.html', user=user_data,verify_url=verify_url)
+            # Send verification email
+            # CHANGE: Flask-Mail 'sender' must be a string, not a list
+            # Old: sender=["SmartSpend", "Kumalanup555@gmail.com"]
+            # Fixed:
+            msg = Message(
+                subject="Verify Your Account",
+                sender="SmartSpend <Kumalanup555@gmail.com>", 
+                recipients=[email]
+            )
+            msg.body = f"Welcome {first_name}, Please verify your account {verify_url}"
+            msg.html = render_template('verify_email.html', user=user_data, verify_url=verify_url)
             mail.send(msg)
-
-
 
             flash('Registration successful! Check your email to verify your account.', 'success')
             return redirect(url_for('auth_bp.login'))
-        
-        except Exception as e:
 
-            # Rollback on error 
+        except Exception as e:
+            # Rollback on error
             db.session.rollback()
             flash(f'Error: {e}', 'danger')
-            
+
     return render_template('register.html', form=form)
+
 
 
 
