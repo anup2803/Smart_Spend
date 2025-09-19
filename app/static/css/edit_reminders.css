@@ -1,17 +1,15 @@
-* {
+body {
   margin: 0;
   padding: 0;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
   box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, sans-serif;
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
 }
 
-/* Page Background */
-body {
-  background: #f8f9fc;
-  padding: 40px;
-}
-
-/* Headings */
 h1 {
   font-size: 28px;
   color: #2c3e50;
@@ -23,17 +21,16 @@ h2 {
   color: #2c3e50;
 }
 
-/* Container */
 .form-container {
   background: #fff;
   max-width: 500px;
+  width: 50%;
   margin: auto;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* Form Fields */
 .form-group {
   margin-bottom: 18px;
 }
@@ -56,7 +53,6 @@ h2 {
   outline: none;
 }
 
-/* Buttons */
 .btn-submit {
   width: 100%;
   padding: 12px;
@@ -87,7 +83,6 @@ h2 {
   background: #333;
 }
 
-/* Flash Messages */
 .flash-message {
   margin-bottom: 20px;
 }
@@ -100,7 +95,6 @@ h2 {
 .flash-success { background: #d4edda; color: #155724; }
 .flash-error { background: #f8d7da; color: #721c24; }
 
-/* Back Link */
 .back-link {
   display: inline-block;
   margin-top: 20px;

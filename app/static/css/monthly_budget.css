@@ -1,20 +1,24 @@
-/* ===== Global Styles ===== */
+
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background: #f5f7fa;
+  padding: 0;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row; 
   min-height: 100vh;
 }
 
-/* ===== Topbar ===== */
+
 .topbar {
   position: fixed;
   top: 0;
   left: 230px;
   right: 0;
   height: 60px;
-  background: #fff;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +34,7 @@ body {
   gap: 10px;
 }
 
-/* ===== Header / Navigation ===== */
+
 header {
   display: flex;
   justify-content: space-between;
@@ -102,7 +106,7 @@ header {
   color: #1a1a1a;
 }
 
-/* ===== Monthly Budget Container ===== */
+
 .monthly-budget {
   margin: 100px auto 40px auto;
   width: 95%;
@@ -116,7 +120,7 @@ header {
   gap: 40px;
 }
 
-/* ===== Budget Form ===== */
+
 .budget-form {
   background: #f9fafc;
   padding: 25px;
@@ -144,7 +148,7 @@ header {
   background: #fff;
 }
 
-/* ===== Buttons ===== */
+
 .btn {
   background: linear-gradient(135deg, #4CAF50, #3e8e41);
   color: #fff;
@@ -163,17 +167,17 @@ header {
   transform: translateY(-2px);
 }
 
-/* Export Button */
+
 .export-buttons {
   background: linear-gradient(135deg, #4CAF50, #3e8e41);
   color: white;
   border: none;
-  padding: 6px 12px; /* increased padding for better click area */
+  padding: 6px 12px; 
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 14px; /* default font size */
-  min-width: 80px; /* ensures minimum size */
+  font-size: 14px; 
+  min-width: 80px; 
   transition: transform 0.2s ease, background 0.3s ease;
   float: right;
   margin-left: auto;
@@ -185,7 +189,7 @@ header {
 }
 
 
-/* ===== Budget List / Items ===== */
+
 .show-budget {
   background: #f9fafc;
   padding: 25px;
@@ -231,7 +235,7 @@ header {
   font-size: 14px;
 }
 
-/* ===== Pagination ===== */
+
 .pagination {
   margin-top: 20px;
   text-align: center;
@@ -250,9 +254,9 @@ header {
   background: #2e7d32;
 }
 
-/* ===== Responsive ===== */
 
-/* Tablets */
+
+
 @media (max-width: 900px) {
   .monthly-budget {
     grid-template-columns: 1fr;
@@ -265,7 +269,7 @@ header {
   }
 }
 
-/* Small Phones */
+
 @media (max-width: 600px) {
   .topbar {
     left: 0;
@@ -306,14 +310,14 @@ header {
     font-size: 13px;
   }
     .export-buttons {
-    font-size: 14px; /* keep readable */
-    padding: 8px 14px; /* comfortable tap area */
-    min-width: 90px;   /* slightly wider */
+    font-size: 14px; 
+    padding: 8px 14px; 
+    min-width: 90px;   
   }
 }
 
 
-/* Extra Small Phones */
+
 @media (max-width: 400px) {
   .budget-form h2, .show-budget h3 {
     font-size: 1.1rem;

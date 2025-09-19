@@ -1,11 +1,13 @@
-/* ===== Global Reset ===== */
 body {
   margin: 0;
   padding: 0;
-  background: transparent; /* remove background */
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: row; 
+  min-height: 100vh;
 }
 
 #myChart {
@@ -15,21 +17,20 @@ body {
   max-height: 400px;
 }
 
-/* ===== Topbar ===== */
 .topbar {
   position: fixed;
   top: 0;
   left: 230px;
   right: 0;
   height: 60px;
-  background: #fff;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
+  color: rgb(0, 0, 0);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   z-index: 1000;
-  border-radius: 10px;
   margin-bottom: 20px;
 }
 .topbar .left {
@@ -38,7 +39,6 @@ body {
   gap: 10px;
 }
 
-/* ===== Header / Navigation ===== */
 header {
   display: flex;
   justify-content: space-between;
@@ -103,45 +103,76 @@ header {
   color: #1a1a1a;
 }
 
-/* ===== Dashboard Container ===== */
 .dashboard-container {
   margin-top: 5px;
   padding: 80px 20px 20px 20px;
   width: 100%;
   min-height: 100vh;
-  background: transparent; /* remove white background */
   box-sizing: border-box;
 }
 
-/* ===== Cards ===== */
 .cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   margin-top: 20px;
 }
+
 .card {
-  background: transparent;
   padding: 25px 20px;
-  border-radius: 12px;
-  box-shadow: none;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  min-height: 120px;
-  transition: transform 0.3s ease;
-}
-.card.green { border-top: 5px solid #4CAF50; }
-.card.red { border-top: 5px solid #f44336; }
-.card.blue { border-top: 5px solid #2196F3; }
-.card.orange { border-top: 5px solid #FF9800; }
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-radius: 15px;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  min-height: 140px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ===== Dashboard Overview ===== */
+.card .icon {
+  font-size: 3rem;            
+  margin-bottom: 10px;
+  opacity: 1;                 
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));  
+  display: inline-block;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  top: -20%;
+  left: -20%;
+  background: rgba(255,255,255,0.1);
+  transform: rotate(25deg);
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.card.green  { background: linear-gradient(135deg, #34d399, #059669); }
+.card.red    { background: linear-gradient(135deg, #f87171, #b91c1c); }
+.card.blue   { background: linear-gradient(135deg, #60a5fa, #1e3a8a); }
+.card.orange { background: linear-gradient(135deg, #fb923c, #f97316); }
+
+.card h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.card p {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
 .dashboard-overview {
   display: flex;
   justify-content: space-between;
@@ -149,10 +180,10 @@ header {
   gap: 20px;
   margin-top: 50px;
 }
-.expenses-overview,
+
 .budget-summary {
   flex: 1 1 50%;
-  background: transparent;
+  background: white;
   padding: 25px;
   border-radius: 18px;
   display: flex;
@@ -160,16 +191,27 @@ header {
   height: auto;
   box-sizing: border-box;
 }
-.expenses-overview canvas {
-  width: 100% !important;
-  max-height: 360px;
-  margin: auto;
+.expenses-overview {
+    flex: 1 1 50%;
+    background: #fff;
+    padding: 25px;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 360px;
 }
+.expenses-overview canvas {
+    width: 100% !important;
+    height: 300px !important;
+    max-width: 100%;
+}
+
 .budget-summary {
   overflow-y: auto;
 }
 
-/* ===== Summary Cards ===== */
 .summary-card {
   background: transparent;
   box-shadow: none;
@@ -217,12 +259,11 @@ header {
 .summary-info p {
      margin: 0; }
 
-/* ===== Recent Transactions ===== */
 .recent-transactions {
   margin-top: 40px;
   font-weight: 10px;
   width: 100%;
-  background: transparent;
+  background: white;
   padding: 20px;
   border-radius: 12px;
 }
@@ -231,7 +272,7 @@ header {
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
-  text-align: left; /* align consistently */
+  text-align: left;
 }
 .transactions-table {
   width: 100%;
@@ -256,9 +297,6 @@ header {
   color: #333;
 }
 
-/* ===== Media Queries ===== */
-
-/* Medium screens */
 @media (max-width: 992px) {
   .dashboard-overview { flex-direction: column; gap: 20px; }
   .expenses-overview canvas { max-width: 100%; }
@@ -267,7 +305,6 @@ header {
   .recent-transactions { width: 100%; }
 }
 
-/* Small screens */
 @media (max-width: 768px) {
   .topbar {
     left: 0;
@@ -288,7 +325,6 @@ header {
   .recent-transactions { width: 100%; }
 }
 
-/* Extra small screens */
 @media (max-width: 480px) {
   .cards { 
     grid-template-columns: 1fr;

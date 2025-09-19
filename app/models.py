@@ -35,9 +35,6 @@ class Budget(db.Model):
 
 
 
-
-
-
 class Reminder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     reminder_type = db.Column(db.String(50), nullable=False)  # Payable or Receivable

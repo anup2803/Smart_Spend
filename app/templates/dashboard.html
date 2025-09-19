@@ -30,33 +30,38 @@
 
     </div>
 
-    <!-- Summary Cards -->
-    <div class="cards">
-        <div class="card green">
-            Total Income:
-            <p>Rs. {{ Total_Income if Total_Income is not none else 0 }}</p>
-        </div>
-        <div class="card red">
-            Total Expenses:
-            <p>Rs. {{ Total_expense if Total_expense is not none else 0 }}</p>
-        </div>
-        <div class="card orange">
-            Total Budgets:
-            <p>Rs. {{ summaries | sum(attribute='total_budget') }}</p>
-        </div>
-        <div class="card blue">
-            Remaining Balance:
-            <p>Rs. {{ summaries | sum(attribute='remaining') }}</p>
-        </div>
+<!-- Summary Cards -->
+<div class="cards">
+    <div class="card green">
+        <div class="icon">💰</div>
+        <h3>Total Income</h3>
+        <p>Rs. {{ Total_Income if Total_Income is not none else 0 }}</p>
     </div>
+    <div class="card red">
+        <div class="icon">💸</div>
+        <h3>Total Expenses</h3>
+        <p>Rs. {{ Total_expense if Total_expense is not none else 0 }}</p>
+    </div>
+    <div class="card orange">
+        <div class="icon">📊</div>
+        <h3>Total Budgets</h3>
+        <p>Rs. {{ summaries | sum(attribute='total_budget') }}</p>
+    </div>
+    <div class="card blue">
+        <div class="icon">💳</div>
+        <h3>Remaining Balance</h3>
+        <p>Rs. {{ summaries | sum(attribute='remaining') }}</p>
+    </div>
+</div>
+
 
 <div class="dashboard-overview">
 
-    <!-- Chart -->
-    <div class="Expenses_Overview">
-        <h2>Expenses Overview</h2>
-        <canvas id="myChart"></canvas>
+     <div class="expenses-overview">
+       <h2>Expenses Overview</h2>
+       <canvas id="myChart"></canvas>
     </div>
+
 
 
     <!-- Category Summary Cards -->

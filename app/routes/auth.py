@@ -78,12 +78,13 @@ def register():
 
         # Send verification email
         msg = Message(
-            subject="Verify Your Account",
-            sender="SmartSpend <smartspend94@gmail.com>",
-            recipients=[email]
-        )
-        msg.body = f"Welcome {first_name}, please verify your account: {verify_url}"
-        msg.html = render_template('verify_email.html', user=user_data, verify_url=verify_url)
+                subject="Password Reset Request",
+                sender="SmartSpend <smartspend94@gmail.com>",
+                recipients=[email]
+            )
+        msg.body = f"Click here to verify your account: {verify_url}"
+        
+
         mail.send(msg)
 
         flash('Registration successful! Check your email to verify your account.', 'success')
@@ -100,9 +101,15 @@ def verify_email(token):
         flash('Verification link is invalid or expired.', 'danger')
         return redirect(url_for('auth_bp.login'))
 
+    # Check if user already exists
     existing_user = User.query.filter_by(email=user_data['email']).first()
     if existing_user:
-        flash('Your account is already verified. Please log in.', 'info')
+        if existing_user.is_verified:
+            flash('Your account is already verified. Please log in.', 'info')
+        else:
+            existing_user.is_verified = True
+            db.session.commit()
+            flash('Your email has been verified! You can now log in.', 'success')
         return redirect(url_for('auth_bp.login'))
 
     # Create new verified user
@@ -119,6 +126,7 @@ def verify_email(token):
 
     flash('Your email has been verified! You can now log in.', 'success')
     return redirect(url_for('auth_bp.login'))
+
 
 
 # --- Login route ---

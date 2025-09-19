@@ -1,30 +1,60 @@
-/* Layout */
-.register-container {
-  display: flex;
-  height: 100vh;
-  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%); /* same as index hero */
+body {
+  margin: 0;
   font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  position: relative;
+  background-color: #f0f4f8;
 }
 
-/* Left Side Info */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('{{ url_for("static", filename="images/background 1.png") }}');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(10px);
+  z-index: -1;
+}
+
+.register-container {
+  display: flex;
+  max-width: 950px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  height: auto;
+  margin: 20px auto;
+  background: #ffffff;
+}
+
 .register-left {
   flex: 1;
-  background: url("../images/money-bg.jpg") no-repeat center center/cover;
   color: #1f2a37;
-  padding: 60px;
+  padding: 25px 35px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
 }
 
 .register-left h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
+  font-size: 1.7rem;
+  margin-bottom: 8px;
 }
 
 .register-left p {
-  font-size: 1.1rem;
-  margin: 8px 0;
+  font-size: 1rem;
+  margin: 5px 0;
   color: #374151;
 }
 
@@ -32,7 +62,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .logo img {
@@ -40,51 +70,47 @@
   height: 40px;
 }
 
-/* Right Side Form */
 .register-right {
   flex: 1;
   background: #ffffff;
-  padding: 50px;
+  padding: 25px 35px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-left: 1px solid rgba(0,0,0,0.1);
-  box-shadow: -5px 0 15px rgba(0,0,0,0.05);
-  border-radius: 15px 0 0 15px;
 }
 
-/* Form Styling */
 .register-title {
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: #1f2a37;
 }
 
 .subtitle {
   text-align: center;
   color: #555;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .form-input {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
-  transition: border 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .form-input:focus {
   border-color: #059669;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(5,150,105,0.2);
+  box-shadow: 0 0 0 3px rgba(5,150,105,0.15);
 }
 
 .hint {
@@ -92,16 +118,16 @@
   color: #555;
 }
 
-/* Button */
 .btn-submit {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   background: #059669;
   color: #fff;
   border: none;
   border-radius: 25px;
   font-size: 1rem;
   cursor: pointer;
+  margin-top: 5px;
   transition: background 0.3s ease;
 }
 
@@ -109,29 +135,54 @@
   background: #047857;
 }
 
-/* Links */
 .login-link {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .login-link a {
-  color: #1976d2;
+  color: #000000;
   text-decoration: none;
-  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
 }
 
 .login-link a:hover {
-  text-decoration: underline;
+   color: #047857;
+  text-decoration: none;
+  transform: translateY(-1px);
 }
 
-/* Responsive for tablets and smaller screens */
+/* Flash Messages */
+.flash {
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.flash-danger {
+  color: #b91c1c;
+  background-color: #fee2e2;
+  border-color: #f44336;
+  box-shadow: 0 2px 6px rgba(184, 28, 28, 0.2);
+}
+
+.flash-success {
+  color: #065f46;
+  background-color: #d1fae5;
+  border-color: #4CAF50;
+  box-shadow: 0 2px 6px rgba(4, 123, 87, 0.2);
+}
+
+/* Responsive */
 @media (max-width: 764px) {
   .register-container {
     flex-direction: column;
     width: 100%;
-    height: auto;
-    margin: 0;
     padding: 0;
   }
 
@@ -143,49 +194,28 @@
     padding: 20px;
     text-align: center;
     border-radius: 10px;
-    box-shadow: none;
-    margin: 0;
-  }
-
-  .register-left {
-    background-size: cover;
-    background-position: center top;
-    padding-bottom: 30px;
+    margin: 0 auto 20px auto;
   }
 
   .register-left h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   .register-left p {
     font-size: 0.95rem;
   }
 
-  .logo {
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .logo img {
-    width: 50px;
-    height: 50px;
-  }
-
   .register-right {
-    padding: 25px;
+    padding: 20px;
   }
 
   .register-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .subtitle {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin-bottom: 15px;
-  }
-
-  .form-group {
-    margin-bottom: 12px;
   }
 
   .form-input {
@@ -197,31 +227,31 @@
     padding: 12px;
     font-size: 0.95rem;
   }
-
-  .login-link {
-    margin-top: 12px;
-  }
 }
 
-/* Extra small screens < 576px */
 @media (max-width: 576px) {
   .register-left h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
+
   .register-left p {
     font-size: 0.85rem;
   }
+
   .register-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
+
   .subtitle {
     font-size: 0.8rem;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
+
   .form-input {
     padding: 8px 10px;
     font-size: 0.9rem;
   }
+
   .btn-submit {
     padding: 10px;
     font-size: 0.9rem;

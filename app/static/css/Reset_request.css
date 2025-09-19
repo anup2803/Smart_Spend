@@ -1,44 +1,130 @@
-/* Flash Messages */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
+}
+
+
+.reset-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.reset-box {
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+
+.reset-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1f2a37;
+}
+
+.reset-subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+
 .flash-message {
   margin-bottom: 15px;
   text-align: center;
 }
 
 .flash {
-  padding: 10px 15px;
+  display: inline-block;
+  padding: 12px 20px;
   margin-bottom: 10px;
-  border-radius: 5px;
-  color: #fff;
+  border-radius: 8px;
   font-weight: 500;
-  animation: fadein 0.5s, fadeout 0.5s 4s;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  animation: fadeInOut 5s forwards;
+  opacity: 0;
 }
 
-.flash-success { background-color: #4CAF50; }
-.flash-danger  { background-color: #f44336; }
-.flash-warning { background-color: #ff9800; }
-.flash-info    { background-color: #2196F3; }
+.flash-success { 
+  background: linear-gradient(135deg, #4CAF50, #66BB6A); }
+.flash-danger  { 
+  background: linear-gradient(135deg, #f44336, #e57373); }
+.flash-warning {
+   background: linear-gradient(135deg, #ff9800, #ffb74d); }
+.flash-info    { 
+  background: linear-gradient(135deg, #2196F3, #64B5F6); }
 
-@keyframes fadein { from {opacity: 0;} to {opacity: 1;} }
-@keyframes fadeout { from {opacity: 1;} to {opacity: 0;} }
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
 
-/* Form Styling */
+
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   font-weight: 600;
+  color: #1f2a37;
 }
 
 .form-input {
   width: 100%;
-  padding: 10px;
+  padding: 12px 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
 }
+
+.form-input:focus {
+  border-color: #059669;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(5,150,105,0.15);
+}
+
+
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background: #059669;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-submit:hover {
+  background: l#047857;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
 
 .error-list {
   margin-top: 5px;
@@ -46,55 +132,38 @@
   font-size: 13px;
 }
 
-.btn-submit {
-  width: 100%;
-  padding: 10px;
-  background: #2196F3;
-  border: none;
-  color: #fff;
-  font-weight: 600;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
+
+.back-btn{
+   color: #000000;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
 }
 
-.btn-submit:hover {
-  background: #1976D2;
+.back-btn:hover{
+  color: #047857;
+  text-decoration: none;
+  transform: translateY(-1px);
 }
 
-/* Responsive for tablets */
-@media (max-width: 900px) {
-  .flash {
-    font-size: 0.95rem;
-    padding: 8px 12px;
-  }
 
-  .form-input {
-    padding: 9px;
-    font-size: 0.95rem;
-  }
-
-  .btn-submit {
-    padding: 10px;
-    font-size: 0.95rem;
-  }
-}
-
-/* Responsive for mobile */
 @media (max-width: 576px) {
-  .flash {
-    font-size: 0.85rem;
-    padding: 6px 10px;
+  .reset-box {
+    padding: 30px 20px;
   }
 
-  .form-input {
-    padding: 8px;
-    font-size: 0.9rem;
+  .reset-title {
+    font-size: 1.5rem;
   }
 
-  .btn-submit {
-    padding: 8px;
+  .reset-subtitle {
     font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .form-input, .btn-submit {
+    font-size: 0.95rem;
+    padding: 10px;
   }
 
   .error-list {

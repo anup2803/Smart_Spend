@@ -9,7 +9,7 @@ from datetime import datetime
 transaction_bp=Blueprint('transaction_bp',__name__)
 
 #transcations route
-@transaction_bp.route('/Transaction')
+@transaction_bp.route('/transaction')
 def transaction():
     # Only logged-in users can access
     if 'user_id' not in session:
@@ -37,7 +37,7 @@ def transaction():
 
 
 #for add expenses and income
-@transaction_bp.route('/ADD_Transaction',methods=['GET','POST'])
+@transaction_bp.route('/add_Transaction',methods=['GET','POST'])
 def add_transaction():
     if 'user_id' not in session:
         flash(f'please login first','danger')
@@ -52,6 +52,18 @@ def add_transaction():
             description=form.description.data
             date=form.date.data
             T_type=form.type.data
+
+
+
+            # Fetch only future reminders
+            now = datetime.now().date()
+            transaction_date = date
+      
+
+             # Ensure the reminder is in the future
+            if transaction_date > now:
+             flash("Cannot set a transactions in future!", "danger")
+             return redirect(url_for('transaction_bp.add_transaction'))
 
             # check budget only for expenses
             if T_type=='expense':
@@ -83,7 +95,7 @@ def add_transaction():
             db.session.rollback()
             flash(f'An error occurred: {e}', 'danger')
     return render_template('add_transaction.html',form=form)
-
+    
 
 
 

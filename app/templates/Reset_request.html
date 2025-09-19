@@ -1,37 +1,43 @@
-
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/Reset_request.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reset_request.css') }}">
 {% endblock %}
 
-<form method="POST" class="login-form">
-<div class="flash-message">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="flash flash-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
+<div class="reset-container">
+  <div class="reset-box">
+    <h2 class="reset-title">Forgot Password</h2>
+    <p class="reset-subtitle">Enter your email to reset your password</p>
+
+    <div class="flash-message">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
     </div>
-    {{ form.hidden_tag() }}
 
+    <form method="POST" class="reset-form">
+      {{ form.hidden_tag() }}
 
-
-    <div class="form-group">
+      <div class="form-group">
         {{ form.email.label(class="form-label") }}
         {{ form.email(class="form-input") }}
         {% if form.email.errors %}
-            <ul class="error-list">
-                {% for error in form.email.errors %}
-                    <li class="error">{{ error }}</li>
-                {% endfor %}
-            </ul>
+          <ul class="error-list">
+            {% for error in form.email.errors %}
+              <li class="error">{{ error }}</li>
+            {% endfor %}
+          </ul>
         {% endif %}
-    </div>
+      </div>
 
+      <div class="form-group">
+        {{ form.submit(class="btn-submit", value="Send Reset Link") }}
+      </div>
+      <a href="{{ url_for('transaction_bp.transaction') }}" class="back-btn">Back</a>
 
-
-    <div class="form-group">
-        {{ form.submit(class="btn-submit") }}
-    </div>
     </form>
+
+  </div>
+</div>

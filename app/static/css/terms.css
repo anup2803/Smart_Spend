@@ -1,12 +1,11 @@
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 20px;
-    background-color: #f9f9f9;
-    color: #333;
+  margin: 0;
+  padding: 10px;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Headings */
+
 h1 {
     text-align: center;
     color: #2c3e50;
@@ -18,7 +17,7 @@ h2 {
     font-size: 1.5rem;
 }
 
-/* Sections */
+
 section {
     margin-bottom: 20px;
     padding: 15px;
@@ -27,7 +26,7 @@ section {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Lists */
+
 ul {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -38,7 +37,7 @@ li {
     margin-bottom: 8px;
 }
 
-/* Responsive for tablets */
+
 @media (max-width: 900px) {
     body {
         margin: 15px;
@@ -61,7 +60,7 @@ li {
     }
 }
 
-/* Responsive for mobile */
+
 @media (max-width: 576px) {
     body {
         margin: 10px;

@@ -17,8 +17,7 @@
     <h2 class="register-title">Sign up</h2>
     <p class="subtitle">Create a new account with Smart Spent</p>
 
-    <form method="POST" action="{{ url_for('auth_bp.register') }}" class="register-form">
-      <!-- Flash Messages -->
+          <!-- Flash Messages -->
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, message in messages %}
@@ -26,6 +25,8 @@
           {% endfor %}
         {% endif %}
       {% endwith %}
+
+    <form method="POST" action="{{ url_for('auth_bp.register') }}" class="register-form">
 
       <!-- CSRF Token -->
       {{ form.hidden_tag() }}

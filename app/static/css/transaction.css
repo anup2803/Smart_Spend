@@ -1,10 +1,25 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row; /* sidebar + main content side by side */
+  min-height: 100vh;
+}
+
+
+
+
 .topbar {
   position: fixed;
   top: 0;
   left: 230px;
   right: 0;
   height: 60px;
-  background: #fff;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -199,7 +214,7 @@ button.delete-btn:hover {
   gap: 5px;
 }
 
-/* ===== Tablet (1024px) ===== */
+
 @media (max-width: 1024px) {
   .topbar {
     left: 200px;
@@ -210,13 +225,13 @@ button.delete-btn:hover {
   }
 }
 
-/* ===== Mobile View (<=768px) ===== */
+
 @media (max-width: 768px) {
-  /* Topbar */
+  
   .topbar {
     position: fixed;
     top: 0;
-    left: 0; /* full width on mobile */
+    left: 0; 
     right: 0;
     height: 60px;
     padding: 0 15px;
@@ -236,15 +251,15 @@ button.delete-btn:hover {
   }
 
   .transaction-container {
-    margin-top: 70px; /* below topbar */
+    margin-top: 70px; 
     padding: 10px;
     width: 90%;
   }
 
-  /* Add Transaction button */
+ 
   .add_transaction {
     display: flex;
-    justify-content: flex-end; /* align right */
+    justify-content: flex-end; 
     margin-bottom: 15px;
     flex-wrap: wrap;
     margin-left: 250px;
@@ -271,7 +286,7 @@ button.delete-btn:hover {
 
   table {
     
-    min-width: 450px; /* allows horizontal scroll if needed */
+    min-width: 450px; 
     border-collapse: collapse;
     font-size: 13px;
   }
@@ -296,7 +311,7 @@ button.delete-btn:hover {
     background-color: #f1f1f1;
   }
 
-  /* Table action buttons */
+ 
   .table-actions {
     display: flex;
     justify-content: flex-start;
@@ -311,10 +326,10 @@ button.delete-btn:hover {
   }
 }
 
-/* ===== Extra Small Phones (<=480px) ===== */
+
 @media (max-width: 480px) {
   .transaction-container {
-    margin-top: 70px; /* below topbar */
+    margin-top: 70px; 
     padding: 5px 10px;
     width: 100%;
   }
@@ -335,13 +350,13 @@ button.delete-btn:hover {
 
   .table {
     width: 100%;
-    overflow-x: auto; /* horizontal scroll only if needed */
+    overflow-x: auto; 
     padding: 5px;
   }
 
   table {
     width: 100%;
-    min-width: unset; /* remove forced min-width */
+    min-width: unset; 
     font-size: 12px;
   }
 

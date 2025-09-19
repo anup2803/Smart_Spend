@@ -1,9 +1,5 @@
 
 
-
-
-
-
 // for the master side bar menu
 document.addEventListener('DOMContentLoaded', function () {
   const sidebar = document.querySelector('.sidebar');

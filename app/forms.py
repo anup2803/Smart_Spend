@@ -33,7 +33,7 @@ class ResetPasswordForm(FlaskForm):
 #form for add/edit income and expenses
 class TransactionForm(FlaskForm):
     amount = StringField('Amount', validators=[DataRequired()])
-    category = SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('other', 'Other'),('salary','Salary')],validators=[DataRequired()])
+    category = SelectField('Category', choices=[('food', 'Food'),('transport', 'Transport'),('shopping', 'Shopping'),('rent', 'Rent'),('salary','Salary'),('other', 'Other')],validators=[DataRequired()])
     date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
     type = RadioField('Transaction Type',choices=[('expense', 'Expense'), ('income', 'Income')],default='expense',validators=[DataRequired()])

@@ -19,15 +19,17 @@
         <h1 class="login-title">Welcome Back</h1>
         <p class="subtitle">Sign in to your Smart Spent account</p>
 
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+     {% if messages %}
+      {% for category, message in messages %}
+         <div class="flash flash-{{ category }}">{{ message }}</div>
+       {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+
         <form method="POST" action="{{ url_for('auth_bp.login') }}" class="login-form">
-            <!-- Flash Messages -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                {% for category, message in messages %}
-                  <div class="flash flash-{{ category }}">{{ message }}</div>
-                {% endfor %}
-              {% endif %}
-            {% endwith %}
 
             <!-- CSRF Token -->
             {{ form.hidden_tag() }}
@@ -63,15 +65,13 @@
                 {{ form.submit(class="btn-submit") }}
             </div>
 
-            <!-- Additional Links -->
-            <div class="links">
-                <a href="{{ url_for('auth_bp.reset_password_request') }}">Forgot password?</a>
-            </div>
         </form>
 
-        <div class="links">
-            <a href="{{ url_for('auth_bp.register') }}">Don't have an account? Register here</a><br>
-            <a href="{{ url_for('auth_bp.index') }}">Back</a>
-        </div>
+       <div class="links">
+         <a href="{{ url_for('auth_bp.reset_password_request') }}" class="forgot">Forgot password?</a>
+         <a href="{{ url_for('auth_bp.register') }}" class="register">Don't have an account? Register here</a>
+         <a href="{{ url_for('auth_bp.index') }}" class="back">Back</a>
+       </div>
+
     </div>
 </div>

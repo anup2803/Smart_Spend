@@ -1,19 +1,24 @@
-/* General Reset */
-* {
+
+body {
   margin: 0;
   padding: 0;
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
   box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, sans-serif;
+  display: flex;
+  flex-direction: row; 
+  min-height: 100vh;
 }
 
-/* Topbar */
+
 .topbar {
   position: fixed;
   top: 0;
   left: 230px;
   right: 0;
   height: 60px;
-  background: #fff;    
+  background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);   
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +35,7 @@
   gap: 10px;
 }
 
-/* Header */
+
 header {
   display: flex;
   justify-content: space-between;
@@ -106,7 +111,7 @@ header {
   color: #1a1a1a;
 }
 
-/* Reminder Container */
+
 .reminder-container {
   max-width: 900px;
   margin: 80px auto 30px auto;
@@ -116,7 +121,7 @@ header {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
 }
 
-/* Page Header */
+
 .page-header {
   display: flex;
   align-items: center;
@@ -144,7 +149,7 @@ header {
   background: #333;
 }
 
-/* Titles & Subtitles */
+
 .title {
   font-size: 22px;
   font-weight: bold;
@@ -157,7 +162,7 @@ header {
   color: #555;
 }
 
-/* Form */
+
 .vertical-form {
   display: flex;
   flex-direction: column;
@@ -206,7 +211,7 @@ header {
   border-top: 1px solid #ddd;
 }
 
-/* Active Reminders Header */
+
 .active-reminders-header {
   display: flex;
   justify-content: space-between;
@@ -262,7 +267,7 @@ header {
   padding: 6px 10px;
 }
 
-/* Table */
+
 .reminders-table {
   width: 100%;
   border-collapse: collapse;
@@ -288,7 +293,7 @@ header {
   background: #f1f1f1;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .topbar {
     left: 0;

@@ -29,9 +29,21 @@
 
 
         <div class="cards">
-            <div class="card blue">Total Income: <p>Rs.{{ Total_Income if Total_Income is not none else 0 }}</p></div>
-            <div class="card red">Total Expenses: <p>Rs.{{ Total_expense if Total_expense is not none else 0 }}</p></div>
-            <div class="card green">Net Saving: <p>Rs.{{ Net_income }}</p></div>
+                <div class="card green">
+                   <div class="icon">💰</div>
+                    <h3>Total Income</h3>
+                    <p>Rs.{{ Total_Income if Total_Income is not none else 0 }}</p>
+                </div>
+                <div class="card red">
+                     <div class="icon">💸</div>
+                     <h3>Total Expenses</h3>
+                     <p>Rs.{{ Total_expense if Total_expense is not none else 0 }}</p>
+                </div>
+                <div class="card green">
+                     <div class="icon">📈</div>
+                     <h3>Net Saving</h3>
+                     <p>Rs. {{ Net_income }}</p>
+                </div>
         </div>
 
 
