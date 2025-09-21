@@ -92,11 +92,17 @@ window.addEventListener('click', function(e) {
     }
 });
 
+// Get previous month
+let today = new Date();
+let prevMonth = today.getMonth(); // JS months: 0-11
+let year = today.getFullYear();
+if (prevMonth === 0) { // January
+    prevMonth = 12;
+    year -= 1;
+}
 
-
-// for reports
-
-fetch('/expense_data')
+// Fetch expense data for previous month
+fetch(`/expense_data?month=${prevMonth}&year=${year}`)
 .then(response => response.json())
 .then(data => {
     const ctx = document.getElementById('expensePie').getContext('2d');
@@ -122,9 +128,8 @@ fetch('/expense_data')
     });
 });
 
-
-
-fetch('/summary_data')
+// Fetch summary data for previous month
+fetch(`/summary_data?month=${prevMonth}&year=${year}`)
 .then(response => response.json())
 .then(data => {
     const ctx = document.getElementById('summaryBar').getContext('2d');

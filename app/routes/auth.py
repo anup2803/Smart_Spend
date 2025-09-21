@@ -35,7 +35,7 @@ def generate_email_token(user_data):
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return s.dumps(user_data)
 
-def verify_email_token(token, max_age=3600):
+def verify_email_token(token, max_age=600):
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     try:
         return s.loads(token, max_age=max_age)
@@ -78,7 +78,7 @@ def register():
 
         # Send verification email
         msg = Message(
-                subject="Password Reset Request",
+                subject=" Account Verification",
                 sender="SmartSpend <smartspend94@gmail.com>",
                 recipients=[email]
             )

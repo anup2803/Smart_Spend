@@ -1,5 +1,5 @@
 from app import db
-from datetime import datetime
+
 
 class User(db.Model):
     __tablename__ = 'register'
@@ -9,8 +9,8 @@ class User(db.Model):
     username = db.Column(db.String(100), nullable=False, unique=True)
     email = db.Column(db.String(200), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
-    is_verified=db.Column(db.Boolean, default=False)  #use to verify the user confirm their email ?
-    created_at=db.Column(db.DateTime,default=db.func.now()) # Auto timestamp    
+    is_verified=db.Column(db.Boolean, default=False)  
+    created_at=db.Column(db.DateTime,default=db.func.now()) 
 
 
 class Transaction(db.Model):

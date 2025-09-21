@@ -1,4 +1,4 @@
-from flask import jsonify,flash,Blueprint,render_template,redirect,url_for,session,make_response
+from flask import jsonify,flash,Blueprint,render_template,redirect,url_for,session,make_response,request
 from sqlalchemy import func,desc
 from app import db
 from app.models import Transaction,User,Budget
@@ -356,23 +356,34 @@ def monthly_budgets_csv():
 
 
 
-
-#create the expense data and convert into chart.js
 @report_bp.route('/expense_data')
 def expense_data():
     if 'user_id' not in session:
-        return jsonify({'error','Pleases Login First'}),403
-        
-    user_id=session.get('user_id')
-    results=db.session.query(Transaction.category,func.sum(Transaction.amount)).filter_by(user_id=user_id,type='expense').group_by(Transaction.category).all()
-    
-    #convert json format to chart.js
-    data={
-        "labels":[r[0] for r in results],
-        "values":[float(r[1]) for r in results]
+        return jsonify({'error': 'Please login first'}), 403
+
+    user_id = session.get('user_id')
+
+    # Optionally accept month/year from query params
+    month = request.args.get('month', type=int)
+    year = request.args.get('year', type=int)
+
+    query = db.session.query(Transaction.category, func.sum(Transaction.amount)).filter_by(user_id=user_id, type='expense')
+
+    # Filter by month/year if provided
+    if month and year:
+        query = query.filter(
+            func.extract('month', Transaction.date) == month,
+            func.extract('year', Transaction.date) == year
+        )
+
+    results = query.group_by(Transaction.category).all()
+
+    data = {
+        "labels": [r[0] for r in results],
+        "values": [float(r[1]) for r in results]
     }
 
-    return  jsonify(data)
+    return jsonify(data)
 
 
 
@@ -387,30 +398,35 @@ def expenses_chart():
         
 
 
-
-#summary_data for the bar graph
 @report_bp.route('/summary_data')
 def summary_data():
     if 'user_id' not in session:
-        return jsonify({'error','Please Login First'})
-    
-    user_id=session.get('user_id')
+        return jsonify({'error': 'Please login first'}), 403
 
-    #total income query from the transactions
-    Total_income=db.session.query(func.sum(Transaction.amount)).filter_by(user_id=user_id,type='income').scalar() or 0
+    user_id = session.get('user_id')
 
+    month = request.args.get('month', type=int)
+    year = request.args.get('year', type=int)
 
-    #total expense query from the transactions
-    Total_expense=db.session.query(func.sum(Transaction.amount)).filter_by(user_id=user_id,type='expense').scalar() or 0
+    income_query = db.session.query(func.sum(Transaction.amount)).filter_by(user_id=user_id, type='income')
+    expense_query = db.session.query(func.sum(Transaction.amount)).filter_by(user_id=user_id, type='expense')
 
-    #net saving of the transactions 
-    Net_saving=max(Total_income - Total_expense, 0)
+    if month and year:
+        income_query = income_query.filter(func.extract('month', Transaction.date) == month,
+                                           func.extract('year', Transaction.date) == year)
+        expense_query = expense_query.filter(func.extract('month', Transaction.date) == month,
+                                             func.extract('year', Transaction.date) == year)
 
-    data={
-        "labels":['Income','Expense','Net Saving'],
-        "values":[Total_income,Total_expense,Net_saving]
+    Total_income = income_query.scalar() or 0
+    Total_expense = expense_query.scalar() or 0
+    Net_saving = max(Total_income - Total_expense, 0)
+
+    data = {
+        "labels": ['Income', 'Expense', 'Net Saving'],
+        "values": [Total_income, Total_expense, Net_saving]
     }
 
     return jsonify(data)
+
 
 
