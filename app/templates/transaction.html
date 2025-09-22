@@ -7,23 +7,6 @@
 
 {% block content %}
 
-  <div class="topbar">
-    <div class="left">
-        <span class="menu-icon">☰</span>
-        <h3>Transactions</h3>
-    </div>
-     <div class="profile">
-     <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
-       <div class="dropdown" id="profileDropdown">
-        <p><strong>Username:{{user.username}}</strong></p>
-        <p><strong>{{user.email}}</strong></p>
-        <a href="{{url_for('settings_bp.settings')}}">Settings</a>
-        <a href="{{url_for('auth_bp.logout')}}">Logout</a>
-       </div>
-     </div>
-  </div>
-
-
 <div class="transaction-container">
     <!-- Add Transaction -->
     <div class="add_transaction">

@@ -88,7 +88,8 @@ def monthly():
         form=form,
         budget_data=budget_data,
         user=user,
-        budgets=budgets
+        budgets=budgets,
+        page_title="Monthly Budgets"
     )
 
 

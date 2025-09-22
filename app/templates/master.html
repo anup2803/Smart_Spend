@@ -4,29 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Smart Spend{% endblock %}</title>
+  
+  <!-- CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/master.css') }}">
+  
+  <!-- Favicon -->
   <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
+  
   {% block head %}{% endblock %}
 </head>
-<body>
+<body class="light">
 
-  <!-- Sidebar (Fixed for all pages) -->
+  <!-- Sidebar -->
   <div class="sidebar">
     <div class="logo">
       <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Smart Spend Logo">
       <strong>Smart Spend</strong>
-</div>
-<ul>
-  <li><a href="{{ url_for('dashboard_bp.dashboard') }}">Dashboard</a></li>
-  <li><a href="{{ url_for('transaction_bp.transaction') }}">Transactions</a></li>
-  <li><a href="{{ url_for('monthly_bp.monthly') }}">Monthly Budget</a></li>
-  <li><a href="{{ url_for('report_bp.report_analysis') }}">Reports & Analytics</a></li>
-  <li><a href="{{ url_for('reminders_bp.reminders') }}">Reminders</a></li>
-  <li><a href="{{ url_for('settings_bp.settings') }}">Settings</a></li>
+    </div>
+    <ul>
+      <li><a href="{{ url_for('dashboard_bp.dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ url_for('transaction_bp.transaction') }}">Transactions</a></li>
+      <li><a href="{{ url_for('monthly_bp.monthly') }}">Monthly Budget</a></li>
+      <li><a href="{{ url_for('report_bp.report_analysis') }}">Reports & Analytics</a></li>
+      <li><a href="{{ url_for('reminders_bp.reminders') }}">Reminders</a></li>
+      <li><a href="{{ url_for('settings_bp.settings') }}">Settings</a></li>
+    </ul>
+  </div>
 
-</ul>
-</div>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="left">
+      <span class="menu-icon">☰</span>
+      <h3>{{ page_title }}</h3>
+    </div>
 
+    <!-- Theme Toggle -->
+    <button id="themeToggle" onclick="toggleTheme()">🌙</button>
+
+    <!-- Profile Dropdown -->
+    <div class="profile">
+      <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
+      <div class="dropdown" id="profileDropdown">
+        <p><strong>{{ user.username }}</strong></p>
+        <p><strong>{{ user.email }}</strong></p>
+        <a href="{{ url_for('settings_bp.settings') }}">Settings</a>
+        <a href="{{ url_for('auth_bp.logout') }}">Logout</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Main Content -->
   <div class="main-content">
@@ -44,11 +69,12 @@
     {% endwith %}
   </div>
 
+  <!-- Overlay for Mobile -->
+  <div id="overlay"></div>
 
+  <!-- JS -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  {% block scripts %}{% endblock %}
 
-  <!-- Overlay for mobile -->
-<div id="overlay"></div>
-
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

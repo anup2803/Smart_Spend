@@ -55,6 +55,7 @@ def register():
         last_name = form.last_name.data
         username = form.username.data
         email = form.email.data
+        phonenumber=form.phonenumber.data
         password = generate_password_hash(form.password.data)
 
         # Check if user exists
@@ -70,6 +71,7 @@ def register():
             "last_name": last_name,
             "username": username,
             "email": email,
+            "phonenumber":phonenumber,
             "password": password
         }
 
@@ -118,6 +120,7 @@ def verify_email(token):
         last_name=user_data['last_name'],
         username=user_data['username'],
         email=user_data['email'],
+        phonenumber=user_data['phonenumber'],
         password=user_data['password'],
         is_verified=True
     )

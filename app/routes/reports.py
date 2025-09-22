@@ -64,7 +64,7 @@ def report_analysis():
 
 
 
-      return render_template('reports.html',Total_Income=Total_Income,Total_expense=Total_expense,Net_income=Net_income,recent_trans=recent_trans,user=user,past_budget=past_budget)
+      return render_template('reports.html',Total_Income=Total_Income,Total_expense=Total_expense,Net_income=Net_income,recent_trans=recent_trans,user=user,past_budget=past_budget,page_title="Reports & Analysis")
 
     except Exception as e:
           flash(f"Error generating report: {e}", "danger")

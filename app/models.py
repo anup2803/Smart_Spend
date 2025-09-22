@@ -8,6 +8,7 @@ class User(db.Model):
     last_name = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), nullable=False, unique=True)
     email = db.Column(db.String(200), nullable=False, unique=True)
+    phonenumber=db.Column(db.String(10),nullable=False,unique=True)
     password = db.Column(db.String(200), nullable=False)
     is_verified=db.Column(db.Boolean, default=False)  
     created_at=db.Column(db.DateTime,default=db.func.now()) 

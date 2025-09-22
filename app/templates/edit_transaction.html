@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Transaction -Smart Spend</title>
+{% extends 'master.html' %}
+    {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_transaction.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
-</head>
-<body>
+    {% endblock %}
+    {% block content %}
     <div class="container">
-        <h2>Edit Transaction</h2>
 
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -21,8 +16,6 @@
         {% endwith %}
 
 
-            <!-- Back Button -->
-      <a href="{{ url_for('transaction_bp.transaction') }}" class="back-btn">Back</a>
 
 
         <!-- Edit Transaction Form -->
@@ -59,5 +52,5 @@
             {{ form.submit(class="btn") }}
         </form>
     </div>
-</body>
-</html>
+    
+    {% endblock %}

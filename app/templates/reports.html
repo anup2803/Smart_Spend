@@ -8,21 +8,6 @@
 
     {% block content %}
 
-    <div class="topbar">
-        <div class="left">
-            <span class="menu-icon">☰</span>
-            <h3>Reports</h3>
-        </div>
-        <div class="profile">
-        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
-        <div class="dropdown" id="profileDropdown">
-            <p><strong>{{user.username}}</strong></p>
-            <p><strong>{{user.email}}</strong></p>
-            <a href="{{url_for('settings_bp.settings')}}">Settings</a>
-            <a href="{{url_for('auth_bp.logout')}}">Logout</a>
-        </div>
-        </div>
-    </div>
 
     <div class="report-container">
 
@@ -74,7 +59,7 @@
 
        {% if recent_trans %}
 <div class="table-container">
-    <h3>Recent Transactions</h3>
+    <h2>Recent Transactions</h2>
     <table class="styled-table">
         <thead>
             <tr>

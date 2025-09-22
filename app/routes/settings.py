@@ -20,7 +20,7 @@ def settings():
 
     user = User.query.filter_by(id=user_id).first()
     
-    return render_template('setting.html',user=user)
+    return render_template('setting.html',user=user,page_title="Settings")
 
 
 
@@ -33,8 +33,11 @@ def edit_informations():
         flash(f'Please Login first','danger')
         return redirect(url_for('auth_bp.login'))
     
+
+
     # Load user from DB
     user = User.query.get(session['user_id'])
+    
     # Pre-fill form with user data
     form=UpdateprofileForm(obj=user)
 
@@ -55,7 +58,7 @@ def edit_informations():
             flash(f"Error updating profile: {e}", "danger")
 
 
-    return render_template('edit_information.html', form=form, user=user)
+    return render_template('edit_information.html', form=form, user=user,page_title="Profile")
 
 
 
@@ -86,4 +89,4 @@ def change_password():
             flash("Password changed successfully!", "success")
             return redirect(url_for('settings_bp.change_password'))
         
-    return render_template("change_password.html",form=form)
+    return render_template("change_password.html",form=form,user=user,page_title="Change Password")

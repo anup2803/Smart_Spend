@@ -1,45 +1,72 @@
+// ===== Theme Toggle =====
+function toggleTheme() {
+    const body = document.body;
+    const button = document.getElementById("themeToggle");
 
+    if (body.classList.contains("light")) {
+        body.classList.replace("light", "dark");
+        localStorage.setItem("theme", "dark");
+        button.textContent = "☀️"; // sun icon
+    } else {
+        body.classList.replace("dark", "light");
+        localStorage.setItem("theme", "light");
+        button.textContent = "🌙"; // moon icon
+    }
+}
 
-// for the master side bar menu
-document.addEventListener('DOMContentLoaded', function () {
-  const sidebar = document.querySelector('.sidebar');
-  const overlay = document.getElementById('overlay');
-  const menuIcon = document.querySelector('.menu-icon');
-  const sidebarLinks = document.querySelectorAll('.sidebar a');
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.body.classList.add(savedTheme);
+    document.getElementById("themeToggle").textContent = 
+        savedTheme === "dark" ? "☀️" : "🌙";
+});
 
-  // Toggle sidebar on ☰ click
-  menuIcon.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-    overlay.classList.toggle('active');
+// ===== Sidebar toggle =====
+document.addEventListener("DOMContentLoaded", function() {
+  const menuIcon = document.querySelector(".menu-icon");
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("overlay");
+
+  menuIcon.addEventListener("click", function() {
+    if (window.innerWidth <= 768) {
+      // Mobile toggle
+      sidebar.classList.toggle("active");
+      overlay.classList.toggle("active");
+    } else {
+      // Desktop toggle
+      sidebar.classList.toggle("hidden");
+    }
   });
 
-  // Close sidebar when clicking overlay
-  overlay.addEventListener('click', () => {
-    sidebar.classList.remove('active');
-    overlay.classList.remove('active');
-  });
-
-  // Close sidebar after clicking a link (mobile)
-  sidebarLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      sidebar.classList.remove('active');
-      overlay.classList.remove('active');
-    });
+  overlay.addEventListener("click", function() {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
   });
 });
 
 
 
+// ===== Profile dropdown =====
+const profileBtn = document.getElementById('profileBtn');
+const profileDropdown = document.getElementById('profileDropdown');
+
+profileBtn.addEventListener('click', () => {
+    profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+});
+
+window.addEventListener('click', e => {
+    if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+        profileDropdown.style.display = 'none';
+    }
+});
 
 
 
-
-// fetch the data and show in the graph
+// ===== Line chart (all-time) =====
 fetch('/data')
 .then(res => res.json())
 .then(data => {
     const ctx = document.getElementById('myChart').getContext('2d');
-
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -51,7 +78,7 @@ fetch('/data')
                     borderColor: 'rgba(255, 0, 0, 0.8)',
                     backgroundColor: 'rgba(255, 0, 0, 0.3)',
                     fill: true,
-                    tension: 0.4  // smooth curve
+                    tension: 0.4
                 },
                 {
                     label: 'Income',
@@ -65,46 +92,28 @@ fetch('/data')
         },
         options: {
             responsive: true,
-            plugins: {
-                legend: { position: 'bottom' }
-            },
-            scales: {
-                y: { beginAtZero: true }
-            }
+            plugins: { legend: { position: 'bottom' } },
+            scales: { y: { beginAtZero: true } }
         }
     });
 });
 
-
-
-// // toogle profile
-const profileBtn = document.getElementById('profileBtn');
-const profileDropdown = document.getElementById('profileDropdown');
-
-profileBtn.addEventListener('click', () => {
-    profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
-});
-
-// Close dropdown if clicked outside
-window.addEventListener('click', function(e) {
-    if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
-        profileDropdown.style.display = 'none';
-    }
-});
-
-// Get previous month
+// ===== Get previous month correctly (1-12) =====
 let today = new Date();
-let prevMonth = today.getMonth(); // JS months: 0-11
+let prevMonth = today.getMonth(); // 0-11
 let year = today.getFullYear();
+
 if (prevMonth === 0) { // January
     prevMonth = 12;
     year -= 1;
+} else {
+    prevMonth = prevMonth; // 1-11
 }
+prevMonth += 1; // Convert to 1-12 for SQL
 
-// Fetch expense data for previous month
-fetch(`/expense_data?month=${prevMonth}&year=${year}`)
-.then(response => response.json())
-.then(data => {
+
+// ===== Expense Pie Chart =====
+function drawExpensePie(data) {
     const ctx = document.getElementById('expensePie').getContext('2d');
     new Chart(ctx, {
         type: 'pie',
@@ -126,12 +135,23 @@ fetch(`/expense_data?month=${prevMonth}&year=${year}`)
             }
         }
     });
-});
+}
 
-// Fetch summary data for previous month
-fetch(`/summary_data?month=${prevMonth}&year=${year}`)
-.then(response => response.json())
+fetch(`/expense_data?month=${prevMonth}&year=${year}`)
+.then(res => res.json())
 .then(data => {
+    if (data.labels.length === 0) {
+        // fallback to all-time data
+        return fetch('/expense_data').then(res => res.json());
+    }
+    return data;
+})
+.then(drawExpensePie);
+
+
+
+// ===== Summary Bar Chart =====
+function drawSummaryBar(data) {
     const ctx = document.getElementById('summaryBar').getContext('2d');
     new Chart(ctx, {
         type: 'bar',
@@ -152,4 +172,15 @@ fetch(`/summary_data?month=${prevMonth}&year=${year}`)
             scales: { y: { beginAtZero: true } }
         }
     });
-});
+}
+
+fetch(`/summary_data?month=${prevMonth}&year=${year}`)
+.then(res => res.json())
+.then(data => {
+    if (data.values.every(v => v === 0)) {
+        // fallback to all-time summary
+        return fetch('/summary_data').then(res => res.json());
+    }
+    return data;
+})
+.then(drawSummaryBar);

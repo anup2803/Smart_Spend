@@ -90,7 +90,8 @@ def dashboard():
             Total_Income=Total_Income,
             Total_expense=Total_Expense,
             recent_trans=recent_trans,
-            summaries=summary_data
+            summaries=summary_data,
+            page_title="Dashboard"
         )
 
     except Exception as e:

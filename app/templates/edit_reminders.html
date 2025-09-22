@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Reminder -Smart Spend</title>
+{% extends 'master.html' %}
+    {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_reminders.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
-</head>
-<body>
+    {% endblock %}
+    {% block content%}
 
 <div class="form-container">
-    <h2>Edit Reminder</h2>
 
     <!-- Flash Messages -->
     <div class="flash-message">
@@ -57,9 +52,6 @@
         </div>
     </form>
 
-    <!-- Back Link -->
-    <a href="{{ url_for('reminders_bp.reminders') }}" class="back-link">⬅ Back to Reminders</a>
 </div>
 
-</body>
-</html>
+{% endblock %}

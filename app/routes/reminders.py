@@ -99,7 +99,7 @@ def reminders():
  reminders = Reminder.query.filter_by(user_id=user_id).all()
  user = User.query.filter_by(id=user_id).first()
 
- return render_template("reminders.html", reminders=reminders,form=form,user=user)
+ return render_template("reminders.html", reminders=reminders,form=form,user=user,page_title="Reminders")
 
 
 
@@ -154,6 +154,8 @@ def edit_reminder(id):
         return redirect(url_for('reminders_bp.reminders'))  
 
     form = RemindersForm(obj=reminder)
+    user_id=session['user_id']
+    user = User.query.get(user_id) 
 
     if form.validate_on_submit():
         try:
@@ -171,7 +173,7 @@ def edit_reminder(id):
             db.session.rollback()
             flash(f'Error updating reminder: {e}', 'danger')
 
-    return render_template('edit_reminders.html', form=form, reminder=reminder)
+    return render_template('edit_reminders.html', form=form, reminder=reminder,user=user,page_title="Edit Reminders")
 
 
 

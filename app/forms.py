@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateField, RadioField,TimeField,SelectField,FloatField
-from wtforms.validators import DataRequired, Email, EqualTo, Length,NumberRange
+from wtforms.validators import DataRequired, Email, EqualTo, Length,NumberRange,Regexp
 
 
 #Form for new user registration
@@ -9,7 +9,8 @@ class RegisterForm(FlaskForm):
     last_name = StringField('Last Name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
+    phonenumber=StringField('Phone Number', validators=[DataRequired(),Regexp(r'^\+?\d{10,15}$', message="Enter a valid phone number.")])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8),Regexp(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$',message="Password must contain at least one uppercase letter, one number, and one special character.")])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 

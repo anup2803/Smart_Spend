@@ -8,28 +8,6 @@
 {% block content %}
 
 
-<div class="monthly-budget">
-
-
-  <div class="topbar">
-    <div class="left">
-        <span class="menu-icon">☰</span>
-        <h3>Monthly Budgets</h3>
-    </div>
-     <div class="profile">
-     <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-pic" id="profileBtn">
-       <div class="dropdown" id="profileDropdown">
-        <p><strong>{{user.username}}</strong></p>
-        <p><strong>{{user.email}}</strong></p>
-        <a href="{{url_for('settings_bp.settings')}}">Settings</a>
-        <a href="{{url_for('auth_bp.logout')}}">Logout</a>
-       </div>
-     </div>
-  </div>
-
-
-
-
     <!-- Budget Form -->
     <div class="budget-form">
         <h2>Set Your Monthly Budget</h2>
@@ -51,7 +29,7 @@
 
 
     <!-- Show Budgets -->
-<div class="show-budget">
+ <div class="show-budget">
     <div class="export-buttons">
         <form action="{{ url_for('monthly_bp.current_monthly_budgets') }}">
             <button type="submit" class="btn">Export PDF</button>
@@ -89,11 +67,11 @@
     {% else %}
         <p>No budgets set yet.</p>
     {% endif %}
-</div>
 
 
 
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+ <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}
 
 

@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Information -Smart Spend</title>
+{% extends 'master.html' %}
+    {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_information.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
-</head>
-<body>
+    {% endblock %}
+    {%block content%}
 
-<h1>Profile</h1>
-
-<!-- Back Button -->
-<form action="{{ url_for('settings_bp.settings') }}" method="POST" style="margin-bottom: 20px;">
-    <button class="back-btn" type="submit">Back</button>
-</form>
 
 <!-- Flash Messages -->
 <div class="flash-message">
@@ -54,5 +44,4 @@
     </form>
 </div>
 
-</body>
-</html>
+{% endblock %}

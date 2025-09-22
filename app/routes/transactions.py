@@ -27,7 +27,7 @@ def transaction():
     #recent transaction of recent transactioons 
     recent_trans = Transaction.query.filter_by(user_id=user_id).order_by(desc(Transaction.date)).limit(5).all()
 
-    return render_template('transaction.html',transaction=transaction,recent_trans=recent_trans,user=user)
+    return render_template('transaction.html',transaction=transaction,recent_trans=recent_trans,user=user,page_title="Transactions")
 
 
 
@@ -43,6 +43,9 @@ def add_transaction():
         flash(f'please login first','danger')
         return redirect(url_for('auth_bp.login'))
     
+    user_id = session['user_id']   
+    user = User.query.get(user_id)
+
     form=TransactionForm()
     if form.validate_on_submit():
         try:
@@ -94,7 +97,7 @@ def add_transaction():
         except Exception as e:
             db.session.rollback()
             flash(f'An error occurred: {e}', 'danger')
-    return render_template('add_transaction.html',form=form)
+    return render_template('add_transaction.html',form=form,user=user,page_title="Add Transactions")
     
 
 
@@ -108,6 +111,9 @@ def edit_transaction(id):
     if 'user_id' not in session:
         flash('Please login first', 'danger')
         return redirect(url_for('auth_bp.login'))
+    
+    user_id=session['user_id']
+    user = User.query.get(user_id) 
 
     # fetch transactions by ID
     transaction = Transaction.query.filter_by(id=id, user_id=session['user_id']).first()
@@ -117,6 +123,7 @@ def edit_transaction(id):
 
     # Pre-fill form with current values
     form = TransactionForm(obj=transaction)
+    
 
     if form.validate_on_submit():
         try:
@@ -140,7 +147,7 @@ def edit_transaction(id):
             db.session.rollback()
             flash(f'Error updating transaction: {e}', 'danger')
 
-    return render_template('edit_transaction.html', form=form, transaction=transaction)
+    return render_template('edit_transaction.html', form=form, transaction=transaction,user=user,page_title="Edit Transactions")
 
 
 
