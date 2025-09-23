@@ -3,23 +3,37 @@ function toggleTheme() {
     const body = document.body;
     const button = document.getElementById("themeToggle");
 
+    let newTheme;
     if (body.classList.contains("light")) {
         body.classList.replace("light", "dark");
-        localStorage.setItem("theme", "dark");
+        newTheme = "dark";
         button.textContent = "☀️"; // sun icon
     } else {
         body.classList.replace("dark", "light");
-        localStorage.setItem("theme", "light");
+        newTheme = "light";
         button.textContent = "🌙"; // moon icon
     }
+
+    // Save to localStorage
+    localStorage.setItem("theme", newTheme);
+
+    // Save to backend (user-specific)
+    fetch("/settings/theme", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ theme: newTheme }),
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     const savedTheme = localStorage.getItem("theme") || "light";
     document.body.classList.add(savedTheme);
-    document.getElementById("themeToggle").textContent = 
+    document.getElementById("themeToggle").textContent =
         savedTheme === "dark" ? "☀️" : "🌙";
 });
+
 
 // ===== Sidebar toggle =====
 document.addEventListener("DOMContentLoaded", function() {
@@ -184,3 +198,36 @@ fetch(`/summary_data?month=${prevMonth}&year=${year}`)
     return data;
 })
 .then(drawSummaryBar);
+
+
+
+
+// for delete the transactions 
+
+const deleteButtons = document.querySelectorAll('.delete-btn');
+
+deleteButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        // Show confirmation dialog
+        const confirmDelete = confirm("Are you sure you want to delete this transaction?");
+        if (!confirmDelete) {
+            // Prevent form submission if user clicks "Cancel"
+            event.preventDefault();
+        }
+    });
+});
+
+
+// FOR DELETE THE REMINDER
+
+const deletereminder=document.querySelectorAll(".btn-danger_small-btn")
+
+deletereminder.forEach(button=>{  
+ button.addEventListener('click',function(event){
+    const confirmdeletereminders=confirm("Are you sure you want to delete this Reminders?");
+    if (!confirmdeletereminders)
+        {
+        event.preventDefault();
+        }
+    });
+});

@@ -1,8 +1,8 @@
-from flask import render_template,redirect,url_for,session,flash,Blueprint
+from flask import render_template,redirect,url_for,session,flash,Blueprint,request
 from app import db
 from app.models import User
 from werkzeug.security import generate_password_hash,check_password_hash
-from app.forms import ChangePasswordForm,UpdateprofileForm
+from app.forms import ChangePasswordForm,UpdateprofileForm,ThemeForm
 
 #blueprint for the settings
 settings_bp=Blueprint('settings_bp',__name__)
@@ -90,3 +90,23 @@ def change_password():
             return redirect(url_for('settings_bp.change_password'))
         
     return render_template("change_password.html",form=form,user=user,page_title="Change Password")
+
+
+
+
+#theme perferences
+@settings_bp.route('/theme', methods=['POST'])
+def ajax_theme():
+    if 'user_id' not in session:
+        return {"success": False, "error": "Not logged in"}, 401
+
+    user = User.query.get(session['user_id'])
+    data = request.get_json()
+    theme_choice = data.get("theme")
+
+    if theme_choice in ["light", "dark"]:
+        user.theme = theme_choice
+        db.session.commit()
+        return {"success": True, "theme": theme_choice}
+
+    return {"success": False, "error": "Invalid theme"}, 400

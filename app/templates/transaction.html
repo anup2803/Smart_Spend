@@ -37,7 +37,7 @@
                         <button class="edit-btn" type="submit">Edit</button>
                     </form>
                     <form action="{{ url_for('transaction_bp.delete_transaction', id=t.id) }}" method="post" style="display: inline;">
-                        <button class="delete-btn" type="submit">Delete</button>
+                        <button class="delete-btn" type="submit" id="delete-btn">Delete</button>
                     </form>
                 </td>
             </tr>

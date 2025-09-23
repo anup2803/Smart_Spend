@@ -25,7 +25,6 @@ def monthly():
     page = request.args.get('page', 1, type=int)
     form = BudgetForm()
     user = User.query.filter_by(id=user_id).first()
-
     current_month = datetime.now().month
     current_year = datetime.now().year
 
@@ -34,25 +33,28 @@ def monthly():
         category = form.category.data
         amount = form.amount.data
 
+        # Calculate total spent for this category in current month
+        total_used = db.session.query(func.sum(Transaction.amount)).filter(
+            Transaction.user_id == user_id,
+            Transaction.category == category,
+            Transaction.type == 'expense',
+            func.extract('month', Transaction.date) == current_month,
+            func.extract('year', Transaction.date) == current_year
+        ).scalar() or 0
+
+        # Prevent setting budget lower than already spent
+        if amount < total_used:
+            flash(f"Cannot set budget lower than already spent: Rs {total_used}", "danger")
+            return redirect(url_for('monthly_bp.monthly'))
+
         # Check if a budget exists for the current month/year
-        existing = Budget.query.filter_by(
-            user_id=user_id,
-            category=category,
-            month=current_month,
-            year=current_year
-        ).first()
+        existing = Budget.query.filter_by(user_id=user_id,category=category,month=current_month,year=current_year).first()
 
         if existing:
             existing.amount = amount
             flash(f'Budget for {category} updated!', 'success')
         else:
-            new_budget = Budget(
-                user_id=user_id,
-                category=category,
-                amount=amount,
-                month=current_month,
-                year=current_year
-            )
+            new_budget = Budget(user_id=user_id,category=category,amount=amount,month=current_month,year=current_year)
             db.session.add(new_budget)
             flash(f'Budget for {category} set!', 'success')
 
@@ -61,10 +63,10 @@ def monthly():
 
     # --- Fetch Budgets with Pagination ---
     budgets = Budget.query.filter_by(user_id=user_id).paginate(page=page, per_page=2)
-
     budget_data = []
+
     for b in budgets.items:
-        # Only include transactions that match the budget's month/year
+        # Total spent for this budget category
         total_used = db.session.query(func.sum(Transaction.amount)).filter(
             Transaction.user_id == user_id,
             Transaction.category == b.category,
@@ -91,6 +93,7 @@ def monthly():
         budgets=budgets,
         page_title="Monthly Budgets"
     )
+
 
 
 # Export current month budget report to PDF

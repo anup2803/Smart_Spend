@@ -8,10 +8,10 @@ class User(db.Model):
     last_name = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), nullable=False, unique=True)
     email = db.Column(db.String(200), nullable=False, unique=True)
-    phonenumber=db.Column(db.String(10),nullable=False,unique=True)
     password = db.Column(db.String(200), nullable=False)
     is_verified=db.Column(db.Boolean, default=False)  
     created_at=db.Column(db.DateTime,default=db.func.now()) 
+    theme = db.Column(db.String(10), default="light")
 
 
 class Transaction(db.Model):
@@ -33,6 +33,8 @@ class Budget(db.Model):
     amount = db.Column(db.Float)
     month = db.Column(db.Integer)   
     year = db.Column(db.Integer)
+    alert_80_sent = db.Column(db.Boolean, default=False)
+    alert_100_sent = db.Column(db.Boolean, default=False)
 
 
 

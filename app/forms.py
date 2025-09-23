@@ -9,7 +9,6 @@ class RegisterForm(FlaskForm):
     last_name = StringField('Last Name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    phonenumber=StringField('Phone Number', validators=[DataRequired(),Regexp(r'^\+?\d{10,15}$', message="Enter a valid phone number.")])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8),Regexp(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$',message="Password must contain at least one uppercase letter, one number, and one special character.")])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
@@ -30,6 +29,15 @@ class ResetPasswordForm(FlaskForm):
     password=PasswordField('Password',validators=[DataRequired(),Length(min=8)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit=SubmitField('Update password')
+
+#theme perferences
+class ThemeForm(FlaskForm):
+    theme = RadioField(
+        'Choose Theme',
+        choices=[('light', 'Light Mode'), ('dark', 'Dark Mode')],
+        validators=[DataRequired()]
+    )
+    submit = SubmitField('Save Preference')
 
 #form for add/edit income and expenses
 class TransactionForm(FlaskForm):

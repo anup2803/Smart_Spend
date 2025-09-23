@@ -141,7 +141,6 @@ def send_reminder_email(app,reminder_id):
 
 
 
-# Edit reminders
 @reminders_bp.route('/edit_reminders/<int:id>', methods=['GET', 'POST'])
 def edit_reminder(id):
     if 'user_id' not in session:
@@ -154,18 +153,27 @@ def edit_reminder(id):
         return redirect(url_for('reminders_bp.reminders'))  
 
     form = RemindersForm(obj=reminder)
-    user_id=session['user_id']
+    user_id = session['user_id']
     user = User.query.get(user_id) 
 
     if form.validate_on_submit():
         try:
+            # Combine date and time from form into a datetime object
+            new_datetime = datetime.combine(form.due_date.data, form.time.data)
+
+            # Prevent past datetime
+            if new_datetime < datetime.now():
+                flash("You cannot set a reminder in the past.", "danger")
+                return redirect(url_for('reminders_bp.edit_reminder', id=id))
+
+            # Update reminder fields
             reminder.reminder_type = form.reminder_type.data
             reminder.category = form.category.data
             reminder.due_date = form.due_date.data
             reminder.time = form.time.data
             reminder.amount = form.amount.data
-            db.session.commit()
 
+            db.session.commit()
             flash(f'{reminder.reminder_type.capitalize()} updated successfully!', 'success')
             return redirect(url_for('reminders_bp.reminders'))
 
@@ -173,7 +181,13 @@ def edit_reminder(id):
             db.session.rollback()
             flash(f'Error updating reminder: {e}', 'danger')
 
-    return render_template('edit_reminders.html', form=form, reminder=reminder,user=user,page_title="Edit Reminders")
+    return render_template(
+        'edit_reminders.html',
+        form=form,
+        reminder=reminder,
+        user=user,
+        page_title="Edit Reminders"
+    )
 
 
 

@@ -153,6 +153,18 @@ body {
   background: #c0392b;
 }
 
+.btn-danger_small-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-danger_small-btn:hover{
+  background: #c0392b;
+}
+
 .btn-edit {
   background: #27ae60;
   color: #fff;

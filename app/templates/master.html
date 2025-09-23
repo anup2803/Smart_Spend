@@ -13,7 +13,7 @@
   
   {% block head %}{% endblock %}
 </head>
-<body class="light">
+<body class="{{ user.theme if user else 'light' }}">
 
   <!-- Sidebar -->
   <div class="sidebar">
@@ -39,7 +39,10 @@
     </div>
 
     <!-- Theme Toggle -->
-    <button id="themeToggle" onclick="toggleTheme()">🌙</button>
+   <button id="themeToggle" onclick="toggleTheme()">
+    {% if user.theme == "dark" %} ☀️ {% else %} 🌙 {% endif %}
+   </button>
+
 
     <!-- Profile Dropdown -->
     <div class="profile">
