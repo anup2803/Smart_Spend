@@ -11,7 +11,7 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     is_verified=db.Column(db.Boolean, default=False)  
     created_at=db.Column(db.DateTime,default=db.func.now()) 
-    theme = db.Column(db.String(10), default="light")
+    # theme = db.Column(db.String(10), default="light")
 
 
 class Transaction(db.Model):
@@ -33,12 +33,11 @@ class Budget(db.Model):
     amount = db.Column(db.Float)
     month = db.Column(db.Integer)   
     year = db.Column(db.Integer)
-    alert_80_sent = db.Column(db.Boolean, default=False)
-    alert_100_sent = db.Column(db.Boolean, default=False)
 
 
 
 class Reminder(db.Model):
+    __tablename__ = 'reminder'
     id = db.Column(db.Integer, primary_key=True)
     reminder_type = db.Column(db.String(50), nullable=False)  # Payable or Receivable
     category = db.Column(db.String(50), nullable=False)

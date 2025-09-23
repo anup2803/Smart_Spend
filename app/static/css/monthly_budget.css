@@ -237,19 +237,19 @@ body {
 }
 
 
-/* Light Theme (Default) */
+
 body.light {
   background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
   color: #333;
 }
 
-/* Dark Theme */
+
 body.dark {
   background: linear-gradient(135deg, #1e1e1e 0%, #2c3e50 100%);
   color: #f5f5f5;
 }
 
-/* Topbar */
+
 body.light .topbar {
   background: linear-gradient(135deg, #E3F2FD 0%, #B2DFDB 100%);
   color: #000;
@@ -259,7 +259,7 @@ body.dark .topbar {
   color: #f5f5f5;
 }
 
-/* Header */
+
 body.light header {
   background-color: #2c3e50;
   color: white;
@@ -269,19 +269,19 @@ body.dark header {
   color: #f5f5f5;
 }
 
-/* Cards */
+
 body.dark .card.green  { background: linear-gradient(135deg, #065f46, #064e3b); }
 body.dark .card.red    { background: linear-gradient(135deg, #7f1d1d, #991b1b); }
 body.dark .card.blue   { background: linear-gradient(135deg, #1e3a8a, #1e40af); }
 body.dark .card.orange { background: linear-gradient(135deg, #7c2d12, #9a3412); }
 
-/* Card text */
+
 body.dark .card h3,
 body.dark .card p {
   color: #f5f5f5;
 }
 
-/* Sections */
+
 body.light .budget-summary,
 body.light .expenses-overview,
 body.light .recent-transactions {
@@ -295,22 +295,22 @@ body.dark .recent-transactions {
   color: #f5f5f5;
 }
 
-/* ✅ FIX: Summary card headings */
+
 body.dark .summary-card h3 {
   color: #f5f5f5;
 }
 
-/* ✅ FIX: Summary info text */
+
 body.dark .summary-info {
   color: #f5f5f5;
 }
 
-/* ✅ FIX: Recent transactions heading */
+
 body.dark .recent-transactions h2 {
   color: #f5f5f5;
 }
 
-/* Tables */
+
 body.dark .transactions-table thead {
   background: #333;
   color: #f5f5f5;
@@ -320,22 +320,22 @@ body.dark .transactions-table tr:hover {
 }
 body.dark .transactions-table td {
   border-bottom: 1px solid #444;
-  color: #f5f5f5;   /* ✅ FIX: table cell text */
+  color: #f5f5f5;   
 }
 
-/* Dark mode style */
+
 body.dark #themeToggle {
   background: #333;
   color: #f5f5f5;
 }
-/* Inputs and textareas */
+
 body.dark .form-control {
   background: #333;
   color: #f5f5f5;
   border: 1px solid #555;
 }
 
-/* Form containers */
+
 body.dark .budget-form,
 body.dark .show-budget {
   background: #222;
@@ -343,7 +343,7 @@ body.dark .show-budget {
   box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
-/* Form headings */
+
 body.dark .budget-form h2,
 body.dark .show-budget h3 {
   color: #f5f5f5;

@@ -13,7 +13,7 @@ body {
   flex-direction: row;
 }
 
-/* Sidebar */
+
 .sidebar {
   width: 230px;
   position: fixed;
@@ -27,7 +27,7 @@ body {
   overflow-y: auto;
 }
 
-/* Hidden sidebar for desktop */
+
 .sidebar.hidden {
   transform: translateX(-230px);
 }
@@ -66,8 +66,7 @@ body {
 
 .sidebar li:hover { background: #34495e; }
 
-/* Topbar */
-/* Topbar */
+
 .topbar {
   position: fixed;
   top: 0;
@@ -113,7 +112,7 @@ body {
   background: #ddd;
 }
 
-/* Profile dropdown */
+
 .profile {
   position: relative;
   cursor: pointer;
@@ -160,8 +159,7 @@ body {
   color: #1a1a1a;
 }
 
-/* Main content */
-/* Main content */
+
 .main-content {
   margin-left: 230px;
   padding: 30px;
@@ -170,7 +168,7 @@ body {
   min-height: 100vh;
 }
 
-/* When sidebar is hidden on desktop */
+
 .sidebar.hidden ~ .main-content {
   margin-left: 0;
 }
@@ -179,7 +177,7 @@ body {
   left: 0;
 }
 
-/* Flash messages */
+
 .flash-message {
   position: fixed;
   top: 20px;

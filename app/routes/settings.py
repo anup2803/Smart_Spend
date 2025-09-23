@@ -94,19 +94,19 @@ def change_password():
 
 
 
-#theme perferences
-@settings_bp.route('/theme', methods=['POST'])
-def ajax_theme():
-    if 'user_id' not in session:
-        return {"success": False, "error": "Not logged in"}, 401
+# #theme perferences
+# @settings_bp.route('/theme', methods=['POST'])
+# def ajax_theme():
+#     if 'user_id' not in session:
+#         return {"success": False, "error": "Not logged in"}, 401
 
-    user = User.query.get(session['user_id'])
-    data = request.get_json()
-    theme_choice = data.get("theme")
+#     user = User.query.get(session['user_id'])
+#     data = request.get_json()
+#     theme_choice = data.get("theme")
 
-    if theme_choice in ["light", "dark"]:
-        user.theme = theme_choice
-        db.session.commit()
-        return {"success": True, "theme": theme_choice}
+#     if theme_choice in ["light", "dark"]:
+#         user.theme = theme_choice
+#         db.session.commit()
+#         return {"success": True, "theme": theme_choice}
 
-    return {"success": False, "error": "Invalid theme"}, 400
+#     return {"success": False, "error": "Invalid theme"}, 400
