@@ -112,6 +112,9 @@ fetch('/data')
     });
 });
 
+
+    
+
 // ===== Get previous month correctly (1-12) =====
 let today = new Date();
 let prevMonth = today.getMonth(); // 0-11
@@ -151,17 +154,16 @@ function drawExpensePie(data) {
     });
 }
 
-fetch(`/expense_data?month=${prevMonth}&year=${year}`)
+fetch(`/expense_data?month=${prevMonth}&year=${year}`, { credentials: 'include' })
 .then(res => res.json())
 .then(data => {
     if (data.labels.length === 0) {
         // fallback to all-time data
-        return fetch('/expense_data').then(res => res.json());
+        return fetch('/expense_data', { credentials: 'include' }).then(res => res.json());
     }
     return data;
 })
 .then(drawExpensePie);
-
 
 
 // ===== Summary Bar Chart =====
@@ -188,16 +190,17 @@ function drawSummaryBar(data) {
     });
 }
 
-fetch(`/summary_data?month=${prevMonth}&year=${year}`)
+fetch(`/summary_data?month=${prevMonth}&year=${year}`, { credentials: 'include' })
 .then(res => res.json())
 .then(data => {
     if (data.values.every(v => v === 0)) {
         // fallback to all-time summary
-        return fetch('/summary_data').then(res => res.json());
+        return fetch('/summary_data', { credentials: 'include' }).then(res => res.json());
     }
     return data;
 })
 .then(drawSummaryBar);
+
 
 
 
@@ -224,7 +227,7 @@ const deletereminder=document.querySelectorAll(".btn-danger_small-btn")
 
 deletereminder.forEach(button=>{  
  button.addEventListener('click',function(event){
-    const confirmdeletereminders=confirm("Are you sure you want to delete this Reminders?");
+    const confirmdeletereminders=confirm("Are you sure you want to delete this ?");
     if (!confirmdeletereminders)
         {
         event.preventDefault();

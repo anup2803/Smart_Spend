@@ -18,57 +18,78 @@ report_bp=Blueprint('report_bp',__name__)
 
 
 #report route
+
 @report_bp.route('/report_analysis')
 def report_analysis():
     if 'user_id' not in session:
-        flash("Please Login first","danger")
+        flash("Please login first", "danger")
         return redirect(url_for('auth_bp.login'))
-    
 
     try:
-      user_id=session.get('user_id')
+        user_id = session.get('user_id')
+        user = User.query.get(user_id)
 
+        today = datetime.now()
 
-      user = User.query.filter_by(id=user_id).first()
+        # Get selected month/year from query params (fallback to current)
+        month = request.args.get('month', default=today.month, type=int)
+        year = request.args.get('year', default=today.year, type=int)
 
+        # Totals for selected month/year
+        Total_Income = (
+            db.session.query(func.sum(Transaction.amount))
+            .filter_by(user_id=user_id, type='income')
+            .filter(func.extract('month', Transaction.date) == month,
+                    func.extract('year', Transaction.date) == year)
+            .scalar() or 0
+        )
 
-      today = datetime.now()
-      if today.month == 1:
-       prev_month = 12
-       prev_year = today.year - 1
-      else:
-        prev_month = today.month - 1
-        prev_year = today.year
+        Total_expense = (
+            db.session.query(func.sum(Transaction.amount))
+            .filter_by(user_id=user_id, type='expense')
+            .filter(func.extract('month', Transaction.date) == month,
+                    func.extract('year', Transaction.date) == year)
+            .scalar() or 0
+        )
 
-    #total income 
-      Total_Income = db.session.query(func.sum(Transaction.amount)).filter_by(user_id=user_id, type='income').scalar() or 0
+        Net_income = max(Total_Income - Total_expense, 0)
 
+        # Recent transactions (5 latest for the selected month/year)
+        recent_trans = (
+            Transaction.query.filter_by(user_id=user_id)
+            .filter(func.extract('month', Transaction.date) == month,
+                    func.extract('year', Transaction.date) == year)
+            .order_by(desc(Transaction.date))
+            .limit(5)
+            .all()
+        )
 
+        # Past budgets (last 5 overall, not filtered)
+        past_budget = (
+            Budget.query.filter_by(user_id=user_id)
+            .order_by(desc(Budget.year), desc(Budget.month))
+            .limit(5)
+            .all()
+        ) or []
 
-
-   #total expense
-      Total_expense=db.session.query(func.sum(Transaction.amount)).filter_by(user_id=user_id,type='expense').scalar() or 0
-
-
-    #Net income 
-      Net_income = max(Total_Income - Total_expense, 0)
-
-    
-    #past budget reports
-      past_budget = Budget.query.filter_by(user_id=user_id,month=prev_month,year=prev_year).limit(5).all()
-
-      
-   # Recent transactions (last 5)
-      recent_trans = Transaction.query.filter_by(user_id=user_id).order_by(desc(Transaction.date)).limit(5).all()
-
-
-
-
-      return render_template('reports.html',Total_Income=Total_Income,Total_expense=Total_expense,Net_income=Net_income,recent_trans=recent_trans,user=user,past_budget=past_budget,page_title="Reports & Analysis")
+        return render_template(
+            'reports.html',
+            Total_Income=Total_Income,
+            Total_expense=Total_expense,
+            Net_income=Net_income,
+            recent_trans=recent_trans,
+            user=user,
+            past_budget=past_budget,
+            selected_month=month,
+            selected_year=year,
+            current_year=today.year,
+            page_title="Reports & Analysis"
+        )
 
     except Exception as e:
-          flash(f"Error generating report: {e}", "danger")
-          return redirect(url_for('report_bp.report_analysis'))
+        flash(f"Error generating report: {e}", "danger")
+        return redirect(url_for('report_bp.reports'))
+
 
 
 
@@ -387,13 +408,7 @@ def expense_data():
 
 
 
-#expenses_chart
-@report_bp.route('/expenses_chart')
-def expenses_chart():
-    if 'user_id' not in session:
-        flash('please login first','danger')
-        return redirect(url_for('auth_bp.login'))
-    return render_template('reports.html')
+
 
         
 

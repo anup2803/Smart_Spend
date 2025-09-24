@@ -181,7 +181,7 @@ body {
 .flash-message {
   position: fixed;
   top: 20px;
-  left: 60%;
+  left: 58%;
   transform: translateX(-50%);
   z-index: 2000;
   width: 50%;
@@ -191,6 +191,7 @@ body {
 .flash {
   padding: 12px 20px;
   margin-bottom: 10px;
+  margin-top: 50px;
   border-radius: 5px;
   color: #fff;
   font-weight: 500;
